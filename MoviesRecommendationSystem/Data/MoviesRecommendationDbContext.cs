@@ -6,9 +6,9 @@ using System.Text;
 
 namespace MoviesRecommendationSystem.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class MoviesRecommendationDbContext : IdentityDbContext
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        public MoviesRecommendationDbContext(DbContextOptions<MoviesRecommendationDbContext> options)
             : base(options)
         {
         }

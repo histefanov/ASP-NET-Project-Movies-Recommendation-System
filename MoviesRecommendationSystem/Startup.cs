@@ -19,7 +19,7 @@ namespace MoviesRecommendationSystem
         public void ConfigureServices(IServiceCollection services)
         {
             services
-                .AddDbContext<ApplicationDbContext>(options => options
+                .AddDbContext<MoviesRecommendationDbContext>(options => options
                     .UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddDatabaseDeveloperPageExceptionFilter();
@@ -32,7 +32,7 @@ namespace MoviesRecommendationSystem
                     options.Password.RequireUppercase = false;
                     options.Password.RequireNonAlphanumeric = false;
                 })
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                .AddEntityFrameworkStores<MoviesRecommendationDbContext>();
 
             services.AddControllersWithViews();
         }
