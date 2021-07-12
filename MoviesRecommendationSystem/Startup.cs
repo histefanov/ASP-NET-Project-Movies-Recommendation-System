@@ -8,6 +8,7 @@ namespace MoviesRecommendationSystem
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
     using MoviesRecommendationSystem.Data;
+    using MoviesRecommendationSystem.Infrastructure;
 
     public class Startup
     {
@@ -39,6 +40,8 @@ namespace MoviesRecommendationSystem
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.PrepareDatabase();
+            
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

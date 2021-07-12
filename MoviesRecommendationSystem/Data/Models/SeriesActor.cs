@@ -1,10 +1,10 @@
 ﻿namespace MoviesRecommendationSystem.Data.Models
 {
-    public class MovieActor
+    public class SeriesActor
     {
-        public int MovieId { get; set; }
+        public int SeriesId { get; set; }
 
-        public Movie Movie { get; set; }
+        public Series Series { get; set; }
 
         public int ActorId { get; set; }
 

@@ -15,5 +15,7 @@
         public string Name { get; set; }
 
         public ICollection<Movie> Movies { get; init; } = new HashSet<Movie>();
+
+        public ICollection<Series> Series { get; init; } = new HashSet<Series>();
     }
 }

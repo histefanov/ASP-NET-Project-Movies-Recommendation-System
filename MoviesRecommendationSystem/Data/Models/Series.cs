@@ -5,7 +5,7 @@
 
     using static DataConstants;
 
-    public class Movie
+    public class Series
     {
         [Key]
         public int Id { get; init; }
@@ -18,9 +18,16 @@
         [Range(YearMinValue, YearMaxValue)]
         public int ReleaseYear { get; set; }
 
+        [Range(YearMinValue, YearMaxValue)]
+        public int EndYear { get; set; }
+
+        [Required]
+        [Range(SeasonCountMinValue, SeasonCountMaxValue)]
+        public int SeasonCount { get; set; }
+
         [Required]
         [Range(RuntimeMinValue, RuntimeMaxValue)]
-        public int Runtime { get; set; }
+        public int AverageRuntime { get; set; }
 
         [Required]
         [MaxLength(PlotMaxLength)]
@@ -34,16 +41,12 @@
         [Url]
         public string ImageUrl { get; set; }
 
-        public int DirectorId { get; set; }
-
-        public Director Director { get; set; }
-
         public int StudioId { get; set; }
 
         public Studio Studio { get; set; }
-      
-        public ICollection<MovieGenre> MovieGenres { get; init; } = new HashSet<MovieGenre>();
 
-        public ICollection<MovieActor> MovieActors { get; init; } = new HashSet<MovieActor>();
+        public ICollection<SeriesGenre> SeriesGenres { get; init; } = new HashSet<SeriesGenre>();
+
+        public ICollection<SeriesActor> SeriesActors { get; init; } = new HashSet<SeriesActor>();
     }
 }

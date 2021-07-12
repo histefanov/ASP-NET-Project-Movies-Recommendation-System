@@ -1,10 +1,10 @@
 ﻿namespace MoviesRecommendationSystem.Data.Models
 {
-    public class MovieGenre
+    public class SeriesGenre
     {
-        public int MovieId { get; set; }
+        public int SeriesId { get; set; }
 
-        public Movie Movie { get; set; }
+        public Series Series { get; set; }
 
         public int GenreId { get; set; }
 
