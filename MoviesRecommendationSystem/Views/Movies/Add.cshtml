@@ -1,0 +1,60 @@
+﻿@model AddMovieFormModel
+
+@{
+    ViewData["Title"] = "Add Movie";
+}
+
+
+
+<!-- TODO: Add Genres! -->
+
+<div class="row">
+    <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-2 col-xl-8">
+        <h2 class="heading-margin">Add Movie</h2>
+        <form method="post">
+            <div class="form-group">
+                <label asp-for="Title"></label>
+                <input asp-for="Title" class="form-control">
+                <span asp-validation-for="Title" class="small text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ReleaseYear">Release Year</label>
+                <input asp-for="ReleaseYear" class="form-control">
+                <span asp-validation-for="ReleaseYear" class="small text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Runtime"></label>
+                <input asp-for="Runtime" class="form-control" placeholder="(min.)">
+                <span asp-validation-for="Runtime" class="small text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Language"></label>
+                <input asp-for="Language" class="form-control">
+                <span asp-validation-for="Language" class="small text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ImageUrl"></label>
+                <input asp-for="ImageUrl" class="form-control" placeholder=".jpg/.png">
+                <span asp-validation-for="ImageUrl" class="small text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Director"></label>
+                <input asp-for="Director" class="form-control" placeholder="First name and last name separated by a single space.">
+                <span asp-validation-for="Director" class="small text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Studio"></label>
+                <input asp-for="Studio" class="form-control">
+                <span asp-validation-for="Studio" class="small text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Plot">Plot</label>
+                <textarea asp-for="Plot" class="form-control" placeholder="The movie's awesome plot in a few words." rows="3"></textarea>
+                <span asp-validation-for="Plot" class="small text-danger"></span>
+            </div>
+            <div class="col-auto">
+                <button type="submit" class="btn btn-primary mb-2">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
