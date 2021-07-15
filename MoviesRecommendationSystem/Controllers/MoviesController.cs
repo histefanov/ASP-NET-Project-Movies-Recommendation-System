@@ -46,12 +46,30 @@
             return RedirectToAction("Index", "Home");
         }
 
+        public IActionResult All()
+        {
+            var movies = this.data
+                .Movies
+                .OrderByDescending(m => m.Id)
+                .Select(m => new MovieListingViewModel
+                {
+                    Id = m.Id,
+                    Title = m.Title,
+                    ReleaseYear = m.ReleaseYear,
+                    Plot = m.Plot,
+                    ImageUrl = m.ImageUrl
+                })
+                .ToList();
+            
+            return View(movies);
+        }
+
         private IEnumerable<MovieGenreViewModel> GetMovieGenres()
             => this.data.Genres
-                   .Select(x => new MovieGenreViewModel
+                   .Select(g => new MovieGenreViewModel
                    {
-                       Id = x.Id,
-                       Name = x.Name
+                       Id = g.Id,
+                       Name = g.Name
                    })
                    .ToList();
 
@@ -61,7 +79,7 @@
             var directorFirstName = directorNameParts[0];
             var directorLastName = directorNameParts[1];
 
-            if (!this.data.Directors.Any(x => x.FirstName + " " + x.LastName == director))
+            if (!this.data.Directors.Any(d => d.FirstName + " " + d.LastName == director))
             {               
                 data.Directors.Add(new Director
                 {
@@ -74,7 +92,7 @@
 
             var directorId = this.data
                 .Directors
-                .FirstOrDefault(x => x.FirstName == directorFirstName && x.LastName == directorLastName)
+                .FirstOrDefault(d => d.FirstName == directorFirstName && d.LastName == directorLastName)
                 .Id;
 
             return directorId;
@@ -82,7 +100,7 @@
 
         private int GetStudioId(string studio)
         {
-            if (!this.data.Studios.Any(x => x.Name == studio))
+            if (!this.data.Studios.Any(s => s.Name == studio))
             {
                 this.data.Studios.Add(new Studio
                 {
@@ -94,7 +112,7 @@
 
             var studioId = this.data
                 .Studios
-                .FirstOrDefault(x => x.Name == studio)
+                .FirstOrDefault(s => s.Name == studio)
                 .Id;
 
             return studioId;
