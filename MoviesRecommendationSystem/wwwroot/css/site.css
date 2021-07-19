@@ -67,9 +67,8 @@ html {
 }
 
 body {
-    padding: 50px;
-    max-width: 100%;
-    margin: 0;
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
 }
 
 .footer {
@@ -80,30 +79,11 @@ body {
     line-height: 60px; /* Vertically center the text there */
 }
 
-.heading-margin {
-    text-align: center;
-    margin-top: 20px;
-    margin-bottom: 30px;
-}
-
-.form-check-inline {
-    margin-left: 20px;
-}
-
-.form-check-label {
-    margin-right: 20px;
-}
+/* Custom css 
+    -------------------------------------------- */
 
 .card {
-    border: none;
-}
-
-.card-img-top {
-    width: 286px;
-    height: 160px;
-}
-
-.card-body {
-    margin-bottom: 10px;
-    padding: 15px 0px 0px 0px;   
+    /*border: none;*/
+    margin: 10px;
+    width: 16.5rem;
 }

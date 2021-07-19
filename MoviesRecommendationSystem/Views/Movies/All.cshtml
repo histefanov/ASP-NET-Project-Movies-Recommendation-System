@@ -1,18 +1,18 @@
 ﻿@model IEnumerable<MovieListingViewModel>
 
 <div class="row">
-    @foreach (var movie in Model)
-    {
-    <div class="card" style="width: 18rem;">
-        <a href="#">
-            <img class="card-img-top" src="@movie.ImageUrl" alt="@movie.Title (@movie.ReleaseYear)">
-        </a>
-        <div class="card-body">
-            <a href="#">
-                <h5 class="card-title">@movie.Title, @movie.ReleaseYear</h5>
-            </a>            
-            <p class="card-text">@movie.Plot</p>
-        </div>
-    </div>
-    }
+        @foreach (var movie in Model)
+        {
+            <div class="card">
+                <a href="#">
+                    <img class="card-img-top" src="@movie.ImageUrl" alt="@movie.Title (@movie.ReleaseYear)">
+                </a>
+                <div class="card-body">
+                    <a href="#">
+                        <h5 class="card-title">@movie.Title, @movie.ReleaseYear</h5>
+                    </a>
+                    <p class="card-text">@movie.Plot</p>
+                </div>
+            </div>
+        }
 </div>

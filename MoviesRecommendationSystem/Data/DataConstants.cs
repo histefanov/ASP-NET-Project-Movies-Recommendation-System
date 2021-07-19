@@ -22,7 +22,7 @@
         public const int FirstNameMaxLength = 50;
         public const int LastNameMaxLength = 50;
 
-        public const int StudioNameMinLength = 5;
+        public const int StudioNameMinLength = 3;
         public const int StudioNameMaxLength = 50;       
     }
 }
