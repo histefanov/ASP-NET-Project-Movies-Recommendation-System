@@ -20,10 +20,7 @@
         {
             this.PrepareViewBagGenres();
 
-            return View(new AddMovieFormModel
-            {
-                //Genres = this.GetMovieGenres()
-            });
+            return View(new AddMovieFormModel());
         }
 
         [HttpPost]
