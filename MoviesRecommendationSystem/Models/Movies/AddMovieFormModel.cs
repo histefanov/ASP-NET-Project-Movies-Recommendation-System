@@ -1,5 +1,6 @@
 ﻿namespace MoviesRecommendationSystem.Models.Movies
 {
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
     using static Data.DataConstants;
@@ -48,11 +49,19 @@
         [StringLength(FirstNameMaxLength + LastNameMaxLength, MinimumLength = FullNameMinLength)]
         public string Director { get; init; }
 
-        [Display(Name = "Production Studio")]
+        [Display(Name = "Distribution Studio")]
         [Required]
         [StringLength(StudioNameMaxLength, MinimumLength = StudioNameMinLength)]
         public string Studio { get; init; }
-        
-        //TODO: Add genres
+
+        [Display(Name = "Starring Actors")]
+        [Required]
+        [RegularExpression(
+            @"([A-Za-z .]+)(,\s*[A-Za-z .]+)*", 
+            ErrorMessage = "Invalid format. Please type in the actors' names separated by commas.")]
+        public string StarringActors { get; set; }
+
+        [Required(ErrorMessage = "At least one genre selection is required.")]
+        public List<string> Genres { get; set; }
     }
 }

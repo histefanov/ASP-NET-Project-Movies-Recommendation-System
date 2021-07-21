@@ -44,8 +44,19 @@
             </div>
             <div class="form-group">
                 <label asp-for="Studio"></label>
-                <input asp-for="Studio" class="form-control">
+                <input asp-for="Studio" class="form-control" placeholder="example: Warner Bros. Pictures">
                 <span asp-validation-for="Studio" class="small text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StarringActors"></label>
+                <input asp-for="StarringActors" class="form-control" placeholder="Actor names separated by commas (Brad Pitt, Matt Damon, etc.)">
+                <span asp-validation-for="StarringActors" class="small text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Genres"></label>
+                <select multiple asp-for="Genres" class="form-control" asp-items="ViewBag.Genres">
+                </select>
+                <span asp-validation-for="Genres" class="small text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Plot">Plot</label>

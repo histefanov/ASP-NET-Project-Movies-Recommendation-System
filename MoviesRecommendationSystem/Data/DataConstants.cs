@@ -20,6 +20,7 @@
 
         public const int FullNameMinLength = 4;
         public const int FirstNameMaxLength = 50;
+        public const int MiddleNameMaxLength = 50;
         public const int LastNameMaxLength = 50;
 
         public const int StudioNameMinLength = 3;

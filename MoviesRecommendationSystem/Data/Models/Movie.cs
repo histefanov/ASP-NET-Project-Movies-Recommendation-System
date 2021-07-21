@@ -38,9 +38,9 @@
 
         public Director Director { get; set; }
 
-        public int StudioId { get; set; }
-
-        public Studio Studio { get; set; }
+        [Required]
+        [MaxLength(StudioNameMaxLength)]
+        public string Studio { get; set; }
       
         public ICollection<MovieGenre> MovieGenres { get; init; } = new HashSet<MovieGenre>();
 

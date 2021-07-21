@@ -1,8 +1,10 @@
 ﻿namespace MoviesRecommendationSystem.Controllers
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Rendering;
     using MoviesRecommendationSystem.Data;
     using MoviesRecommendationSystem.Data.Models;
     using MoviesRecommendationSystem.Models.Movies;
@@ -14,16 +16,23 @@
         public MoviesController(MoviesRecommendationDbContext data) 
             => this.data = data;
 
-        public IActionResult Add() => View(new AddMovieFormModel
+        public IActionResult Add()
         {
-            //Genres = this.GetMovieGenres()
-        });
+            this.PrepareViewBagGenres();
+
+            return View(new AddMovieFormModel
+            {
+                //Genres = this.GetMovieGenres()
+            });
+        }
 
         [HttpPost]
         public IActionResult Add(AddMovieFormModel movie)
         {
             if (!ModelState.IsValid)
             {
+                this.PrepareViewBagGenres();
+
                 return View(movie);
             }
 
@@ -35,15 +44,120 @@
                 Plot = movie.Plot,
                 Language = movie.Language,
                 ImageUrl = movie.ImageUrl,
-                DirectorId = GetDirectorId(movie.Director),
-                StudioId = GetStudioId(movie.Studio)
+                DirectorId = this.GetDirectorId(movie.Director),
+                Studio = movie.Studio
             };
 
             this.data.Movies.Add(movieData);
 
             this.data.SaveChanges();
 
+            var movieId = this.data
+                .Movies
+                .FirstOrDefault(m => m.Title == movie.Title)
+                .Id;
+
+            this.AddActors(movie.StarringActors, movieId);
+
+            this.AddMovieGenres(movie.Genres, movieId);
+
             return RedirectToAction("Index", "Home");
+        }
+
+        private void AddMovieGenres(List<string> genreIds, int movieId)
+        {
+            foreach (var genreId in genreIds)
+            {
+                this.data
+                    .MovieGenres
+                    .Add(new MovieGenre
+                    {
+                        MovieId = movieId,
+                        GenreId = int.Parse(genreId)
+                    });
+            }
+        }
+
+        private void PrepareViewBagGenres()
+        {
+            var genres = this.GetMovieGenres();
+
+            var viewBagGenres = new List<SelectListItem>();
+
+            foreach (var genre in genres)
+            {
+                viewBagGenres.Add(new SelectListItem
+                {
+                    Text = genre.Name,
+                    Value = genre.Id.ToString()
+                });
+            }
+
+            this.ViewBag.Genres = viewBagGenres;
+        }
+
+        private void AddActors(string starringActors, int movieId)
+        {
+            var actorsArray = starringActors.Split(',', StringSplitOptions.RemoveEmptyEntries);
+
+            for (int i = 0; i < actorsArray.Length; i++)
+            {
+                var actor = actorsArray[i].Trim();
+
+                string 
+                    firstName, 
+                    middleName, 
+                    lastName;
+
+                var actorNames = actor.Split();
+
+                if (actorNames.Length == 2)
+                {
+                    firstName = actorNames[0];
+                    middleName = null;
+                    lastName = actorNames[1];
+                }
+                else if (actorNames.Length == 3)
+                {
+                    firstName = actorNames[0];
+                    middleName = actorNames[1];
+                    lastName = actorNames[2];
+                }
+                else
+                {
+                    continue;
+                    //TODO: Extend functionality
+                }
+
+                var actorModel = new Actor
+                {
+                    FirstName = firstName,
+                    MiddleName = middleName,
+                    LastName = lastName
+                };
+
+                this.data.Actors.Add(actorModel);
+
+                this.data.SaveChanges();
+
+                var actorId = this.data
+                    .Actors
+                    .FirstOrDefault(a =>
+                        a.FirstName == firstName &&
+                        a.MiddleName == middleName &&
+                        a.LastName == lastName)
+                    .Id;
+
+                this.data
+                    .MovieActors
+                    .Add(new MovieActor
+                    {
+                        MovieId = movieId,
+                        ActorId = actorId
+                    });
+
+                this.data.SaveChanges();
+            }
         }
 
         public IActionResult All()
@@ -61,7 +175,10 @@
                 })
                 .ToList();
             
-            return View(movies);
+            return View(new AllMoviesQueryModel 
+            {
+                Movies = movies
+            });
         }
 
         private IEnumerable<MovieGenreViewModel> GetMovieGenres()
@@ -79,16 +196,7 @@
             var directorFirstName = directorNameParts[0];
             var directorLastName = directorNameParts[1];
 
-            if (!this.data.Directors.Any(d => d.FirstName + " " + d.LastName == director))
-            {               
-                data.Directors.Add(new Director
-                {
-                    FirstName = directorFirstName,
-                    LastName = directorLastName
-                });
-
-                data.SaveChanges();
-            }
+            this.AddDirector(directorFirstName, directorLastName);
 
             var directorId = this.data
                 .Directors
@@ -98,24 +206,18 @@
             return directorId;
         }
 
-        private int GetStudioId(string studio)
+        private void AddDirector(string directorFirstName, string directorLastName)
         {
-            if (!this.data.Studios.Any(s => s.Name == studio))
+            if (!this.data.Directors.Any(d => d.FirstName == directorFirstName && d.LastName == directorLastName))
             {
-                this.data.Studios.Add(new Studio
+                data.Directors.Add(new Director
                 {
-                    Name = studio
+                    FirstName = directorFirstName,
+                    LastName = directorLastName
                 });
 
                 data.SaveChanges();
             }
-
-            var studioId = this.data
-                .Studios
-                .FirstOrDefault(s => s.Name == studio)
-                .Id;
-
-            return studioId;
         }
     }
 }

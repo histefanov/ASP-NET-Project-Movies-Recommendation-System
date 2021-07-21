@@ -1,18 +1,28 @@
-﻿@model IEnumerable<MovieListingViewModel>
+﻿@model AllMoviesQueryModel
 
 <div class="row">
-        @foreach (var movie in Model)
-        {
-            <div class="card">
+    <form method="get">
+        <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search"
+               aria-describedby="search-addon" />
+        <span class="input-group-text border-0" id="search-addon">
+            <i class="fas fa-search"></i>
+        </span>
+    </form>
+</div>
+
+<div class="row">
+    @foreach (var movie in Model.Movies)
+    {
+        <div class="card">
+            <a href="#">
+                <img class="card-img-top" src="@movie.ImageUrl" alt="@movie.Title (@movie.ReleaseYear)">
+            </a>
+            <div class="card-body">
                 <a href="#">
-                    <img class="card-img-top" src="@movie.ImageUrl" alt="@movie.Title (@movie.ReleaseYear)">
+                    <h5 class="card-title">@movie.Title, @movie.ReleaseYear</h5>
                 </a>
-                <div class="card-body">
-                    <a href="#">
-                        <h5 class="card-title">@movie.Title, @movie.ReleaseYear</h5>
-                    </a>
-                    <p class="card-text">@movie.Plot</p>
-                </div>
+                <p class="card-text">@movie.Plot</p>
             </div>
-        }
+        </div>
+    }
 </div>

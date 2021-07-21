@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MoviesRecommendationSystem.Data;
 
 namespace MoviesRecommendationSystem.Data.Migrations
 {
     [DbContext(typeof(MoviesRecommendationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210721104959_ActorTable")]
+    partial class ActorTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -314,10 +316,8 @@ namespace MoviesRecommendationSystem.Data.Migrations
                     b.Property<int>("Runtime")
                         .HasColumnType("int");
 
-                    b.Property<string>("Studio")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                    b.Property<int>("StudioId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -327,6 +327,8 @@ namespace MoviesRecommendationSystem.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("DirectorId");
+
+                    b.HasIndex("StudioId");
 
                     b.ToTable("Movies");
                 });
@@ -394,9 +396,6 @@ namespace MoviesRecommendationSystem.Data.Migrations
                     b.Property<int>("SeasonCount")
                         .HasColumnType("int");
 
-                    b.Property<string>("Studio")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("StudioId")
                         .HasColumnType("int");
 
@@ -406,6 +405,8 @@ namespace MoviesRecommendationSystem.Data.Migrations
                         .HasColumnType("nvarchar(150)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("StudioId");
 
                     b.ToTable("Series");
                 });
@@ -438,6 +439,23 @@ namespace MoviesRecommendationSystem.Data.Migrations
                     b.HasIndex("GenreId");
 
                     b.ToTable("SeriesGenres");
+                });
+
+            modelBuilder.Entity("MoviesRecommendationSystem.Data.Models.Studio", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Studios");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -499,7 +517,15 @@ namespace MoviesRecommendationSystem.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("MoviesRecommendationSystem.Data.Models.Studio", "Studio")
+                        .WithMany("Movies")
+                        .HasForeignKey("StudioId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.Navigation("Director");
+
+                    b.Navigation("Studio");
                 });
 
             modelBuilder.Entity("MoviesRecommendationSystem.Data.Models.MovieActor", b =>
@@ -538,6 +564,17 @@ namespace MoviesRecommendationSystem.Data.Migrations
                     b.Navigation("Genre");
 
                     b.Navigation("Movie");
+                });
+
+            modelBuilder.Entity("MoviesRecommendationSystem.Data.Models.Series", b =>
+                {
+                    b.HasOne("MoviesRecommendationSystem.Data.Models.Studio", "Studio")
+                        .WithMany("Series")
+                        .HasForeignKey("StudioId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Studio");
                 });
 
             modelBuilder.Entity("MoviesRecommendationSystem.Data.Models.SeriesActor", b =>
@@ -605,6 +642,13 @@ namespace MoviesRecommendationSystem.Data.Migrations
                     b.Navigation("SeriesActors");
 
                     b.Navigation("SeriesGenres");
+                });
+
+            modelBuilder.Entity("MoviesRecommendationSystem.Data.Models.Studio", b =>
+                {
+                    b.Navigation("Movies");
+
+                    b.Navigation("Series");
                 });
 #pragma warning restore 612, 618
         }

@@ -29,26 +29,12 @@
 
         public DbSet<SeriesGenre> SeriesGenres { get; init; }
 
-        public DbSet<Studio> Studios { get; init; }
-
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<Movie>()
                 .HasOne(x => x.Director)
                 .WithMany(x => x.Movies)
                 .HasForeignKey(x => x.DirectorId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            builder.Entity<Movie>()
-                .HasOne(x => x.Studio)
-                .WithMany(x => x.Movies)
-                .HasForeignKey(x => x.StudioId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            builder.Entity<Series>()
-                .HasOne(x => x.Studio)
-                .WithMany(x => x.Series)
-                .HasForeignKey(x => x.StudioId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder.Entity<MovieActor>()

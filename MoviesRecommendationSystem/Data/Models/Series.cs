@@ -43,7 +43,7 @@
 
         public int StudioId { get; set; }
 
-        public Studio Studio { get; set; }
+        public string Studio { get; set; }
 
         public ICollection<SeriesGenre> SeriesGenres { get; init; } = new HashSet<SeriesGenre>();
 
