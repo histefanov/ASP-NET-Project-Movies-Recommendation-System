@@ -60,6 +60,49 @@
 
             return RedirectToAction("Index", "Home");
         }
+        
+        public IActionResult All(string selectedGenre, string searchTerm)
+        {
+            var moviesQuery = this.data.Movies.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(selectedGenre))
+            {
+                var genreId = this.data
+                    .Genres
+                    .FirstOrDefault(g => g.Name == selectedGenre)
+                    .Id;
+
+                moviesQuery = moviesQuery
+                    .Where(m => m.MovieGenres
+                        .Any(mg => mg.GenreId == genreId));
+            }
+
+            if (!string.IsNullOrWhiteSpace(searchTerm))
+            {
+                //TODO: Improve code quality by replacing .ToLower() with another functionality
+                moviesQuery = moviesQuery.Where(m =>
+                    m.Title.ToLower().Contains(searchTerm.ToLower()));
+            }
+
+            var movies = moviesQuery
+                .OrderByDescending(m => m.Id)
+                .Select(m => new MovieListingViewModel
+                {
+                    Id = m.Id,
+                    Title = m.Title,
+                    ReleaseYear = m.ReleaseYear,
+                    Plot = m.Plot,
+                    ImageUrl = m.ImageUrl
+                })
+                .ToList();
+            
+            return View(new AllMoviesQueryModel 
+            {
+                Genres = GetGenresAsStrings(),
+                Movies = movies,
+                SearchTerm = searchTerm
+            });
+        }
 
         private void AddMovieGenres(List<string> genreIds, int movieId)
         {
@@ -73,6 +116,8 @@
                         GenreId = int.Parse(genreId)
                     });
             }
+
+            data.SaveChanges();
         }
 
         private void PrepareViewBagGenres()
@@ -101,9 +146,9 @@
             {
                 var actor = actorsArray[i].Trim();
 
-                string 
-                    firstName, 
-                    middleName, 
+                string
+                    firstName,
+                    middleName,
                     lastName;
 
                 var actorNames = actor.Split();
@@ -126,16 +171,20 @@
                     //TODO: Extend functionality
                 }
 
-                var actorModel = new Actor
+                if (!this.data.Actors.Any(a =>
+                    a.FirstName == firstName &&
+                    a.MiddleName == middleName &&
+                    a.LastName == lastName))
                 {
-                    FirstName = firstName,
-                    MiddleName = middleName,
-                    LastName = lastName
-                };
+                    this.data.Actors.Add(new Actor
+                    {
+                        FirstName = firstName,
+                        MiddleName = middleName,
+                        LastName = lastName
+                    });
 
-                this.data.Actors.Add(actorModel);
-
-                this.data.SaveChanges();
+                    this.data.SaveChanges();
+                }
 
                 var actorId = this.data
                     .Actors
@@ -157,27 +206,6 @@
             }
         }
 
-        public IActionResult All()
-        {
-            var movies = this.data
-                .Movies
-                .OrderByDescending(m => m.Id)
-                .Select(m => new MovieListingViewModel
-                {
-                    Id = m.Id,
-                    Title = m.Title,
-                    ReleaseYear = m.ReleaseYear,
-                    Plot = m.Plot,
-                    ImageUrl = m.ImageUrl
-                })
-                .ToList();
-            
-            return View(new AllMoviesQueryModel 
-            {
-                Movies = movies
-            });
-        }
-
         private IEnumerable<MovieGenreViewModel> GetMovieGenres()
             => this.data.Genres
                    .Select(g => new MovieGenreViewModel
@@ -185,7 +213,15 @@
                        Id = g.Id,
                        Name = g.Name
                    })
+                   .OrderBy(g => g.Name)
                    .ToList();
+
+        private IEnumerable<string> GetGenresAsStrings()
+            => this.data
+                .Genres
+                .Select(g => g.Name)
+                .OrderBy(n => n)
+                .ToList();
 
         private int GetDirectorId(string director)
         {

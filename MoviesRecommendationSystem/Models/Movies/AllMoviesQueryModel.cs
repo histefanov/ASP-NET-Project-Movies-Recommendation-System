@@ -6,10 +6,12 @@
 
     public class AllMoviesQueryModel
     {
+        public string SelectedGenre { get; init; }
+
         public IEnumerable<string> Genres { get; init; }
 
         [Display(Name = "Search")]
-        public IEnumerable<string> SearchTerm { get; init; }
+        public string SearchTerm { get; init; }
 
         public MovieSorting Sorting { get; init; }
 

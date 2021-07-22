@@ -57,7 +57,7 @@
         [Display(Name = "Starring Actors")]
         [Required]
         [RegularExpression(
-            @"([A-Za-z .]+)(,\s*[A-Za-z .]+)*", 
+            @"([A-Za-z .-]+)(,\s*[A-Za-z .-]+)*", 
             ErrorMessage = "Invalid format. Please type in the actors' names separated by commas.")]
         public string StarringActors { get; set; }
 

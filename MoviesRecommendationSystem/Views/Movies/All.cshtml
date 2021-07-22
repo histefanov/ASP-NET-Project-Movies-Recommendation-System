@@ -1,12 +1,20 @@
 ﻿@model AllMoviesQueryModel
 
 <form method="get">
-    <div class="input-group col-md-4">
-        <input asp-for="SearchTerm" class="form-control">
-        <span class="input-group-btn">
-            <button class="btn btn-default" type="button">Search</button>
-        </span>
-    </div>
+    <div class="row" mb-5>
+        <div class="form-group col-md-4">
+            <select asp-for="SelectedGenre" class="form-control">
+                <option value="">All Genres</option>
+                @foreach (var genre in Model.Genres)
+                {
+                    <option value="@genre">@genre</option>
+                }
+            </select>
+        </div>
+        <div class="input-group col-md-4">
+            <input asp-for="SearchTerm" class="form-control">
+        </div>
+    </div>   
 </form>
 
 
