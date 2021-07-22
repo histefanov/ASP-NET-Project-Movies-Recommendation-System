@@ -3,7 +3,7 @@
     public enum MovieSorting
     {
         DateCreated = 0,
-        ReleaseDate = 1,
-        Rating = 2,
+        DateCreatedDescending = 1,
+        DateCreatedAscending = 2,
     }
 }

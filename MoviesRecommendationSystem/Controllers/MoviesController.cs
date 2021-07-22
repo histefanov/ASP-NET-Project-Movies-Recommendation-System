@@ -8,6 +8,7 @@
     using MoviesRecommendationSystem.Data;
     using MoviesRecommendationSystem.Data.Models;
     using MoviesRecommendationSystem.Models.Movies;
+    using MoviesRecommendationSystem.Models.Movies.Enums;
 
     public class MoviesController : Controller
     {
@@ -61,15 +62,15 @@
             return RedirectToAction("Index", "Home");
         }
         
-        public IActionResult All(string selectedGenre, string searchTerm)
+        public IActionResult All([FromQuery]AllMoviesQueryModel query)
         {
             var moviesQuery = this.data.Movies.AsQueryable();
 
-            if (!string.IsNullOrWhiteSpace(selectedGenre))
+            if (!string.IsNullOrWhiteSpace(query.SelectedGenre))
             {
                 var genreId = this.data
                     .Genres
-                    .FirstOrDefault(g => g.Name == selectedGenre)
+                    .FirstOrDefault(g => g.Name == query.SelectedGenre)
                     .Id;
 
                 moviesQuery = moviesQuery
@@ -77,15 +78,25 @@
                         .Any(mg => mg.GenreId == genreId));
             }
 
-            if (!string.IsNullOrWhiteSpace(searchTerm))
+            moviesQuery = query.Sorting switch
+            {
+                MovieSorting.DateCreatedDescending => moviesQuery.OrderByDescending(m => m.ReleaseYear),
+                MovieSorting.DateCreatedAscending => moviesQuery.OrderBy(m => m.ReleaseYear),
+                MovieSorting.DateCreated or _ => moviesQuery.OrderByDescending(m => m.Id),
+            };
+
+            if (!string.IsNullOrWhiteSpace(query.SearchTerm))
             {
                 //TODO: Improve code quality by replacing .ToLower() with another functionality
                 moviesQuery = moviesQuery.Where(m =>
-                    m.Title.ToLower().Contains(searchTerm.ToLower()));
+                    m.Title.ToLower().Contains(query.SearchTerm.ToLower()));
             }
 
+            var totalMoviesCount = moviesQuery.Count();
+
             var movies = moviesQuery
-                .OrderByDescending(m => m.Id)
+                .Skip((query.CurrentPage - 1) * AllMoviesQueryModel.MoviesPerPage)
+                .Take(AllMoviesQueryModel.MoviesPerPage)
                 .Select(m => new MovieListingViewModel
                 {
                     Id = m.Id,
@@ -95,13 +106,12 @@
                     ImageUrl = m.ImageUrl
                 })
                 .ToList();
-            
-            return View(new AllMoviesQueryModel 
-            {
-                Genres = GetGenresAsStrings(),
-                Movies = movies,
-                SearchTerm = searchTerm
-            });
+
+            query.Genres = GetGenresAsStrings();
+            query.Movies = movies;
+            query.TotalMoviesCount = totalMoviesCount;
+
+            return View(query);
         }
 
         private void AddMovieGenres(List<string> genreIds, int movieId)

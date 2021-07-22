@@ -87,3 +87,11 @@ body {
     margin: 10px;
     width: 16.5rem;
 }
+
+.pagination-button {
+    text-align: center;
+    padding: 15px;
+    margin: 0 auto;
+    border: thin solid grey;
+    border-radius: 4px;
+}
