@@ -35,6 +35,12 @@
                 <img class="card-img-top" src="@movie.ImageUrl" alt="@movie.Title (@movie.ReleaseYear)">
             </a>
             <div class="card-body">
+                <p class="genres">
+                    @foreach (var genre in movie.Genres)
+                    {
+                        <span>@genre.ToUpper()</span>
+                    }
+                </p>
                 <a href="#">
                     <h5 class="card-title">@movie.Title, @movie.ReleaseYear</h5>
                 </a>

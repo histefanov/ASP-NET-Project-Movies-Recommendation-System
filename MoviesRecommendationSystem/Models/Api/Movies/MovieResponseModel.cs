@@ -1,9 +1,8 @@
-﻿namespace MoviesRecommendationSystem.Models.Movies
+﻿namespace MoviesRecommendationSystem.Models.Api.Movies
 {
     using System.Collections.Generic;
-    using MoviesRecommendationSystem.Data.Models;
 
-    public class MovieListingViewModel
+    public class MovieResponseModel
     {
         public int Id { get; init; }
 

@@ -7,8 +7,8 @@
     using Microsoft.AspNetCore.Mvc.Rendering;
     using MoviesRecommendationSystem.Data;
     using MoviesRecommendationSystem.Data.Models;
+    using MoviesRecommendationSystem.Models.Enums;
     using MoviesRecommendationSystem.Models.Movies;
-    using MoviesRecommendationSystem.Models.Movies.Enums;
 
     public class MoviesController : Controller
     {
@@ -103,7 +103,10 @@
                     Title = m.Title,
                     ReleaseYear = m.ReleaseYear,
                     Plot = m.Plot,
-                    ImageUrl = m.ImageUrl
+                    ImageUrl = m.ImageUrl,
+                    Genres = m.MovieGenres
+                                 .Select(mg => mg.Genre.Name)
+                                 .ToList()
                 })
                 .ToList();
 

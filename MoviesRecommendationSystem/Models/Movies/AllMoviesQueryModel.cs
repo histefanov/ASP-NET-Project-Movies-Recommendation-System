@@ -1,8 +1,8 @@
 ﻿namespace MoviesRecommendationSystem.Models.Movies
 {
-    using MoviesRecommendationSystem.Models.Movies.Enums;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using MoviesRecommendationSystem.Models.Enums;
 
     public class AllMoviesQueryModel
     {

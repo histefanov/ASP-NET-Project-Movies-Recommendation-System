@@ -95,3 +95,22 @@ body {
     border: thin solid grey;
     border-radius: 4px;
 }
+
+.jumbotron {
+    background-image: url("https://wallpapercave.com/wp/2wuJNqK.jpg");
+    background-size: cover;
+}
+
+#total-movies, 
+#total-genres,
+#total-actors,
+#total-directors {
+    color: whitesmoke; 
+    font-weight: 300;
+}
+
+.genres > span {
+    font-size: smaller;
+    color: dimgrey;
+    text-decoration: underline;
+}

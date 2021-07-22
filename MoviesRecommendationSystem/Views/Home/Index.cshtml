@@ -1,4 +1,6 @@
-﻿@{
+﻿@model IndexViewModel
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -6,3 +8,39 @@
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
+
+<div class="row mt-5">
+    <div class="col-12 text-center">
+        <button class="btn btn-primary" id="statistics-button">Collection Statistics</button>
+    </div>
+</div>
+
+<h1 class="text-center d-none" style="margin: 35px" id="statistics-title">
+    Currently in our collection:
+</h1>
+
+<div class="jumbotron d-none" id="statistics-jumbotron">
+    <div class="row">
+        <h2 class="col-md-3 text-center" id="total-movies"></h2>
+        <h2 class="col-md-3 text-center" id="total-genres"></h2>
+        <h2 class="col-md-3 text-center" id="total-actors"></h2>
+        <h2 class="col-md-3 text-center" id="total-directors"></h2>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $('#statistics-button').on('click', ev => {
+            $.get('/api/statistics', (data) => {
+                $('#total-movies').text(data.totalMovies + " movies")
+                $('#total-genres').text("throughout " + data.totalGenres + " Genres")
+                $('#total-actors').text("starring " + data.totalActors + " Actors")
+                $('#total-directors').text("guided by " + data.totalDirectors + " Directors")
+            });
+
+            $('#statistics-title').removeClass('d-none');
+            $('#statistics-jumbotron').removeClass('d-none');
+            $('#statistics-button').hide();
+        });
+    </script>
+}
