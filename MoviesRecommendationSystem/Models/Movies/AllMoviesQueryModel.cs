@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using MoviesRecommendationSystem.Models.Enums;
+    using MoviesRecommendationSystem.Services.Movies.Models;
 
     public class AllMoviesQueryModel
     {
@@ -21,6 +22,6 @@
 
         public IEnumerable<string> Genres { get; set; }
 
-        public IEnumerable<MovieListingViewModel> Movies { get; set; }
+        public IEnumerable<MovieServiceModel> Movies { get; set; }
     }
 }

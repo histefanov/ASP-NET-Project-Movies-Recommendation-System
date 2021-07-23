@@ -9,6 +9,7 @@ namespace MoviesRecommendationSystem
     using Microsoft.Extensions.Hosting;
     using MoviesRecommendationSystem.Data;
     using MoviesRecommendationSystem.Infrastructure;
+    using MoviesRecommendationSystem.Services.Movies;
     using MoviesRecommendationSystem.Services.Statistics;
 
     public class Startup
@@ -39,6 +40,7 @@ namespace MoviesRecommendationSystem
             services.AddControllersWithViews();
 
             services.AddTransient<IStatisticsService, StatisticsService>();
+            services.AddTransient<IMoviesService, MoviesService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

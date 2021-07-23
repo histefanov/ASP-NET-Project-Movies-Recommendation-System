@@ -11,16 +11,10 @@
 
     public class HomeController : Controller
     {
-        private readonly MoviesRecommendationDbContext data;
         private readonly IStatisticsService statistics;
 
-        public HomeController(
-            MoviesRecommendationDbContext data,
-            IStatisticsService statistics)
-        {
-            this.data = data;
-            this.statistics = statistics;
-        }
+        public HomeController(IStatisticsService statistics) 
+            => this.statistics = statistics;
 
         public IActionResult Index()
         {

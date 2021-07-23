@@ -9,13 +9,18 @@
     using MoviesRecommendationSystem.Data.Models;
     using MoviesRecommendationSystem.Models.Enums;
     using MoviesRecommendationSystem.Models.Movies;
+    using MoviesRecommendationSystem.Services.Movies;
 
     public class MoviesController : Controller
     {
         private readonly MoviesRecommendationDbContext data;
+        private readonly IMoviesService moviesService;
 
-        public MoviesController(MoviesRecommendationDbContext data) 
-            => this.data = data;
+        public MoviesController(MoviesRecommendationDbContext data, IMoviesService moviesService)
+        {
+            this.data = data;
+            this.moviesService = moviesService;
+        }
 
         public IActionResult Add()
         {
@@ -61,58 +66,22 @@
 
             return RedirectToAction("Index", "Home");
         }
-        
-        public IActionResult All([FromQuery]AllMoviesQueryModel query)
+
+        public IActionResult All([FromQuery] AllMoviesQueryModel query)
         {
-            var moviesQuery = this.data.Movies.AsQueryable();
+            var queryResult = this.moviesService.All(
+                query.SelectedGenre,
+                query.SearchTerm,
+                query.Sorting,
+                query.CurrentPage,
+                AllMoviesQueryModel.MoviesPerPage);
 
-            if (!string.IsNullOrWhiteSpace(query.SelectedGenre))
-            {
-                var genreId = this.data
-                    .Genres
-                    .FirstOrDefault(g => g.Name == query.SelectedGenre)
-                    .Id;
+            query.Genres = this.moviesService
+                .AllGenres()
+                .Select(g => g.Name);
 
-                moviesQuery = moviesQuery
-                    .Where(m => m.MovieGenres
-                        .Any(mg => mg.GenreId == genreId));
-            }
-
-            moviesQuery = query.Sorting switch
-            {
-                MovieSorting.DateCreatedDescending => moviesQuery.OrderByDescending(m => m.ReleaseYear),
-                MovieSorting.DateCreatedAscending => moviesQuery.OrderBy(m => m.ReleaseYear),
-                MovieSorting.DateCreated or _ => moviesQuery.OrderByDescending(m => m.Id),
-            };
-
-            if (!string.IsNullOrWhiteSpace(query.SearchTerm))
-            {
-                //TODO: Improve code quality by replacing .ToLower() with another functionality
-                moviesQuery = moviesQuery.Where(m =>
-                    m.Title.ToLower().Contains(query.SearchTerm.ToLower()));
-            }
-
-            var totalMoviesCount = moviesQuery.Count();
-
-            var movies = moviesQuery
-                .Skip((query.CurrentPage - 1) * AllMoviesQueryModel.MoviesPerPage)
-                .Take(AllMoviesQueryModel.MoviesPerPage)
-                .Select(m => new MovieListingViewModel
-                {
-                    Id = m.Id,
-                    Title = m.Title,
-                    ReleaseYear = m.ReleaseYear,
-                    Plot = m.Plot,
-                    ImageUrl = m.ImageUrl,
-                    Genres = m.MovieGenres
-                                 .Select(mg => mg.Genre.Name)
-                                 .ToList()
-                })
-                .ToList();
-
-            query.Genres = GetGenresAsStrings();
-            query.Movies = movies;
-            query.TotalMoviesCount = totalMoviesCount;
+            query.TotalMoviesCount = queryResult.TotalMovies;
+            query.Movies = queryResult.Movies;
 
             return View(query);
         }
@@ -159,29 +128,29 @@
             {
                 var actor = actorsArray[i].Trim();
 
-                string
-                    firstName,
-                    middleName,
-                    lastName;
-
                 var actorNames = actor.Split();
+
+                string
+                    firstName = actorNames[0],
+                    middleName = null,
+                    lastName;
 
                 if (actorNames.Length == 2)
                 {
-                    firstName = actorNames[0];
-                    middleName = null;
                     lastName = actorNames[1];
                 }
                 else if (actorNames.Length == 3)
                 {
-                    firstName = actorNames[0];
                     middleName = actorNames[1];
                     lastName = actorNames[2];
+                }
+                else if (actorNames.Length > 3)
+                {
+                    lastName = actorNames[actorNames.Length - 1];
                 }
                 else
                 {
                     continue;
-                    //TODO: Extend functionality
                 }
 
                 if (!this.data.Actors.Any(a =>

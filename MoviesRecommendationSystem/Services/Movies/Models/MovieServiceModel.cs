@@ -1,9 +1,8 @@
-﻿namespace MoviesRecommendationSystem.Models.Movies
+﻿namespace MoviesRecommendationSystem.Services.Movies.Models
 {
     using System.Collections.Generic;
-    using MoviesRecommendationSystem.Data.Models;
-
-    public class MovieListingViewModel
+    
+    public class MovieServiceModel
     {
         public int Id { get; init; }
 
