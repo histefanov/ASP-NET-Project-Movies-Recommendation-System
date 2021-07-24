@@ -28,8 +28,10 @@
         public class Person
         {
             public const int FullNameMinLength = 4;
+            public const int FirstNameMinLength = 1;
             public const int FirstNameMaxLength = 50;
             public const int MiddleNameMaxLength = 50;
+            public const int LastNameMinLength = 1;
             public const int LastNameMaxLength = 50;
             public const int EditorMinAge = 16;
             public const int EditorMaxAge = 100;

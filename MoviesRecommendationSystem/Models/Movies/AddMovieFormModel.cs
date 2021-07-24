@@ -3,7 +3,8 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
-    using static Data.DataConstants;
+    using static Data.DataConstants.Movie;
+    using static Data.DataConstants.Person;
 
     public class AddMovieFormModel
     {       

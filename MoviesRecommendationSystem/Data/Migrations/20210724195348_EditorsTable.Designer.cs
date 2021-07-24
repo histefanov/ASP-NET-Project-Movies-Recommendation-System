@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MoviesRecommendationSystem.Data;
 
 namespace MoviesRecommendationSystem.Data.Migrations
 {
     [DbContext(typeof(MoviesRecommendationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210724195348_EditorsTable")]
+    partial class EditorsTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -301,7 +303,7 @@ namespace MoviesRecommendationSystem.Data.Migrations
 
                     b.HasIndex("UserId1");
 
-                    b.ToTable("Editors");
+                    b.ToTable("Editor");
                 });
 
             modelBuilder.Entity("MoviesRecommendationSystem.Data.Models.Genre", b =>

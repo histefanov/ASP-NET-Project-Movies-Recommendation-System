@@ -13,15 +13,14 @@
         public int Id { get; set; }
 
         [Required]
-        [StringLength(FirstNameMaxLength)]
+        [MaxLength(FirstNameMaxLength)]
         public string FirstName { get; set; }
 
         [Required]
-        [StringLength(LastNameMaxLength)]
+        [MaxLength(LastNameMaxLength)]
         public string LastName { get; set; }
 
         [Required]
-        [BirthDate(ErrorMessage = "Your age must be between 16 and 100 years old.")]
         public DateTime BirthDate { get; set; }
 
         [Required]

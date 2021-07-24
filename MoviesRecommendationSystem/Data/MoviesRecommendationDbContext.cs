@@ -16,6 +16,8 @@
 
         public DbSet<Director> Directors { get; init; }
 
+        public DbSet<Editor> Editors { get; init; }
+
         public DbSet<Genre> Genres { get; init; }
 
         public DbSet<Movie> Movies { get; init; }
@@ -35,12 +37,14 @@
             builder.Entity<Editor>()
                 .HasOne<IdentityUser>()
                 .WithOne()
-                .HasForeignKey<Editor>(e => e.UserId);
+                .HasForeignKey<Editor>(e => e.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder.Entity<Movie>()
                 .HasOne(m => m.Editor)
                 .WithMany(e => e.Movies)
-                .HasForeignKey(m => m.EditorId);
+                .HasForeignKey(m => m.EditorId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder.Entity<Movie>()
                 .HasOne(x => x.Director)

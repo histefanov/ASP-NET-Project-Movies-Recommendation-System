@@ -3,10 +3,12 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using MoviesRecommendationSystem.Data;
     using MoviesRecommendationSystem.Data.Models;
+    using MoviesRecommendationSystem.Infrastructure;
     using MoviesRecommendationSystem.Models.Enums;
     using MoviesRecommendationSystem.Models.Movies;
     using MoviesRecommendationSystem.Services.Movies;
@@ -22,16 +24,32 @@
             this.moviesService = moviesService;
         }
 
+        [Authorize]
         public IActionResult Add()
         {
+            if (!this.UserIsEditor())
+            {
+                return RedirectToAction(nameof(HomeController.Index), "Home");
+            }
+
             this.PrepareViewBagGenres();
 
             return View(new AddMovieFormModel());
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult Add(AddMovieFormModel movie)
         {
+            var editor = this.data
+                .Editors
+                .FirstOrDefault(e => e.UserId == this.User.GetId());
+
+            if (editor == null)
+            {
+                return RedirectToAction(nameof(HomeController.Index), "Home");
+            }
+
             if (!ModelState.IsValid)
             {
                 this.PrepareViewBagGenres();
@@ -48,7 +66,8 @@
                 Language = movie.Language,
                 ImageUrl = movie.ImageUrl,
                 DirectorId = this.GetDirectorId(movie.Director),
-                Studio = movie.Studio
+                Studio = movie.Studio,
+                EditorId = editor.Id
             };
 
             this.data.Movies.Add(movieData);
@@ -234,5 +253,11 @@
                 data.SaveChanges();
             }
         }
+
+        private bool UserIsEditor()
+            => this.data
+                .Editors
+                .Any(e => e.UserId == this.User.GetId());
+
     }
 }

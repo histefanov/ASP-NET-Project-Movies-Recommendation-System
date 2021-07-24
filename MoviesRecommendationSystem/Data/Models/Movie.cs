@@ -42,7 +42,7 @@
         [MaxLength(StudioNameMaxLength)]
         public string Studio { get; set; }
 
-        public int EditorId { get; set; }
+        public int? EditorId { get; set; }
 
         public Editor Editor { get; init; }
       

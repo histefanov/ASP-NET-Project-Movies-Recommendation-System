@@ -2,9 +2,7 @@
 {
 
     using System.Diagnostics;
-    using System.Linq;
     using Microsoft.AspNetCore.Mvc;
-    using MoviesRecommendationSystem.Data;
     using MoviesRecommendationSystem.Models;
     using MoviesRecommendationSystem.Models.Home;
     using MoviesRecommendationSystem.Services.Statistics;
