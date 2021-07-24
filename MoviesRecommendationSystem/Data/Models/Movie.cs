@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
-    using static DataConstants;
+    using static DataConstants.Movie;
 
     public class Movie
     {
@@ -41,6 +41,10 @@
         [Required]
         [MaxLength(StudioNameMaxLength)]
         public string Studio { get; set; }
+
+        public int EditorId { get; set; }
+
+        public Editor Editor { get; init; }
       
         public ICollection<MovieGenre> MovieGenres { get; init; } = new HashSet<MovieGenre>();
 

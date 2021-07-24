@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
-    using static DataConstants;
+    using static DataConstants.Movie;
 
     public class Series
     {
@@ -14,14 +14,13 @@
         [MaxLength(TitleMaxLength)]
         public string Title { get; set; }
 
-        [Required]
         [Range(YearMinValue, YearMaxValue)]
         public int ReleaseYear { get; set; }
-
+        
+        // Make EndYear nullable and migrate
         [Range(YearMinValue, YearMaxValue)]
         public int EndYear { get; set; }
 
-        [Required]
         [Range(SeasonCountMinValue, SeasonCountMaxValue)]
         public int SeasonCount { get; set; }
 

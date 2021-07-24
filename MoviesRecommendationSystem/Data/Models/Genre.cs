@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
-    using static DataConstants;
+    using static DataConstants.Genre;
 
     public class Genre
     {
@@ -11,7 +11,7 @@
         public int Id { get; init; }
 
         [Required]
-        [MaxLength(GenreNameMaxLength)]
+        [MaxLength(NameMaxLength)]
         public string Name { get; set; }
 
         public ICollection<MovieGenre> MovieGenres { get; init; } = new HashSet<MovieGenre>();

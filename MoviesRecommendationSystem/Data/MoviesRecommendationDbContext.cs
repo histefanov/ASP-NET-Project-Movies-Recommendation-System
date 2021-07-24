@@ -1,5 +1,6 @@
 ﻿namespace MoviesRecommendationSystem.Data
 {
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
     using MoviesRecommendationSystem.Data.Models;
@@ -31,6 +32,16 @@
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.Entity<Editor>()
+                .HasOne<IdentityUser>()
+                .WithOne()
+                .HasForeignKey<Editor>(e => e.UserId);
+
+            builder.Entity<Movie>()
+                .HasOne(m => m.Editor)
+                .WithMany(e => e.Movies)
+                .HasForeignKey(m => m.EditorId);
+
             builder.Entity<Movie>()
                 .HasOne(x => x.Director)
                 .WithMany(x => x.Movies)
