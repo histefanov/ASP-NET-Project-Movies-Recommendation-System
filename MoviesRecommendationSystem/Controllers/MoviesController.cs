@@ -9,7 +9,6 @@
     using MoviesRecommendationSystem.Data;
     using MoviesRecommendationSystem.Data.Models;
     using MoviesRecommendationSystem.Infrastructure;
-    using MoviesRecommendationSystem.Models.Enums;
     using MoviesRecommendationSystem.Models.Movies;
     using MoviesRecommendationSystem.Services.Movies;
 
@@ -103,6 +102,12 @@
             query.Movies = queryResult.Movies;
 
             return View(query);
+        }
+
+        [Authorize]
+        public IActionResult EditorContributions()
+        {
+            return View();
         }
 
         private void AddMovieGenres(List<string> genreIds, int movieId)

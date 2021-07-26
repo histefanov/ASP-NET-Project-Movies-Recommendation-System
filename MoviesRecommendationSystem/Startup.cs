@@ -3,12 +3,14 @@ namespace MoviesRecommendationSystem
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
     using MoviesRecommendationSystem.Data;
     using MoviesRecommendationSystem.Infrastructure;
+    using MoviesRecommendationSystem.Services.Editors;
     using MoviesRecommendationSystem.Services.Movies;
     using MoviesRecommendationSystem.Services.Statistics;
 
@@ -30,6 +32,7 @@ namespace MoviesRecommendationSystem
             services
                 .AddDefaultIdentity<IdentityUser>(options =>
                 {
+                    options.SignIn.RequireConfirmedAccount = false;
                     options.Password.RequireDigit = false;
                     options.Password.RequireLowercase = false;
                     options.Password.RequireUppercase = false;
@@ -37,10 +40,14 @@ namespace MoviesRecommendationSystem
                 })
                 .AddEntityFrameworkStores<MoviesRecommendationDbContext>();
 
-            services.AddControllersWithViews();
+            services.AddControllersWithViews(options => 
+            {
+                options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
+            });
 
-            services.AddTransient<IStatisticsService, StatisticsService>();
             services.AddTransient<IMoviesService, MoviesService>();
+            services.AddTransient<IEditorsService, EditorsService>();
+            services.AddTransient<IStatisticsService, StatisticsService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

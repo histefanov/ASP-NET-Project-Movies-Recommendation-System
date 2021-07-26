@@ -1,13 +1,28 @@
 ﻿@using Microsoft.AspNetCore.Identity
+@using MoviesRecommendationSystem.Services.Editors
+
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
+@inject IEditorsService Editors
 
 <ul class="navbar-nav">
     @if (SignInManager.IsSignedIn(User))
     {
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-controller="Editors" asp-action="Create">Become Editor</a>
-        </li>
+        var userIsEditor = Editors.UserIsEditor(User.GetId());
+
+        if (userIsEditor)
+        {
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-controller="Movies" asp-action="Mine">Contributions</a>
+            </li>
+        }
+        else
+        {
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-controller="Editors" asp-action="Create">Become Editor</a>
+            </li>
+        }
+
         <li class="nav-item">
             <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Profile</a>
         </li>
