@@ -2,8 +2,8 @@
 {
     using System.Collections.Generic;
     using MoviesRecommendationSystem.Models.Enums;
+    using MoviesRecommendationSystem.Models.Movies;
     using MoviesRecommendationSystem.Services.Movies.Models;
-    using MoviesRecommendationSystem.Services.Movies.Models.Genres;
 
     public interface IMoviesService
     {
@@ -14,6 +14,8 @@
             int currentPage,
             int moviesPerPage);
 
-        IEnumerable<GenreServiceModel> AllGenres();
+        IEnumerable<MovieServiceModel> ByUser(string userId);
+
+        IEnumerable<MovieGenreServiceModel> AllGenres();
     }
 }

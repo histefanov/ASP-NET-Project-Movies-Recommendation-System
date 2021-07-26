@@ -114,3 +114,7 @@ body {
     color: dimgrey;
     text-decoration: underline;
 }
+
+#movie-buttons {
+    margin: 0 auto;
+}

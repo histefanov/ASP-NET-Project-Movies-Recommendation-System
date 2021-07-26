@@ -10,35 +10,41 @@
     using MoviesRecommendationSystem.Data.Models;
     using MoviesRecommendationSystem.Infrastructure;
     using MoviesRecommendationSystem.Models.Movies;
+    using MoviesRecommendationSystem.Services.Editors;
     using MoviesRecommendationSystem.Services.Movies;
 
     public class MoviesController : Controller
     {
         private readonly MoviesRecommendationDbContext data;
         private readonly IMoviesService moviesService;
+        private readonly IEditorsService editorsService;
 
-        public MoviesController(MoviesRecommendationDbContext data, IMoviesService moviesService)
+        public MoviesController(
+            MoviesRecommendationDbContext data, 
+            IMoviesService moviesService, 
+            IEditorsService editorsService)
         {
             this.data = data;
             this.moviesService = moviesService;
+            this.editorsService = editorsService;
         }
 
         [Authorize]
         public IActionResult Add()
         {
-            if (!this.UserIsEditor())
+            if (!this.editorsService.UserIsEditor(this.User.GetId()))
             {
                 return RedirectToAction(nameof(HomeController.Index), "Home");
             }
 
             this.PrepareViewBagGenres();
 
-            return View(new AddMovieFormModel());
+            return View(new MovieFormModel());
         }
 
         [HttpPost]
         [Authorize]
-        public IActionResult Add(AddMovieFormModel movie)
+        public IActionResult Add(MovieFormModel movie)
         {
             var editor = this.data
                 .Editors
@@ -85,6 +91,12 @@
             return RedirectToAction("Index", "Home");
         }
 
+        [Authorize]
+        public IActionResult Edit(int id)
+        {
+            return View();
+        }
+
         public IActionResult All([FromQuery] AllMoviesQueryModel query)
         {
             var queryResult = this.moviesService.All(
@@ -107,7 +119,10 @@
         [Authorize]
         public IActionResult EditorContributions()
         {
-            return View();
+            var contributions = this.moviesService
+                .ByUser(this.User.GetId());
+
+            return View(contributions);
         }
 
         private void AddMovieGenres(List<string> genreIds, int movieId)
@@ -128,7 +143,7 @@
 
         private void PrepareViewBagGenres()
         {
-            var genres = this.GetMovieGenres();
+            var genres = this.moviesService.AllGenres();
 
             var viewBagGenres = new List<SelectListItem>();
 
@@ -212,23 +227,6 @@
             }
         }
 
-        private IEnumerable<MovieGenreViewModel> GetMovieGenres()
-            => this.data.Genres
-                   .Select(g => new MovieGenreViewModel
-                   {
-                       Id = g.Id,
-                       Name = g.Name
-                   })
-                   .OrderBy(g => g.Name)
-                   .ToList();
-
-        private IEnumerable<string> GetGenresAsStrings()
-            => this.data
-                .Genres
-                .Select(g => g.Name)
-                .OrderBy(n => n)
-                .ToList();
-
         private int GetDirectorId(string director)
         {
             var directorNameParts = director.Split();
@@ -258,11 +256,5 @@
                 data.SaveChanges();
             }
         }
-
-        private bool UserIsEditor()
-            => this.data
-                .Editors
-                .Any(e => e.UserId == this.User.GetId());
-
     }
 }

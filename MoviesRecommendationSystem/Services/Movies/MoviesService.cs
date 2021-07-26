@@ -3,9 +3,10 @@
     using System.Collections.Generic;
     using System.Linq;
     using MoviesRecommendationSystem.Data;
+    using MoviesRecommendationSystem.Data.Models;
     using MoviesRecommendationSystem.Models.Enums;
+    using MoviesRecommendationSystem.Models.Movies;
     using MoviesRecommendationSystem.Services.Movies.Models;
-    using MoviesRecommendationSystem.Services.Movies.Models.Genres;
 
     public class MoviesService : IMoviesService
     {
@@ -50,9 +51,37 @@
 
             var totalMoviesCount = moviesQuery.Count();
 
-            var movies = moviesQuery
-                .Skip((currentPage - 1) * moviesPerPage)
-                .Take(moviesPerPage)
+            var movies = GetMovies(
+                 moviesQuery
+                    .Skip((currentPage - 1) * moviesPerPage)
+                    .Take(moviesPerPage));
+
+            return new MovieQueryServiceModel
+            {
+                TotalMovies = totalMoviesCount,
+                CurrentPage = currentPage,
+                MoviesPerPage = moviesPerPage,
+                Movies = movies
+            };
+        }
+
+        public IEnumerable<MovieGenreServiceModel> AllGenres()
+            => this.data.Genres
+                   .Select(g => new MovieGenreServiceModel
+                   {
+                       Id = g.Id,
+                       Name = g.Name
+                   })
+                   .OrderBy(g => g.Name)
+                   .ToList();
+
+        public IEnumerable<MovieServiceModel> ByUser(string userId)
+            => this.GetMovies(this.data
+                .Movies
+                .Where(m => m.Editor.UserId == userId));
+
+        private IEnumerable<MovieServiceModel> GetMovies(IQueryable<Movie> movieQuery)
+            => movieQuery
                 .Select(m => new MovieServiceModel
                 {
                     Id = m.Id,
@@ -65,24 +94,5 @@
                                 .ToList()
                 })
                 .ToList();
-
-            return new MovieQueryServiceModel
-            {
-                TotalMovies = totalMoviesCount,
-                CurrentPage = currentPage,
-                MoviesPerPage = moviesPerPage,
-                Movies = movies
-            };
-        }
-
-        public IEnumerable<GenreServiceModel> AllGenres()
-            => this.data.Genres
-                   .Select(g => new GenreServiceModel
-                   {
-                       Id = g.Id,
-                       Name = g.Name
-                   })
-                   .OrderBy(g => g.Name)
-                   .ToList();
     }
 }

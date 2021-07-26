@@ -1,0 +1,15 @@
+﻿@model IEnumerable<MovieServiceModel>
+
+@{ 
+    ViewBag.Title = "My Contributions";
+    ViewBag.AllowEdit = true;
+}
+
+@if (!Model.Any())
+{
+    <h2>Currently you do not have any movie contributions. Why not add one?</h2>
+}
+
+<partial name="_MoviesPartial" model="@Model" />
+
+

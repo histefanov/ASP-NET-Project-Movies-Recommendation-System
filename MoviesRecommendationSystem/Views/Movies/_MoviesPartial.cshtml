@@ -1,0 +1,31 @@
+﻿@model IEnumerable<MovieServiceModel>
+
+<div class="row">
+    @foreach (var movie in Model)
+    {
+        <div class="card">
+            <a href="#">
+                <img class="card-img-top" src="@movie.ImageUrl" alt="@movie.Title (@movie.ReleaseYear)">
+            </a>
+            <div class="card-body">
+                <p class="genres">
+                    @foreach (var genre in movie.Genres)
+                    {
+                        <span>@genre.ToUpper()</span>
+                    }
+                </p>
+                <a href="#">
+                    <h5 class="card-title">@movie.Title, @movie.ReleaseYear</h5>
+                </a>
+                <p class="card-text">@movie.Plot</p>
+                @if (ViewBag.AllowEdit == true)
+                {
+                    <div class="row" id="movie-buttons">
+                        <a asp-controller="Movies" asp-action="Edit" asp-route-id="@movie.Id" class="btn btn-outline-dark">Edit</a>
+                        <a asp-controller="Movies" asp-action="Delete" asp-route-id="@movie.Id" class="btn btn-danger">Delete</a>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+</div>
