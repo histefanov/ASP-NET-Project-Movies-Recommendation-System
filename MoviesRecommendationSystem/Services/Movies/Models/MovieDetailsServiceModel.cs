@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace MoviesRecommendationSystem.Services.Movies.Models
+﻿namespace MoviesRecommendationSystem.Services.Movies.Models
 {
-    public class MovieDetailsServiceModel
+    public class MovieDetailsServiceModel : MovieServiceModel
     {
+        public int EditorId { get; set; }
+
+        public string EditorName { get; set; }
+
+        public string UserId { get; set; }
     }
 }

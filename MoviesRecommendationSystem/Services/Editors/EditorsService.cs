@@ -14,5 +14,12 @@
             => this.data
                    .Editors
                    .Any(e => e.UserId == userId);
+
+        public int GetIdByUser(string userId)
+            => this.data
+                .Editors
+                .Where(e => e.UserId == userId)
+                .Select(e => e.Id)
+                .FirstOrDefault();
     }
 }

@@ -6,7 +6,7 @@
     using static Data.DataConstants.Movie;
     using static Data.DataConstants.Person;
 
-    public class AddMovieFormModel
+    public class MovieFormModel
     {       
         [Required]
         [StringLength(TitleMaxLength, MinimumLength = TitleMinLength)]
@@ -63,6 +63,6 @@
         public string StarringActors { get; set; }
 
         [Required(ErrorMessage = "At least one genre selection is required.")]
-        public List<string> Genres { get; set; }
+        public List<string> GenreIds { get; set; }
     }
 }

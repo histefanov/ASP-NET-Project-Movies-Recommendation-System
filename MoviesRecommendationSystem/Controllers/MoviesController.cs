@@ -46,13 +46,21 @@
         [Authorize]
         public IActionResult Add(MovieFormModel movie)
         {
-            var editor = this.data
-                .Editors
-                .FirstOrDefault(e => e.UserId == this.User.GetId());
+            var editorId = this.editorsService.GetIdByUser(User.GetId());
 
-            if (editor == null)
+            if (editorId == 0)
             {
                 return RedirectToAction(nameof(HomeController.Index), "Home");
+            }
+
+            //TODO: Limit the number of genres a movie can have
+
+            foreach (var genreId in movie.GenreIds)
+            {
+                if (!this.moviesService.GenreExists(int.Parse(genreId)))
+                {
+                    this.ModelState.AddModelError(nameof(genreId), $"Genre '{genreId}' does not exist.");
+                }
             }
 
             if (!ModelState.IsValid)
@@ -62,31 +70,18 @@
                 return View(movie);
             }
 
-            var movieData = new Movie
-            {
-                Title = movie.Title,
-                ReleaseYear = (int)movie.ReleaseYear,
-                Runtime = (int)movie.Runtime,
-                Plot = movie.Plot,
-                Language = movie.Language,
-                ImageUrl = movie.ImageUrl,
-                DirectorId = this.GetDirectorId(movie.Director),
-                Studio = movie.Studio,
-                EditorId = editor.Id
-            };
-
-            this.data.Movies.Add(movieData);
-
-            this.data.SaveChanges();
-
-            var movieId = this.data
-                .Movies
-                .FirstOrDefault(m => m.Title == movie.Title)
-                .Id;
-
-            this.AddActors(movie.StarringActors, movieId);
-
-            this.AddMovieGenres(movie.Genres, movieId);
+            this.moviesService.Create(
+                movie.Title,
+                (int)movie.ReleaseYear,
+                (int)movie.Runtime,
+                movie.Plot,
+                movie.Language,
+                movie.ImageUrl,
+                movie.Director,
+                movie.Studio,
+                movie.StarringActors,
+                movie.GenreIds,
+                editorId);
 
             return RedirectToAction("Index", "Home");
         }
