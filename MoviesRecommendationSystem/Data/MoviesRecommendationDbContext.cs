@@ -1,11 +1,10 @@
 ﻿namespace MoviesRecommendationSystem.Data
 {
-    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
     using MoviesRecommendationSystem.Data.Models;
 
-    public class MoviesRecommendationDbContext : IdentityDbContext
+    public class MoviesRecommendationDbContext : IdentityDbContext<User>
     {
         public MoviesRecommendationDbContext(DbContextOptions<MoviesRecommendationDbContext> options)
             : base(options)
@@ -35,7 +34,7 @@
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<Editor>()
-                .HasOne<IdentityUser>()
+                .HasOne<User>()
                 .WithOne()
                 .HasForeignKey<Editor>(e => e.UserId)
                 .OnDelete(DeleteBehavior.Restrict);

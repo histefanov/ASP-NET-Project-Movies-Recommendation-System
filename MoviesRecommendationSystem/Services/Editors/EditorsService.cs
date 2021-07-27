@@ -15,7 +15,7 @@
                    .Editors
                    .Any(e => e.UserId == userId);
 
-        public int GetIdByUser(string userId)
+        public int IdByUser(string userId)
             => this.data
                 .Editors
                 .Where(e => e.UserId == userId)

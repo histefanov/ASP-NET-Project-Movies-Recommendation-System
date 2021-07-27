@@ -4,6 +4,6 @@
     {
         bool UserIsEditor(string userId);
 
-        int GetIdByUser(string userId);
+        int IdByUser(string userId);
     }
 }

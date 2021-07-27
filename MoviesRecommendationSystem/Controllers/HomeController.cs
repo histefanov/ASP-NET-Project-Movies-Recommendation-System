@@ -1,6 +1,5 @@
 ﻿namespace MoviesRecommendationSystem.Controllers
 {
-
     using System.Diagnostics;
     using Microsoft.AspNetCore.Mvc;
     using MoviesRecommendationSystem.Models;

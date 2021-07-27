@@ -9,6 +9,7 @@ namespace MoviesRecommendationSystem
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
     using MoviesRecommendationSystem.Data;
+    using MoviesRecommendationSystem.Data.Models;
     using MoviesRecommendationSystem.Infrastructure;
     using MoviesRecommendationSystem.Services.Editors;
     using MoviesRecommendationSystem.Services.Movies;
@@ -30,7 +31,7 @@ namespace MoviesRecommendationSystem
             services.AddDatabaseDeveloperPageExceptionFilter();
 
             services
-                .AddDefaultIdentity<IdentityUser>(options =>
+                .AddDefaultIdentity<User>(options =>
                 {
                     options.SignIn.RequireConfirmedAccount = false;
                     options.Password.RequireDigit = false;
@@ -38,6 +39,7 @@ namespace MoviesRecommendationSystem
                     options.Password.RequireUppercase = false;
                     options.Password.RequireNonAlphanumeric = false;
                 })
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<MoviesRecommendationDbContext>();
 
             services.AddControllersWithViews(options => 

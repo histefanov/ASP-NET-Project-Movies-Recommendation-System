@@ -1,7 +1,5 @@
 ﻿namespace MoviesRecommendationSystem.Data.Models
 {
-    using Microsoft.AspNetCore.Identity;
-    using MoviesRecommendationSystem.Data.Models.ValidationAttributes;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -26,7 +24,7 @@
         [Required]
         public string UserId { get; set; }
 
-        public IdentityUser User { get; set; }
+        public User User { get; set; }
 
         public IEnumerable<Movie> Movies { get; init; } = new List<Movie>();
     }

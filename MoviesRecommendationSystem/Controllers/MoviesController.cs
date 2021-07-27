@@ -44,14 +44,14 @@
         [Authorize]
         public IActionResult Add(MovieFormModel movie)
         {
-            var editorId = this.editorsService.GetIdByUser(User.GetId());
+            var editorId = this.editorsService.IdByUser(User.GetId());
 
             if (editorId == 0)
             {
                 return RedirectToAction(nameof(HomeController.Index), "Home");
             }
 
-            //TODO: Limit the number of genres a movie can have
+            //TODO: Limit the number of genres a movie can have and fix the NullReferenceException for the null genre collection
 
             foreach (var genreId in movie.GenreIds)
             {
@@ -126,7 +126,7 @@
         [Authorize]
         public IActionResult Edit(int id, MovieFormModel movie)
         {
-            var editorId = this.editorsService.GetIdByUser(User.GetId());
+            var editorId = this.editorsService.IdByUser(User.GetId());
 
             if (editorId == 0)
             {
