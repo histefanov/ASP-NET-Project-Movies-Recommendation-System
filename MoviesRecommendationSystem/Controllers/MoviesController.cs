@@ -6,25 +6,21 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
-    using MoviesRecommendationSystem.Data;
-    using MoviesRecommendationSystem.Data.Models;
     using MoviesRecommendationSystem.Infrastructure;
     using MoviesRecommendationSystem.Models.Movies;
     using MoviesRecommendationSystem.Services.Editors;
     using MoviesRecommendationSystem.Services.Movies;
+    using MoviesRecommendationSystem.Services.Movies.Models;
 
     public class MoviesController : Controller
     {
-        private readonly MoviesRecommendationDbContext data;
         private readonly IMoviesService moviesService;
         private readonly IEditorsService editorsService;
 
         public MoviesController(
-            MoviesRecommendationDbContext data, 
             IMoviesService moviesService, 
             IEditorsService editorsService)
         {
-            this.data = data;
             this.moviesService = moviesService;
             this.editorsService = editorsService;
         }
@@ -37,7 +33,9 @@
                 return RedirectToAction(nameof(HomeController.Index), "Home");
             }
 
-            this.PrepareViewBagGenres();
+            var genres = this.moviesService.AllGenres();
+
+            this.PrepareViewBagGenres(genres);
 
             return View(new MovieFormModel());
         }
@@ -65,7 +63,9 @@
 
             if (!ModelState.IsValid)
             {
-                this.PrepareViewBagGenres();
+                var genres = this.moviesService.AllGenres();
+
+                this.PrepareViewBagGenres(genres);
 
                 return View(movie);
             }
@@ -89,7 +89,36 @@
         [Authorize]
         public IActionResult Edit(int id)
         {
-            return View();
+            var userId = this.User.GetId();
+
+            if (!this.editorsService.UserIsEditor(userId))
+            {
+                return RedirectToAction(nameof(EditorsController.Create), "EditorsController");
+            }
+
+            var movie = this.moviesService.Details(id);
+
+            if (movie.UserId != userId)
+            {
+                return Unauthorized();
+            }
+
+            var genres = this.moviesService.AllGenres();
+            var selectedGenreIds = this.moviesService.SelectedGenreIds(id);
+
+            this.PrepareViewBagGenres(genres, selectedGenreIds);
+
+            return View(new MovieFormModel
+            {
+                Title = movie.Title,
+                ReleaseYear = movie.ReleaseYear,
+                Runtime = movie.Runtime,
+                Plot = movie.Plot,
+                Language = movie.Language,
+                ImageUrl = movie.ImageUrl,
+                Studio = movie.Studio,
+                //Director = movie.
+            });
         }
 
         public IActionResult All([FromQuery] AllMoviesQueryModel query)
@@ -120,26 +149,10 @@
             return View(contributions);
         }
 
-        private void AddMovieGenres(List<string> genreIds, int movieId)
+        private void PrepareViewBagGenres(
+            IEnumerable<MovieGenreServiceModel> genres, 
+            IEnumerable<string> selectedGenreIds = null)
         {
-            foreach (var genreId in genreIds)
-            {
-                this.data
-                    .MovieGenres
-                    .Add(new MovieGenre
-                    {
-                        MovieId = movieId,
-                        GenreId = int.Parse(genreId)
-                    });
-            }
-
-            data.SaveChanges();
-        }
-
-        private void PrepareViewBagGenres()
-        {
-            var genres = this.moviesService.AllGenres();
-
             var viewBagGenres = new List<SelectListItem>();
 
             foreach (var genre in genres)
@@ -151,105 +164,15 @@
                 });
             }
 
+            if (selectedGenreIds != null)
+            {
+                foreach (var genre in viewBagGenres)
+                {
+                    genre.Selected = selectedGenreIds.Contains(genre.Value);
+                }
+            }
+
             this.ViewBag.Genres = viewBagGenres;
-        }
-
-        private void AddActors(string starringActors, int movieId)
-        {
-            var actorsArray = starringActors.Split(',', StringSplitOptions.RemoveEmptyEntries);
-
-            for (int i = 0; i < actorsArray.Length; i++)
-            {
-                var actor = actorsArray[i].Trim();
-
-                var actorNames = actor.Split();
-
-                string
-                    firstName = actorNames[0],
-                    middleName = null,
-                    lastName;
-
-                if (actorNames.Length == 2)
-                {
-                    lastName = actorNames[1];
-                }
-                else if (actorNames.Length == 3)
-                {
-                    middleName = actorNames[1];
-                    lastName = actorNames[2];
-                }
-                else if (actorNames.Length > 3)
-                {
-                    lastName = actorNames[actorNames.Length - 1];
-                }
-                else
-                {
-                    continue;
-                }
-
-                if (!this.data.Actors.Any(a =>
-                    a.FirstName == firstName &&
-                    a.MiddleName == middleName &&
-                    a.LastName == lastName))
-                {
-                    this.data.Actors.Add(new Actor
-                    {
-                        FirstName = firstName,
-                        MiddleName = middleName,
-                        LastName = lastName
-                    });
-
-                    this.data.SaveChanges();
-                }
-
-                var actorId = this.data
-                    .Actors
-                    .FirstOrDefault(a =>
-                        a.FirstName == firstName &&
-                        a.MiddleName == middleName &&
-                        a.LastName == lastName)
-                    .Id;
-
-                this.data
-                    .MovieActors
-                    .Add(new MovieActor
-                    {
-                        MovieId = movieId,
-                        ActorId = actorId
-                    });
-
-                this.data.SaveChanges();
-            }
-        }
-
-        private int GetDirectorId(string director)
-        {
-            var directorNameParts = director.Split();
-            var directorFirstName = directorNameParts[0];
-            var directorLastName = directorNameParts[1];
-
-            this.AddDirector(directorFirstName, directorLastName);
-
-            var directorId = this.data
-                .Directors
-                .FirstOrDefault(d => d.FirstName == directorFirstName && d.LastName == directorLastName)
-                .Id;
-
-            return directorId;
-        }
-
-        private void AddDirector(string directorFirstName, string directorLastName)
-        {
-            if (!this.data.Directors.Any(d => d.FirstName == directorFirstName && d.LastName == directorLastName))
-            {
-                data.Directors.Add(new Director
-                {
-                    FirstName = directorFirstName,
-                    LastName = directorLastName
-                });
-
-                data.SaveChanges();
-            }
         }
     }
 }

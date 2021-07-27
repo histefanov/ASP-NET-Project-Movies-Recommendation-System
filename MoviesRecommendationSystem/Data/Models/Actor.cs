@@ -11,15 +11,8 @@
         public int Id { get; set; }
 
         [Required]
-        [MaxLength(FirstNameMaxLength)]
-        public string FirstName { get; set; }
-
-        [MaxLength(MiddleNameMaxLength)]
-        public string MiddleName { get; set; }
-
-        [Required]
-        [MaxLength(LastNameMaxLength)]
-        public string LastName { get; set; }
+        [MaxLength(FullNameMaxLength)]
+        public string Name { get; set; }
 
         public ICollection<MovieActor> MovieActors { get; init; } = new HashSet<MovieActor>();
     }

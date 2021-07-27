@@ -26,11 +26,13 @@
             int currentPage,
             int moviesPerPage);
 
-        MovieServiceModel Details(int id);
+        MovieDetailsServiceModel Details(int id);
 
         IEnumerable<MovieServiceModel> ByUser(string userId);
 
         IEnumerable<MovieGenreServiceModel> AllGenres();
+
+        IEnumerable<string> SelectedGenreIds(int movieId);
 
         bool GenreExists(int id);
     }

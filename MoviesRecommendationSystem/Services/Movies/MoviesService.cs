@@ -15,6 +15,7 @@
         public MoviesService(MoviesRecommendationDbContext data) 
             => this.data = data;
 
+        //TODO: try to pass the arguments in a better way
         public int Create(
             string title, 
             int releaseYear, 
@@ -28,7 +29,7 @@
             IEnumerable<string> genres,
             int editorId)
         {
-            this.data.Movies.Add(new Movie
+            var movieData = new Movie
             {
                 Title = title,
                 ReleaseYear = releaseYear,
@@ -36,107 +37,21 @@
                 Plot = plot,
                 Language = language,
                 ImageUrl = imageUrl,
-                DirectorId = this.ConfigureDirector(director),
+                DirectorId = this.AddDirector(director),
                 Studio = studio,
                 EditorId = editorId
-            });
+            };
 
+            this.data.Movies.Add(movieData);
             this.data.SaveChanges();
 
-            var movieId = this.data
-                .Movies
-                .FirstOrDefault(m => m.Title == title)
-                .Id;
+            var movieId = movieData.Id;
 
             this.AddActors(actors, movieId);
 
             this.AddMovieGenres(genres, movieId);
 
             return movieId;
-        }
-
-        private void AddMovieGenres(IEnumerable<string> genres, int movieId)
-        {
-            foreach (var genreId in genres)
-            {
-                this.data
-                    .MovieGenres
-                    .Add(new MovieGenre
-                    {
-                        MovieId = movieId,
-                        GenreId = int.Parse(genreId)
-                    });
-            }
-
-            data.SaveChanges();
-        }
-
-        private void AddActors(string actors, int movieId)
-        {
-            var actorsArray = actors.Split(',', StringSplitOptions.RemoveEmptyEntries);
-
-            for (int i = 0; i < actorsArray.Length; i++)
-            {
-                var actor = actorsArray[i].Trim();
-
-                var actorNames = actor.Split();
-
-                string
-                    firstName = actorNames[0],
-                    middleName = null,
-                    lastName;
-
-                if (actorNames.Length == 2)
-                {
-                    lastName = actorNames[1];
-                }
-                else if (actorNames.Length == 3)
-                {
-                    middleName = actorNames[1];
-                    lastName = actorNames[2];
-                }
-                else if (actorNames.Length > 3)
-                {
-                    lastName = actorNames[actorNames.Length - 1];
-                }
-                else
-                {
-                    continue;
-                }
-
-                if (!this.data.Actors.Any(a =>
-                    a.FirstName == firstName &&
-                    a.MiddleName == middleName &&
-                    a.LastName == lastName))
-                {
-                    this.data.Actors.Add(new Actor
-                    {
-                        FirstName = firstName,
-                        MiddleName = middleName,
-                        LastName = lastName
-                    });
-
-                    this.data.SaveChanges();
-                }
-
-                var actorId = this.data
-                    .Actors
-                    .FirstOrDefault(a =>
-                        a.FirstName == firstName &&
-                        a.MiddleName == middleName &&
-                        a.LastName == lastName)
-                    .Id;
-
-                this.data
-                    .MovieActors
-                    .Add(new MovieActor
-                    {
-                        MovieId = movieId,
-                        ActorId = actorId
-                    });
-
-                this.data.SaveChanges();
-            }
         }
 
         public MovieQueryServiceModel All(
@@ -188,7 +103,7 @@
                 Movies = movies
             };
         }
-        public MovieServiceModel Details(int id)
+        public MovieDetailsServiceModel Details(int id)
             => this.data
                 .Movies
                 .Where(m => m.Id == id)
@@ -197,8 +112,13 @@
                     Id = m.Id,
                     Title = m.Title,
                     ReleaseYear = m.ReleaseYear,
+                    Runtime = m.Runtime,
                     Plot = m.Plot,
+                    Language = m.Language,
                     ImageUrl = m.ImageUrl,
+                    Studio = m.Studio,
+                    DirectorId = m.DirectorId,
+                    //StarringActors = ActorsToString(id),
                     Genres = m.MovieGenres
                                 .Select(mg => mg.Genre.Name)
                                 .ToList(),
@@ -209,14 +129,22 @@
                 .FirstOrDefault();
 
         public IEnumerable<MovieGenreServiceModel> AllGenres()
-            => this.data.Genres
-                   .Select(g => new MovieGenreServiceModel
-                   {
-                       Id = g.Id,
-                       Name = g.Name
-                   })
-                   .OrderBy(g => g.Name)
-                   .ToList();
+            => this.data
+                .Genres
+                .Select(g => new MovieGenreServiceModel
+                {
+                    Id = g.Id,
+                    Name = g.Name
+                })
+                .OrderBy(g => g.Name)
+                .ToList();
+
+        public IEnumerable<string> SelectedGenreIds(int movieId)
+            => this.data
+                .MovieGenres
+                .Where(mg => mg.MovieId == movieId)
+                .Select(mg => mg.GenreId.ToString())
+                .ToList();
 
         public IEnumerable<MovieServiceModel> ByUser(string userId)
             => GetMovies(this.data
@@ -243,24 +171,12 @@
                 })
                 .ToList();
 
-        private int ConfigureDirector(string director)
+        private int AddDirector(string director)
         {
             var directorNameParts = director.Split();
             var directorFirstName = directorNameParts[0];
             var directorLastName = directorNameParts[1];
 
-            this.AddDirector(directorFirstName, directorLastName);
-
-            var directorId = this.data
-                .Directors
-                .FirstOrDefault(d => d.FirstName == directorFirstName && d.LastName == directorLastName)
-                .Id;
-
-            return directorId;
-        }
-
-        private void AddDirector(string directorFirstName, string directorLastName)
-        {
             if (!this.data.Directors.Any(d => d.FirstName == directorFirstName && d.LastName == directorLastName))
             {
                 data.Directors.Add(new Director
@@ -271,6 +187,60 @@
 
                 data.SaveChanges();
             }
+
+            var directorId = this.data
+                .Directors
+                .FirstOrDefault(d => d.FirstName == directorFirstName && d.LastName == directorLastName)
+                .Id;
+
+            return directorId;
+        }
+
+        private void AddMovieGenres(IEnumerable<string> genres, int movieId)
+        {
+            foreach (var genreId in genres)
+            {
+                this.data
+                    .MovieGenres
+                    .Add(new MovieGenre
+                    {
+                        MovieId = movieId,
+                        GenreId = int.Parse(genreId)
+                    });
+            }
+
+            data.SaveChanges();
+        }
+
+        private void AddActors(string actors, int movieId)
+        {
+            var actorsNames = actors.Split(',', StringSplitOptions.RemoveEmptyEntries);
+
+            foreach (var actorName in actorsNames)
+            {
+                var actor = this.data
+                    .Actors
+                    .FirstOrDefault(a => a.Name == actorName);
+
+                if (actor == null)
+                {
+                    actor = new Actor { Name = actorName };
+
+                    this.data.SaveChanges();
+                }
+
+                var actorId = actor.Id;
+
+                this.data
+                    .MovieActors
+                    .Add(new MovieActor
+                    {
+                        MovieId = movieId,
+                        ActorId = actorId
+                    });
+
+                this.data.SaveChanges();
+            }                                     
         }
     }
 }
