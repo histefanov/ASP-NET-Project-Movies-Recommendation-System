@@ -49,7 +49,7 @@
 
             this.AddActors(actors, movieId);
 
-            this.AddMovieGenres(genres, movieId);
+            this.AddGenres(genres, movieId);
 
             return movieId;
         }
@@ -171,32 +171,24 @@
                 })
                 .ToList();
 
-        private int AddDirector(string director)
+        private int AddDirector(string directorName)
         {
-            var directorNameParts = director.Split();
-            var directorFirstName = directorNameParts[0];
-            var directorLastName = directorNameParts[1];
+            var director = this.data
+                .Directors
+                .FirstOrDefault(d => d.Name == directorName);
 
-            if (!this.data.Directors.Any(d => d.FirstName == directorFirstName && d.LastName == directorLastName))
+            if (director == null)
             {
-                data.Directors.Add(new Director
-                {
-                    FirstName = directorFirstName,
-                    LastName = directorLastName
-                });
+                director = new Director { Name = directorName };
 
+                data.Directors.Add(director);
                 data.SaveChanges();
             }
 
-            var directorId = this.data
-                .Directors
-                .FirstOrDefault(d => d.FirstName == directorFirstName && d.LastName == directorLastName)
-                .Id;
-
-            return directorId;
+            return director.Id;
         }
 
-        private void AddMovieGenres(IEnumerable<string> genres, int movieId)
+        private void AddGenres(IEnumerable<string> genres, int movieId)
         {
             foreach (var genreId in genres)
             {
@@ -214,7 +206,9 @@
 
         private void AddActors(string actors, int movieId)
         {
-            var actorsNames = actors.Split(',', StringSplitOptions.RemoveEmptyEntries);
+            var actorsNames = actors
+                .Split(',', StringSplitOptions.RemoveEmptyEntries)
+                .Select(a => a.Trim());
 
             foreach (var actorName in actorsNames)
             {
@@ -226,17 +220,16 @@
                 {
                     actor = new Actor { Name = actorName };
 
+                    this.data.Actors.Add(actor);
                     this.data.SaveChanges();
                 }
-
-                var actorId = actor.Id;
 
                 this.data
                     .MovieActors
                     .Add(new MovieActor
                     {
                         MovieId = movieId,
-                        ActorId = actorId
+                        ActorId = actor.Id
                     });
 
                 this.data.SaveChanges();

@@ -47,7 +47,7 @@
         public string ImageUrl { get; init; }
 
         [Required]
-        [StringLength(FirstNameMaxLength + LastNameMaxLength, MinimumLength = FullNameMinLength)]
+        [StringLength(FullNameMaxLength, MinimumLength = FullNameMinLength)]
         public string Director { get; init; }
 
         [Display(Name = "Distribution Studio")]
@@ -57,9 +57,10 @@
 
         [Display(Name = "Starring Actors")]
         [Required]
+        [StringLength((FullNameMaxLength * 3), MinimumLength = FullNameMinLength)]
         [RegularExpression(
-            @"([A-Za-z .-]+)(,\s*[A-Za-z .-]+)*", 
-            ErrorMessage = "Invalid format. Please type in the actors' names separated by commas.")]
+            @"([A-Za-z .-]+)(,\s*[A-Za-z .-]+){0,2}", 
+            ErrorMessage = "Invalid format. Please type in up to 3 actor names separated by commas.")]
         public string StarringActors { get; set; }
 
         [Required(ErrorMessage = "At least one genre selection is required.")]
