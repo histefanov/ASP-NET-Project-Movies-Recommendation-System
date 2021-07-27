@@ -12,18 +12,18 @@
     {
         private readonly MoviesRecommendationDbContext data;
 
-        public MoviesService(MoviesRecommendationDbContext data) 
+        public MoviesService(MoviesRecommendationDbContext data)
             => this.data = data;
 
         //TODO: try to pass the arguments in a better way
         public int Create(
-            string title, 
-            int releaseYear, 
-            int runTime, 
-            string plot, 
-            string language, 
-            string imageUrl, 
-            string director, 
+            string title,
+            int releaseYear,
+            int runTime,
+            string plot,
+            string language,
+            string imageUrl,
+            string director,
             string studio,
             string actors,
             IEnumerable<string> genres,
@@ -52,6 +52,62 @@
             this.AddGenres(genres, movieId);
 
             return movieId;
+        }
+
+        public bool Edit(
+            int movieId,
+            string title,
+            int releaseYear,
+            int runTime,
+            string plot,
+            string language,
+            string imageUrl,
+            string director,
+            string studio,
+            string actors,
+            IEnumerable<string> genres,
+            int editorId)
+        {
+            var movieData = this.data.Movies.Find(movieId);
+
+            if (movieData == null)
+            {
+                return false;
+            }
+
+            movieData.Title = title;
+            movieData.ReleaseYear = releaseYear;
+            movieData.Runtime = runTime;
+            movieData.Plot = plot;
+            movieData.Language = language;
+            movieData.ImageUrl = imageUrl;
+            movieData.DirectorId = this.AddDirector(director);
+            movieData.Studio = studio;
+            movieData.EditorId = editorId;
+
+            this.data.SaveChanges();
+
+            var movieActors = this.data
+              .MovieActors
+              .Where(ma => ma.MovieId == movieId)
+              .ToArray();
+
+            this.data.MovieActors.RemoveRange(movieActors);
+            this.data.SaveChanges();
+
+            this.AddActors(actors, movieId);
+
+            var movieGenres = this.data
+              .MovieGenres
+              .Where(mg => mg.MovieId == movieId)
+              .ToArray();
+
+            this.data.MovieGenres.RemoveRange(movieGenres);
+            this.data.SaveChanges();
+
+            this.AddGenres(genres, movieId);
+
+            return true;
         }
 
         public MovieQueryServiceModel All(
@@ -118,7 +174,8 @@
                     ImageUrl = m.ImageUrl,
                     Studio = m.Studio,
                     DirectorId = m.DirectorId,
-                    //StarringActors = ActorsToString(id),
+                    DirectorName = m.Director.Name,
+                    StarringActors = ActorsToString(id),
                     Genres = m.MovieGenres
                                 .Select(mg => mg.Genre.Name)
                                 .ToList(),
@@ -150,7 +207,12 @@
             => GetMovies(this.data
                 .Movies
                 .Where(m => m.Editor.UserId == userId));
-        
+
+        public bool IsByEditor(int movieId, int editorId)
+            => this.data
+                .Movies
+                .Any(m => m.Id == movieId && m.EditorId == editorId);
+
         public bool GenreExists(int id)
             => this.data
                 .Genres
@@ -233,7 +295,18 @@
                     });
 
                 this.data.SaveChanges();
-            }                                     
+            }
+        }
+
+        private string ActorsToString(int movieId)
+        {
+            var actors = this.data
+                .MovieActors
+                .Where(mg => mg.MovieId == movieId)
+                .Select(mg => mg.Actor.Name)
+                .ToList();
+
+            return string.Join(", ", actors);
         }
     }
 }

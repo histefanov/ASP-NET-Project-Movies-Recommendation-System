@@ -1,5 +1,6 @@
 ﻿namespace MoviesRecommendationSystem.Models.Movies
 {
+    using MoviesRecommendationSystem.Data.Models.ValidationAttributes;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
@@ -63,7 +64,7 @@
             ErrorMessage = "Invalid format. Please type in up to 3 actor names separated by commas.")]
         public string StarringActors { get; set; }
 
-        [Required(ErrorMessage = "At least one genre selection is required.")]
+        [GenresCount(ErrorMessage = "You must select at least 1 and up to 3 genres.")]
         public List<string> GenreIds { get; set; }
     }
 }

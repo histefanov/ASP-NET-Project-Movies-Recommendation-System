@@ -18,7 +18,7 @@
         private readonly IEditorsService editorsService;
 
         public MoviesController(
-            IMoviesService moviesService, 
+            IMoviesService moviesService,
             IEditorsService editorsService)
         {
             this.moviesService = moviesService;
@@ -117,8 +117,59 @@
                 Language = movie.Language,
                 ImageUrl = movie.ImageUrl,
                 Studio = movie.Studio,
-                //Director = movie.
+                Director = movie.DirectorName,
+                StarringActors = movie.StarringActors
             });
+        }
+
+        [HttpPost]
+        [Authorize]
+        public IActionResult Edit(int id, MovieFormModel movie)
+        {
+            var editorId = this.editorsService.GetIdByUser(User.GetId());
+
+            if (editorId == 0)
+            {
+                return RedirectToAction(nameof(HomeController.Index), "Home");
+            }
+
+            foreach (var genreId in movie.GenreIds)
+            {
+                if (!this.moviesService.GenreExists(int.Parse(genreId)))
+                {
+                    this.ModelState.AddModelError(nameof(genreId), $"Genre '{genreId}' does not exist.");
+                }
+            }
+
+            if (!ModelState.IsValid)
+            {
+                var genres = this.moviesService.AllGenres();
+
+                this.PrepareViewBagGenres(genres);
+
+                return View(movie);
+            }
+
+            if (!this.moviesService.IsByEditor(id, editorId))
+            {
+                return BadRequest();
+            }
+
+            this.moviesService.Edit(
+                id,
+                movie.Title,
+                (int)movie.ReleaseYear,
+                (int)movie.Runtime,
+                movie.Plot,
+                movie.Language,
+                movie.ImageUrl,
+                movie.Director,
+                movie.Studio,
+                movie.StarringActors,
+                movie.GenreIds,
+                editorId);
+
+            return RedirectToAction("Index", "Home");
         }
 
         public IActionResult All([FromQuery] AllMoviesQueryModel query)
@@ -150,7 +201,7 @@
         }
 
         private void PrepareViewBagGenres(
-            IEnumerable<MovieGenreServiceModel> genres, 
+            IEnumerable<MovieGenreServiceModel> genres,
             IEnumerable<string> selectedGenreIds = null)
         {
             var viewBagGenres = new List<SelectListItem>();

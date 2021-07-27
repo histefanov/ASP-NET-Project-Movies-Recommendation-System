@@ -10,6 +10,8 @@
 
         public int DirectorId { get; set; }
 
+        public string DirectorName { get; set; }
+
         public string StarringActors { get; set; }
 
         public int EditorId { get; set; }
