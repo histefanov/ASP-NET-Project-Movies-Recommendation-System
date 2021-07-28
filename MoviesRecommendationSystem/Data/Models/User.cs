@@ -1,7 +1,8 @@
 ﻿namespace MoviesRecommendationSystem.Data.Models
 {
-    using Microsoft.AspNetCore.Identity;
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using Microsoft.AspNetCore.Identity;
 
     using static DataConstants.Person;
 
@@ -9,5 +10,8 @@
     {
         [MaxLength(FullNameMaxLength)]
         public string Name { get; set; }
+
+        public ICollection<UserWatchlistMovie> UserWatchlistMovies { get; init; }
+            = new HashSet<UserWatchlistMovie>();
     }
 }

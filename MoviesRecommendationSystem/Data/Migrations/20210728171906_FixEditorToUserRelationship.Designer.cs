@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MoviesRecommendationSystem.Data;
 
 namespace MoviesRecommendationSystem.Data.Migrations
 {
     [DbContext(typeof(MoviesRecommendationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210728171906_FixEditorToUserRelationship")]
+    partial class FixEditorToUserRelationship
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -209,13 +211,13 @@ namespace MoviesRecommendationSystem.Data.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("UserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("UserId")
-                        .IsUnique()
-                        .HasFilter("[UserId] IS NOT NULL");
+                        .IsUnique();
 
                     b.ToTable("Editors");
                 });
@@ -467,21 +469,6 @@ namespace MoviesRecommendationSystem.Data.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("MoviesRecommendationSystem.Data.Models.UserWatchlistMovie", b =>
-                {
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("MovieId")
-                        .HasColumnType("int");
-
-                    b.HasKey("UserId", "MovieId");
-
-                    b.HasIndex("MovieId");
-
-                    b.ToTable("UserWatchlistMovies");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -538,7 +525,8 @@ namespace MoviesRecommendationSystem.Data.Migrations
                     b.HasOne("MoviesRecommendationSystem.Data.Models.User", null)
                         .WithOne()
                         .HasForeignKey("MoviesRecommendationSystem.Data.Models.Editor", "UserId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("MoviesRecommendationSystem.Data.Models.Movie", b =>
@@ -635,25 +623,6 @@ namespace MoviesRecommendationSystem.Data.Migrations
                     b.Navigation("Series");
                 });
 
-            modelBuilder.Entity("MoviesRecommendationSystem.Data.Models.UserWatchlistMovie", b =>
-                {
-                    b.HasOne("MoviesRecommendationSystem.Data.Models.Movie", "Movie")
-                        .WithMany("UserWatchlistMovies")
-                        .HasForeignKey("MovieId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MoviesRecommendationSystem.Data.Models.User", "User")
-                        .WithMany("UserWatchlistMovies")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Movie");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("MoviesRecommendationSystem.Data.Models.Actor", b =>
                 {
                     b.Navigation("MovieActors");
@@ -679,8 +648,6 @@ namespace MoviesRecommendationSystem.Data.Migrations
                     b.Navigation("MovieActors");
 
                     b.Navigation("MovieGenres");
-
-                    b.Navigation("UserWatchlistMovies");
                 });
 
             modelBuilder.Entity("MoviesRecommendationSystem.Data.Models.Series", b =>
@@ -688,11 +655,6 @@ namespace MoviesRecommendationSystem.Data.Migrations
                     b.Navigation("SeriesActors");
 
                     b.Navigation("SeriesGenres");
-                });
-
-            modelBuilder.Entity("MoviesRecommendationSystem.Data.Models.User", b =>
-                {
-                    b.Navigation("UserWatchlistMovies");
                 });
 #pragma warning restore 612, 618
         }

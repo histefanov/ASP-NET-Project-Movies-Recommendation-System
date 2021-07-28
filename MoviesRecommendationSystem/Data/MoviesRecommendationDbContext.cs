@@ -31,9 +31,12 @@
 
         public DbSet<SeriesGenre> SeriesGenres { get; init; }
 
+        public DbSet<UserWatchlistMovie> UserWatchlistMovies { get; init; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<Editor>()
+            builder
+                .Entity<Editor>()
                 .HasOne<User>()
                 .WithOne()
                 .HasForeignKey<Editor>(e => e.UserId)
@@ -62,6 +65,9 @@
 
             builder.Entity<SeriesGenre>()
                 .HasKey(x => new { x.SeriesId, x.GenreId });
+
+            builder.Entity<UserWatchlistMovie>()
+                .HasKey(x => new { x.UserId, x.MovieId });
 
             base.OnModelCreating(builder);
         }

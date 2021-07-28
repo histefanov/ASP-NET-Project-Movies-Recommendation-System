@@ -49,5 +49,8 @@
         public ICollection<MovieGenre> MovieGenres { get; init; } = new HashSet<MovieGenre>();
 
         public ICollection<MovieActor> MovieActors { get; init; } = new HashSet<MovieActor>();
+
+        public ICollection<UserWatchlistMovie> UserWatchlistMovies { get; init; }
+            = new HashSet<UserWatchlistMovie>();
     }
 }

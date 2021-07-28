@@ -8,7 +8,7 @@
 
     public class Editor
     {
-        public int Id { get; set; }
+        public int Id { get; init; }
 
         [Required]
         [MaxLength(FirstNameMaxLength)]
@@ -21,10 +21,7 @@
         [Required]
         public DateTime BirthDate { get; set; }
 
-        [Required]
         public string UserId { get; set; }
-
-        public User User { get; set; }
 
         public IEnumerable<Movie> Movies { get; init; } = new List<Movie>();
     }

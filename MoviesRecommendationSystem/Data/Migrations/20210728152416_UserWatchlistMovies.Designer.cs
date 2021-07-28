@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MoviesRecommendationSystem.Data;
 
 namespace MoviesRecommendationSystem.Data.Migrations
 {
     [DbContext(typeof(MoviesRecommendationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210728152416_UserWatchlistMovies")]
+    partial class UserWatchlistMovies
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -209,13 +211,13 @@ namespace MoviesRecommendationSystem.Data.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("UserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("UserId")
-                        .IsUnique()
-                        .HasFilter("[UserId] IS NOT NULL");
+                        .IsUnique();
 
                     b.ToTable("Editors");
                 });
@@ -469,15 +471,20 @@ namespace MoviesRecommendationSystem.Data.Migrations
 
             modelBuilder.Entity("MoviesRecommendationSystem.Data.Models.UserWatchlistMovie", b =>
                 {
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
                     b.Property<int>("MovieId")
                         .HasColumnType("int");
 
+                    b.Property<string>("UserId1")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("UserId", "MovieId");
 
                     b.HasIndex("MovieId");
+
+                    b.HasIndex("UserId1");
 
                     b.ToTable("UserWatchlistMovies");
                 });
@@ -535,10 +542,13 @@ namespace MoviesRecommendationSystem.Data.Migrations
 
             modelBuilder.Entity("MoviesRecommendationSystem.Data.Models.Editor", b =>
                 {
-                    b.HasOne("MoviesRecommendationSystem.Data.Models.User", null)
-                        .WithOne()
+                    b.HasOne("MoviesRecommendationSystem.Data.Models.User", "User")
+                        .WithOne("Editor")
                         .HasForeignKey("MoviesRecommendationSystem.Data.Models.Editor", "UserId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("MoviesRecommendationSystem.Data.Models.Movie", b =>
@@ -645,9 +655,7 @@ namespace MoviesRecommendationSystem.Data.Migrations
 
                     b.HasOne("MoviesRecommendationSystem.Data.Models.User", "User")
                         .WithMany("UserWatchlistMovies")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId1");
 
                     b.Navigation("Movie");
 
@@ -692,6 +700,8 @@ namespace MoviesRecommendationSystem.Data.Migrations
 
             modelBuilder.Entity("MoviesRecommendationSystem.Data.Models.User", b =>
                 {
+                    b.Navigation("Editor");
+
                     b.Navigation("UserWatchlistMovies");
                 });
 #pragma warning restore 612, 618
