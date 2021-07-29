@@ -3,6 +3,8 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using AutoMapper;
+    using AutoMapper.QueryableExtensions;
     using MoviesRecommendationSystem.Data;
     using MoviesRecommendationSystem.Data.Models;
     using MoviesRecommendationSystem.Models.Enums;
@@ -11,9 +13,13 @@
     public class MoviesService : IMoviesService
     {
         private readonly MoviesRecommendationDbContext data;
+        private readonly IMapper mapper;
 
-        public MoviesService(MoviesRecommendationDbContext data)
-            => this.data = data;
+        public MoviesService(MoviesRecommendationDbContext data, IMapper mapper)
+        {
+            this.data = data;
+            this.mapper = mapper;
+        }
 
         //TODO: try to pass the arguments in a better way
         public int Create(
@@ -157,40 +163,24 @@
                 Movies = movies
             };
         }
+
         public MovieDetailsServiceModel Details(int id)
-            => this.data
+        {
+            var movieDetails = this.data
                 .Movies
                 .Where(m => m.Id == id)
-                .Select(m => new MovieDetailsServiceModel
-                {
-                    Id = m.Id,
-                    Title = m.Title,
-                    ReleaseYear = m.ReleaseYear,
-                    Runtime = m.Runtime,
-                    Plot = m.Plot,
-                    Language = m.Language,
-                    ImageUrl = m.ImageUrl,
-                    Studio = m.Studio,
-                    DirectorId = m.DirectorId,
-                    DirectorName = m.Director.Name,
-                    StarringActors = ActorsToString(id),
-                    Genres = m.MovieGenres
-                                .Select(mg => mg.Genre.Name)
-                                .ToList(),
-                    EditorId = (int)m.EditorId,
-                    EditorName = m.Editor.FirstName,
-                    UserId = m.Editor.UserId
-                })
+                .ProjectTo<MovieDetailsServiceModel>(this.mapper.ConfigurationProvider)
                 .FirstOrDefault();
+
+            movieDetails.StarringActors = this.ActorsToString(id);
+
+            return movieDetails;
+        }
 
         public IEnumerable<MovieGenreServiceModel> AllGenres()
             => this.data
                 .Genres
-                .Select(g => new MovieGenreServiceModel
-                {
-                    Id = g.Id,
-                    Name = g.Name
-                })
+                .ProjectTo<MovieGenreServiceModel>(this.mapper.ConfigurationProvider)
                 .OrderBy(g => g.Name)
                 .ToList();
 
@@ -216,20 +206,10 @@
                 .Genres
                 .Any(g => g.Id == id);
 
-        private static IEnumerable<MovieServiceModel> GetMovies(IQueryable<Movie> movieQuery)
+        private IEnumerable<MovieServiceModel> GetMovies(IQueryable<Movie> movieQuery)
             => movieQuery
-                .Select(m => new MovieServiceModel
-                {
-                    Id = m.Id,
-                    Title = m.Title,
-                    ReleaseYear = m.ReleaseYear,
-                    Plot = m.Plot,
-                    ImageUrl = m.ImageUrl,
-                    Genres = m.MovieGenres
-                                .Select(mg => mg.Genre.Name)
-                                .ToList()
-                })
-                .ToList();
+                .ProjectTo<MovieServiceModel>(this.mapper.ConfigurationProvider)
+                .ToList();        
 
         private int AddDirector(string directorName)
         {

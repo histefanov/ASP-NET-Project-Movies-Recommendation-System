@@ -42,6 +42,8 @@ namespace MoviesRecommendationSystem
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<MoviesRecommendationDbContext>();
 
+            services.AddAutoMapper(typeof(Startup));
+
             services.AddControllersWithViews(options => 
             {
                 options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();

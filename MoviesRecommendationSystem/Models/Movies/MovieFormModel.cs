@@ -49,7 +49,7 @@
 
         [Required]
         [StringLength(FullNameMaxLength, MinimumLength = FullNameMinLength)]
-        public string Director { get; init; }
+        public string DirectorName { get; init; }
 
         [Display(Name = "Distribution Studio")]
         [Required]

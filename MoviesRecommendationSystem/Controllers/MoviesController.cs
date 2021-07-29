@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using AutoMapper;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
@@ -16,13 +17,16 @@
     {
         private readonly IMoviesService moviesService;
         private readonly IEditorsService editorsService;
+        private readonly IMapper mapper;
 
         public MoviesController(
             IMoviesService moviesService,
-            IEditorsService editorsService)
+            IEditorsService editorsService,
+            IMapper mapper)
         {
             this.moviesService = moviesService;
             this.editorsService = editorsService;
+            this.mapper = mapper;
         }
 
         [Authorize]
@@ -77,7 +81,7 @@
                 movie.Plot,
                 movie.Language,
                 movie.ImageUrl,
-                movie.Director,
+                movie.DirectorName,
                 movie.Studio,
                 movie.StarringActors,
                 movie.GenreIds,
@@ -108,18 +112,9 @@
 
             this.PrepareViewBagGenres(genres, selectedGenreIds);
 
-            return View(new MovieFormModel
-            {
-                Title = movie.Title,
-                ReleaseYear = movie.ReleaseYear,
-                Runtime = movie.Runtime,
-                Plot = movie.Plot,
-                Language = movie.Language,
-                ImageUrl = movie.ImageUrl,
-                Studio = movie.Studio,
-                Director = movie.DirectorName,
-                StarringActors = movie.StarringActors
-            });
+            var movieForm = this.mapper.Map<MovieFormModel>(movie);
+
+            return View(movieForm);
         }
 
         [HttpPost]
@@ -163,7 +158,7 @@
                 movie.Plot,
                 movie.Language,
                 movie.ImageUrl,
-                movie.Director,
+                movie.DirectorName,
                 movie.Studio,
                 movie.StarringActors,
                 movie.GenreIds);
