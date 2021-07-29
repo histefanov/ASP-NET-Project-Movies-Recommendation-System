@@ -10,7 +10,7 @@
     using MoviesRecommendationSystem.Data;
     using MoviesRecommendationSystem.Data.Models;
 
-    using static Common.WebConstants;
+    using static Areas.Admin.AdminConstants;
 
     public static class ApplicationBuilderExtensions
     {

@@ -75,6 +75,7 @@ namespace MoviesRecommendationSystem
                 .UseAuthorization()
                 .UseEndpoints(endpoints =>
                 {
+                    endpoints.MapDefaultAreaRoute();
                     endpoints.MapDefaultControllerRoute();
                     endpoints.MapRazorPages();
                 });
