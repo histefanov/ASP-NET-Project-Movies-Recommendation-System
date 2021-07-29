@@ -1,6 +1,6 @@
 ﻿@model BecomeEditorFormModel
 
-@{ 
+@{
     ViewBag.Title = "Become Editor";
 }
 
@@ -35,9 +35,13 @@
 </div>
 
 @section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
     <script type="text/javascript">
         $(function () {
             $('#datetimepicker1').datetimepicker();
         });
     </script>
 }
+
+

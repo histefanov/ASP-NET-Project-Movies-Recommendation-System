@@ -91,14 +91,14 @@
         {
             var userId = this.User.GetId();
 
-            if (!this.editorsService.UserIsEditor(userId))
+            if (!this.editorsService.UserIsEditor(userId) && !this.User.IsAdmin())
             {
-                return RedirectToAction(nameof(EditorsController.Create), "EditorsController");
+                return RedirectToAction(nameof(EditorsController.Become), "Editors");
             }
 
             var movie = this.moviesService.Details(id);
 
-            if (movie.UserId != userId)
+            if (movie.UserId != userId && !this.User.IsAdmin())
             {
                 return Unauthorized();
             }
@@ -128,9 +128,9 @@
         {
             var editorId = this.editorsService.IdByUser(User.GetId());
 
-            if (editorId == 0)
+            if (editorId == 0 && !this.User.IsAdmin())
             {
-                return RedirectToAction(nameof(HomeController.Index), "Home");
+                return RedirectToAction(nameof(EditorsController.Become), "Editors");
             }
 
             foreach (var genreId in movie.GenreIds)
@@ -150,7 +150,7 @@
                 return View(movie);
             }
 
-            if (!this.moviesService.IsByEditor(id, editorId))
+            if (!this.moviesService.IsByEditor(id, editorId) && !this.User.IsAdmin())
             {
                 return BadRequest();
             }
@@ -166,8 +166,7 @@
                 movie.Director,
                 movie.Studio,
                 movie.StarringActors,
-                movie.GenreIds,
-                editorId);
+                movie.GenreIds);
 
             return RedirectToAction("Index", "Home");
         }

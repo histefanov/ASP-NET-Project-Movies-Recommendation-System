@@ -1,33 +1,29 @@
 ﻿namespace MoviesRecommendationSystem.Controllers
 {
-    using System.Linq;
-    using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Mvc;
-    using MoviesRecommendationSystem.Data;
-    using MoviesRecommendationSystem.Data.Models;
     using MoviesRecommendationSystem.Infrastructure;
     using MoviesRecommendationSystem.Models.Editors;
+    using MoviesRecommendationSystem.Services.Editors;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Mvc;
 
     public class EditorsController : Controller
     {
-        private readonly MoviesRecommendationDbContext data;
+        private readonly IEditorsService editorsService;
 
-        public EditorsController(MoviesRecommendationDbContext data) 
-            => this.data = data;
+        public EditorsController(IEditorsService editorsService)
+            => this.editorsService = editorsService;
 
         [Authorize]
-        public IActionResult Create()
+        public IActionResult Become()
             => View();
 
         [HttpPost]
         [Authorize]
-        public IActionResult Create(BecomeEditorFormModel editor)
+        public IActionResult Become(BecomeEditorFormModel editor)
         {
             var userId = this.User.GetId();
 
-            var userIsAlreadyEditor = this.data
-                .Editors
-                .Any(d => d.UserId == userId);
+            var userIsAlreadyEditor = this.editorsService.UserIsEditor(userId);
 
             if (userIsAlreadyEditor)
             {
@@ -39,17 +35,11 @@
                 return View(editor);
             }
 
-            var editorData = new Editor
-            {
-                FirstName = editor.FirstName,
-                LastName = editor.LastName,
-                BirthDate = editor.BirthDate,
-                UserId = userId
-            };
-
-            this.data.Editors.Add(editorData);
-
-            this.data.SaveChanges();
+            this.editorsService.Create(
+                editor.FirstName,
+                editor.LastName,
+                editor.BirthDate,
+                userId);
 
             return RedirectToAction(nameof(HomeController.Index), "Home");
         }

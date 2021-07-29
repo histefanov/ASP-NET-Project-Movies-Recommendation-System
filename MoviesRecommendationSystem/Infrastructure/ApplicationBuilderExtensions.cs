@@ -1,11 +1,16 @@
 ﻿namespace MoviesRecommendationSystem.Infrastructure
 {
+    using System;
     using System.Linq;
+    using System.Threading.Tasks;
     using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
     using MoviesRecommendationSystem.Data;
     using MoviesRecommendationSystem.Data.Models;
+
+    using static Common.WebConstants;
 
     public static class ApplicationBuilderExtensions
     {
@@ -14,17 +19,26 @@
         {
             using var scopedServices = app.ApplicationServices.CreateScope();
 
-            var data = scopedServices.ServiceProvider.GetService<MoviesRecommendationDbContext>();
+            var serviceProvider = scopedServices.ServiceProvider;
 
-            data.Database.Migrate();
-
-            SeedGenres(data);
+            MigrateDatabase(serviceProvider);
+            SeedGenres(serviceProvider);
+            SeedAdmin(serviceProvider);
 
             return app;
         }
 
-        private static void SeedGenres(MoviesRecommendationDbContext data)
+        private static void MigrateDatabase(IServiceProvider serviceProvider)
         {
+            var data = serviceProvider.GetRequiredService<MoviesRecommendationDbContext>();
+
+            data.Database.Migrate();
+        }
+
+        private static void SeedGenres(IServiceProvider serviceProvider)
+        {
+            var data = serviceProvider.GetRequiredService<MoviesRecommendationDbContext>();
+
             if (data.Genres.Any())
             {
                 return;
@@ -48,6 +62,40 @@
             });
 
             data.SaveChanges();
+        }
+
+        private static void SeedAdmin(IServiceProvider serviceProvider)
+        {
+            var userManager = serviceProvider.GetRequiredService<UserManager<User>>();
+            var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+            Task
+                .Run(async () =>
+                {
+                    if (await roleManager.RoleExistsAsync(AdminRoleName))
+                    {
+                        return;
+                    }
+
+                    await roleManager.CreateAsync(
+                        new IdentityRole { Name = AdminRoleName });
+                    
+                    const string adminEmail = "admin@movies.com";
+                    const string adminPassword = "adminkey";
+
+                    var user = new User
+                    {
+                        Email = adminEmail,
+                        UserName = adminEmail,
+                        Name = "Admin"
+                    };
+
+                    await userManager.CreateAsync(user, adminPassword);
+
+                    await userManager.AddToRoleAsync(user, AdminRoleName);
+                })
+                .GetAwaiter()
+                .GetResult();
         }
     }
 }

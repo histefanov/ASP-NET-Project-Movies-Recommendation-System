@@ -30,8 +30,7 @@
             string director,
             string studio,
             string actors,
-            IEnumerable<string> genres,
-            int editorId);
+            IEnumerable<string> genres);
 
         MovieQueryServiceModel All(
             string selectedGenre,

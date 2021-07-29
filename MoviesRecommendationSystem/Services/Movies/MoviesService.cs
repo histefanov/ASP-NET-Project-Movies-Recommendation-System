@@ -65,8 +65,7 @@
             string director,
             string studio,
             string actors,
-            IEnumerable<string> genres,
-            int editorId)
+            IEnumerable<string> genres)
         {
             var movieData = this.data.Movies.Find(movieId);
 
@@ -83,7 +82,6 @@
             movieData.ImageUrl = imageUrl;
             movieData.DirectorId = this.AddDirector(director);
             movieData.Studio = studio;
-            movieData.EditorId = editorId;
 
             this.data.SaveChanges();
 

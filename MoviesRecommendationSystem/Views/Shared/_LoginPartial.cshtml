@@ -10,18 +10,22 @@
     @if (SignInManager.IsSignedIn(User))
     {
         var userIsEditor = Editors.UserIsEditor(User.GetId());
+        var userIsAdmin = User.IsAdmin();
 
-        if (userIsEditor)
+        if (!userIsAdmin)
         {
-            <li class="nav-item">
-                <a class="nav-link text-dark" asp-area="" asp-controller="Movies" asp-action="EditorContributions">Contributions</a>
-            </li>
-        }
-        else
-        {
-            <li class="nav-item">
-                <a class="nav-link text-dark" asp-area="" asp-controller="Editors" asp-action="Create">Become Editor</a>
-            </li>
+            if (userIsEditor)
+            {
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Movies" asp-action="EditorContributions">Contributions</a>
+                </li>
+            }
+            else
+            {
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Editors" asp-action="Become">Become Editor</a>
+                </li>
+            }
         }
 
         <li class="nav-item">
