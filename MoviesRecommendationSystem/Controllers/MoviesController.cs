@@ -194,6 +194,14 @@
             return View(contributions);
         }
 
+        public IActionResult Details(int id)
+        {
+            var movie = this.moviesService
+                .Details(id);
+
+            return View(movie);
+        }
+
         private void PrepareViewBagGenres(
             IEnumerable<MovieGenreServiceModel> genres,
             IEnumerable<string> selectedGenreIds = null)

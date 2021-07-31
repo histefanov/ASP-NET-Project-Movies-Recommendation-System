@@ -45,6 +45,9 @@
         public int? EditorId { get; set; }
 
         public Editor Editor { get; init; }
+
+        //[Required]
+        public string YoutubeTrailerId { get; set; }
       
         public ICollection<MovieGenre> MovieGenres { get; init; } = new HashSet<MovieGenre>();
 

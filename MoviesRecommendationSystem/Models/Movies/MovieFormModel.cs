@@ -47,6 +47,13 @@
         [Url]
         public string ImageUrl { get; init; }
 
+        [Display(Name = "Youtube trailer ID")]
+        //[Required]
+        [RegularExpression(
+            @"[a-zA-Z0-9_-]{11}", 
+            ErrorMessage = "Please provide a valid video ID. It must be 11 characters long and may contain upper- and lowercase letters, digits, dashes and underscores.")]
+        public string YoutubeTrailerId { get; init; }
+
         [Required]
         [StringLength(FullNameMaxLength, MinimumLength = FullNameMinLength)]
         public string DirectorName { get; init; }

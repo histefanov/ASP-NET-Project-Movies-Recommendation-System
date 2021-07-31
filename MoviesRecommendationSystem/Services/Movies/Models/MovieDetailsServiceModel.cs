@@ -18,6 +18,8 @@
 
         public string EditorName { get; set; }
 
+        public string YoutubeTrailerId { get; set; }
+
         public string UserId { get; set; }
     }
 }
