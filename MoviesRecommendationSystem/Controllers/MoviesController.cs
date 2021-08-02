@@ -160,6 +160,7 @@
                 movie.ImageUrl,
                 movie.DirectorName,
                 movie.Studio,
+                movie.YoutubeTrailerId,
                 movie.StarringActors,
                 movie.GenreIds);
 

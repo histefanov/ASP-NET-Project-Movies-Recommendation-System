@@ -70,6 +70,7 @@
             string imageUrl,
             string director,
             string studio,
+            string youtubeTrailerId,
             string actors,
             IEnumerable<string> genres)
         {
@@ -88,6 +89,7 @@
             movieData.ImageUrl = imageUrl;
             movieData.DirectorId = this.AddDirector(director);
             movieData.Studio = studio;
+            movieData.YoutubeTrailerId = youtubeTrailerId;
 
             this.data.SaveChanges();
 

@@ -4,7 +4,7 @@
     @foreach (var movie in Model)
     {
         <div class="card">
-            <a href="#">
+            <a href="Details/@movie.Id">
                 <img class="card-img-top" src="@movie.ImageUrl" alt="@movie.Title (@movie.ReleaseYear)">
             </a>
             <div class="card-body">
@@ -14,7 +14,7 @@
                         <span>@genre.ToUpper()</span>
                     }
                 </p>
-                <a href="#">
+                <a href="Details/@movie.Id">
                     <h5 class="card-title">@movie.Title, @movie.ReleaseYear</h5>
                 </a>
                 <p class="card-text">@movie.Plot</p>
