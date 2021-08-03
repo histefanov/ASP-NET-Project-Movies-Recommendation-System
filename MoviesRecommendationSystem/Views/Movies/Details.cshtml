@@ -1,10 +1,41 @@
 ﻿@model MovieDetailsServiceModel
 
 <div class="row">
-    <div class="col-12 col-md-7">
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/@Model.YoutubeTrailerId" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <div class="col-12 col-md-8">
+        <iframe width="730" height="433" src="https://www.youtube.com/embed/@Model.YoutubeTrailerId" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
-    <div class="col-5">
-        <h2>@Model.Title</h2>
+    <div class="col-4">
+        <p class="genres">
+            @foreach (var genre in Model.Genres)
+            {
+                <span>@genre.ToUpper()</span>
+            }
+        </p>
+        <p>
+            <span id="movie-title">@Model.Title, </span>
+            <span id="release-year">@Model.ReleaseYear</span>
+        </p>
+        <p>
+            @Model.Plot
+        </p>
+        <span class="imdbRatingPlugin" data-title="tt1156398" data-style="p4">
+            <a href="https://www.imdb.com/title/tt1156398/?ref_=plg_rt_1">
+                <img width="37" height="17" src="https://www.nicepng.com/png/full/36-360403_8f068a-internet-movie-database.png" alt="@Model.Title (@Model.ReleaseYear) on IMDb" />
+            </a>
+        </span>
+        <div class="mt-4">
+            @*<a class="btn-transparent" href="#">Watch now</a>*@
+            <a href="#" id="btn-netflix">
+            </a>
+            <a class="btn-transparent" href="#">Watch later</a>
+        </div>
+        <script>(function (d, s, id) { var js, stags = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) { return; } js = d.createElement(s); js.id = id; js.src = "https://ia.media-imdb.com/images/G/01/imdb/plugins/rating/js/rating.js"; stags.parentNode.insertBefore(js, stags); })(document, "script", "imdb-rating-api");</script>
     </div>
+</div>
+<div class="div-movie-info">
+    <p class="movie-info">
+        <span>@Model.Studio</span> presents a <span>@Model.ReleaseYear</span> film by <span>@Model.DirectorName</span><br />
+        starring <span>@Model.StarringActors</span><br />
+        runtime <span>@Model.Runtime min</span> languange <span>@Model.Language</span>
+    </p>
 </div>

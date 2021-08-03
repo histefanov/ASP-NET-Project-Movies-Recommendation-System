@@ -13,10 +13,10 @@ a {
     color: inherit;
 }
 
-a:hover {
-    text-decoration: none;
-    color: black;
-}
+    a:hover {
+        text-decoration: none;
+        color: black;
+    }
 
 .btn-primary {
     color: #fff;
@@ -88,12 +88,10 @@ body {
     width: 16.5rem;
 }
 
-.pagination-button {
+.pagination {
     text-align: center;
     padding: 15px;
     margin: 0 auto;
-    border: thin solid grey;
-    border-radius: 4px;
 }
 
 .jumbotron {
@@ -101,11 +99,11 @@ body {
     background-size: cover;
 }
 
-#total-movies, 
+#total-movies,
 #total-genres,
 #total-actors,
 #total-directors {
-    color: whitesmoke; 
+    color: whitesmoke;
     font-weight: 300;
 }
 
@@ -118,3 +116,69 @@ body {
 #movie-buttons {
     margin: 0 auto;
 }
+
+#movie-title, #release-year {
+    font-size: 25pt;
+    text-transform: uppercase;
+    font-family: Garamond;
+}
+
+#movie-title {
+    font-weight: 600;
+}
+
+#release-year {
+    color: dimgrey;
+    font-weight: 100;
+}
+
+.card-img-top:hover {
+    opacity: 0.8;
+    transition-duration: 0.2s;
+}
+
+.btn-transparent {
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    border: 1px solid lightgrey;
+    border-radius: 4px;
+    padding: 12px;
+    margin: 0 auto;
+}
+
+    .btn-transparent:hover {
+        border-color: dimgrey;
+        transition-duration: 0.25s;
+    }
+
+#btn-netflix {
+    background-size: 25px 25px;
+    background-image: url(https://whatmovieshouldiwatchtonight.com/wp-content/themes/whatmovie/css/../images/netflix.svg);
+    margin-right: 5px;
+    color: transparent !important;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 35px;
+    padding: 12px 30px;
+    background-color: red;
+    border-radius: 3px;
+}
+
+    #btn-netflix:hover {
+        background-color: rgb(219, 0, 21);
+        transition-duration: 0.25s;
+    }
+
+.movie-info {
+    margin: 50px;
+    text-align: center;
+    text-transform: uppercase;
+    font-family: "Oswald", sans-serif;
+    font-size: 14pt;
+    font-weight: 100;
+    line-height: 22pt;
+}
+
+    .movie-info > span {
+        font-size: 24pt;
+    }

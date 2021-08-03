@@ -45,8 +45,8 @@
 <div class="row">
     @if (Model.CurrentPage > 1)
     {
-        <div class="pagination-button">
-            <a class="pagination" 
+        <div class="pagination">
+            <a class="btn-transparent" 
                asp-controller="Movies" 
                asp-action="All" 
                asp-route-currentPage="@previousPage"
@@ -59,8 +59,8 @@
     }
     @if (hasNextPage)
     {
-        <div class="pagination-button">
-            <a class="pagination" 
+        <div class="pagination">
+            <a class="btn-transparent" 
                asp-controller="Movies" 
                asp-action="All" 
                asp-route-currentPage="@nextPage"
