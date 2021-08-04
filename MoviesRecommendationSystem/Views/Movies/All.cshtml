@@ -28,6 +28,16 @@
     </div>
 </form>
 
+<form method="get">
+    <div class="row" id="genre-selector">
+        <a class="genre-selector" href="/Movies/All">All</a>
+        @foreach (var genre in Model.Genres)
+        {
+            <a href="?SelectedGenre=@genre">@genre</a>     
+        }
+    </div>
+</form>
+
 <partial name="_MoviesPartial" model="@Model.Movies" />
 
 @{

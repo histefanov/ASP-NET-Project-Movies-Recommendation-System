@@ -108,6 +108,8 @@ body {
 }
 
 .genres > span {
+    font-family: "Oswald", sans-serif;
+    letter-spacing: 1.5px;
     font-size: smaller;
     color: dimgrey;
     text-decoration: underline;
@@ -120,16 +122,18 @@ body {
 #movie-title, #release-year {
     font-size: 25pt;
     text-transform: uppercase;
-    font-family: Garamond;
+    font-family: 'Oswald';
+    line-height: 32pt;
 }
 
 #movie-title {
-    font-weight: 600;
+    font-weight: 900;
+    letter-spacing: 2.5px;
 }
 
 #release-year {
     color: dimgrey;
-    font-weight: 100;
+    font-family: "Oswald";
 }
 
 .card-img-top:hover {
@@ -138,8 +142,11 @@ body {
 }
 
 .btn-transparent {
+    font-family: 'Varela Round', sans-serif;
+    font-size: 13px;
+    font-weight: 100;
     text-transform: uppercase;
-    letter-spacing: 3px;
+    letter-spacing: 2px;
     border: 1px solid lightgrey;
     border-radius: 4px;
     padding: 12px;
@@ -152,14 +159,14 @@ body {
     }
 
 #btn-netflix {
-    background-size: 25px 25px;
+    background-size: 22px 22px;
     background-image: url(https://whatmovieshouldiwatchtonight.com/wp-content/themes/whatmovie/css/../images/netflix.svg);
-    margin-right: 5px;
+    margin-right: 8px;
     color: transparent !important;
     background-position: center;
     background-repeat: no-repeat;
     background-size: 35px;
-    padding: 12px 30px;
+    padding: 7px 24px 10px 24px;
     background-color: red;
     border-radius: 3px;
 }
@@ -182,3 +189,7 @@ body {
     .movie-info > span {
         font-size: 24pt;
     }
+
+#genre-selector a {
+    margin-right: 30px;
+}
