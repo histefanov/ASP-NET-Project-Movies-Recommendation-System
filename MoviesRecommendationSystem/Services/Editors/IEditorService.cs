@@ -2,7 +2,7 @@
 {
     using System;
 
-    public interface IEditorsService
+    public interface IEditorService
     {
         int Create(
             string firstName,

@@ -190,6 +190,29 @@ body {
         font-size: 24pt;
     }
 
+#genre-selector ul {
+    display: inline-block;
+    margin: 30px 50px;
+    text-align: center;
+}
+
+#genre-selector ul li {
+    display: inline-block;
+    margin: 6px 3px 6px 3px;
+}
+
+#genre-selector ul li#active {
+    text-decoration: underline;
+    font-weight: 500;
+}
+
 #genre-selector a {
-    margin-right: 30px;
+    margin: 10px 16px 10px 16px;
+    text-align: center;
+}
+
+.badge {
+    margin-left: -13px;
+    border-radius: 6px;
+    padding-bottom: 2px;
 }

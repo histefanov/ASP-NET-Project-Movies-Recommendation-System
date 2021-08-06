@@ -9,9 +9,9 @@
     [Route("api/movies")]
     public class MoviesApiController : ControllerBase
     {
-        private readonly IMoviesService movies;
+        private readonly IMovieService movies;
 
-        public MoviesApiController(IMoviesService movies) 
+        public MoviesApiController(IMovieService movies) 
             => this.movies = movies;
 
         [HttpGet]

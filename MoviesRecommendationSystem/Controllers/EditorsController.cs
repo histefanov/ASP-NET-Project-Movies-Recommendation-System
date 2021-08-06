@@ -8,9 +8,9 @@
 
     public class EditorsController : Controller
     {
-        private readonly IEditorsService editorsService;
+        private readonly IEditorService editorsService;
 
-        public EditorsController(IEditorsService editorsService)
+        public EditorsController(IEditorService editorsService)
             => this.editorsService = editorsService;
 
         [Authorize]

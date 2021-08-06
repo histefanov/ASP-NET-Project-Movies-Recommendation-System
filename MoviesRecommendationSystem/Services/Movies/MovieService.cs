@@ -10,18 +10,17 @@
     using MoviesRecommendationSystem.Models.Enums;
     using MoviesRecommendationSystem.Services.Movies.Models;
 
-    public class MoviesService : IMoviesService
+    public class MovieService : IMovieService
     {
         private readonly MoviesRecommendationDbContext data;
         private readonly IMapper mapper;
 
-        public MoviesService(MoviesRecommendationDbContext data, IMapper mapper)
+        public MovieService(MoviesRecommendationDbContext data, IMapper mapper)
         {
             this.data = data;
             this.mapper = mapper;
         }
 
-        //TODO: try to pass the arguments in a better way
         public int Create(
             string title,
             int releaseYear,

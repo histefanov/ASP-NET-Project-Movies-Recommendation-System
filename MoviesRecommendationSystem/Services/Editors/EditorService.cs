@@ -5,11 +5,11 @@
     using MoviesRecommendationSystem.Data;
     using MoviesRecommendationSystem.Data.Models;
 
-    public class EditorsService : IEditorsService
+    public class EditorService : IEditorService
     {
         private readonly MoviesRecommendationDbContext data;
 
-        public EditorsService(MoviesRecommendationDbContext data) 
+        public EditorService(MoviesRecommendationDbContext data) 
             => this.data = data;
 
         public bool UserIsEditor(string userId)

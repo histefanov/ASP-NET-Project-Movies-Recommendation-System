@@ -1,8 +1,6 @@
 ﻿namespace MoviesRecommendationSystem.Controllers
 {
-    using System.Diagnostics;
     using Microsoft.AspNetCore.Mvc;
-    using MoviesRecommendationSystem.Models;
     using MoviesRecommendationSystem.Models.Home;
     using MoviesRecommendationSystem.Services.Statistics;
 
@@ -26,8 +24,7 @@
             });
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error() 
-            => View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            => View();
     }
 }

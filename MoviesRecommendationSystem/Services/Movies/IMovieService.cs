@@ -4,7 +4,7 @@
     using MoviesRecommendationSystem.Models.Enums;
     using MoviesRecommendationSystem.Services.Movies.Models;
 
-    public interface IMoviesService
+    public interface IMovieService
     {
         int Create(
             string title,

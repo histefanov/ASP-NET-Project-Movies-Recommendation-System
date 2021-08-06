@@ -14,6 +14,8 @@ namespace MoviesRecommendationSystem
     using MoviesRecommendationSystem.Services.Editors;
     using MoviesRecommendationSystem.Services.Movies;
     using MoviesRecommendationSystem.Services.Statistics;
+    using MoviesRecommendationSystem.Services.Watchlists;
+    using System;
 
     public class Startup
     {
@@ -42,6 +44,15 @@ namespace MoviesRecommendationSystem
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<MoviesRecommendationDbContext>();
 
+            services.AddDistributedMemoryCache();
+
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(20);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
+
             services.AddAutoMapper(typeof(Startup));
 
             services.AddControllersWithViews(options => 
@@ -49,9 +60,10 @@ namespace MoviesRecommendationSystem
                 options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
             });
 
-            services.AddTransient<IMoviesService, MoviesService>();
-            services.AddTransient<IEditorsService, EditorsService>();
+            services.AddTransient<IMovieService, MovieService>();
+            services.AddTransient<IEditorService, EditorService>();
             services.AddTransient<IStatisticsService, StatisticsService>();
+            services.AddTransient<IWatchlistService, WatchlistService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -71,6 +83,7 @@ namespace MoviesRecommendationSystem
 
             app
                 .UseHttpsRedirection()
+                .UseSession()
                 .UseStaticFiles()
                 .UseRouting()
                 .UseAuthentication()
