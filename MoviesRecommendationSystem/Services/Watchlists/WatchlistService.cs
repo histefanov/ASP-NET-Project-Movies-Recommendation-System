@@ -31,7 +31,22 @@
 
         public bool Remove(string userId, int movieId)
         {
-            throw new System.NotImplementedException();
+            var userWatchlistMovie = this.data
+                .UserWatchlistMovies
+                .FirstOrDefault(w => w.UserId == userId && w.MovieId == movieId);
+
+            if (userWatchlistMovie == null)
+            {
+                return false;
+            }
+
+            this.data
+                .UserWatchlistMovies
+                .Remove(userWatchlistMovie);
+
+            this.data.SaveChanges();
+
+            return true;
         }
 
         public int Count(string userid)

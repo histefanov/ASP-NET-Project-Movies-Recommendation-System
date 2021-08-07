@@ -27,5 +27,21 @@
 
             return RedirectToAction("Details", "Movies", new { id = movieId });
         }
+
+        [Authorize]
+        [Route("Watchlist/Remove/{movieId}")]
+        public IActionResult Remove(int movieId)
+        {
+            var userId = this.User.GetId();
+
+            var isSuccess = this.watchlistService.Remove(userId, movieId);
+
+            if (!isSuccess)
+            {
+                return BadRequest();
+            }
+
+            return RedirectToAction("Details", "Movies", new { id = movieId });
+        }
     }
 }

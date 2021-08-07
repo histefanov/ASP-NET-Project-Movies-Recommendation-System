@@ -1,4 +1,10 @@
-﻿<!DOCTYPE html>
+﻿@inject IWatchlistService WatchlistService
+
+@{ 
+    var watchlistCount = WatchlistService.Count(User.GetId());
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -35,7 +41,7 @@
                     <ul class="navbar-nav">
                         <li class="ml-2">
                             <img src="~/img/watchlist_icon.png" alt="Watchlist" />
-                            <span class="badge badge-danger">@ViewBag.WatchlistCount</span>
+                            <span class="badge badge-danger">@watchlistCount</span>
                         </li>
                     </ul>
                 </div>
