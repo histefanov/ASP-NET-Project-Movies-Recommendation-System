@@ -1,7 +1,9 @@
-﻿@inject IWatchlistService WatchlistService
+﻿@inject SignInManager<User> SignInManager
+@inject IWatchlistService WatchlistService
 
-@{ 
-    var watchlistCount = WatchlistService.Count(User.GetId());
+@{
+    var watchlistCount = SignInManager.IsSignedIn(User) ?
+        WatchlistService.Count(User.GetId()) : 0;
 }
 
 <!DOCTYPE html>
@@ -41,7 +43,7 @@
                     <ul class="navbar-nav">
                         <li class="ml-2">
                             <img src="~/img/watchlist_icon.png" alt="Watchlist" />
-                            <span class="badge badge-danger">@watchlistCount</span>
+                            <span class="badge badge-danger" id="watchlist-counter">@watchlistCount</span>
                         </li>
                     </ul>
                 </div>

@@ -196,15 +196,15 @@ body {
     text-align: center;
 }
 
-#genre-selector ul li {
-    display: inline-block;
-    margin: 6px 3px 6px 3px;
-}
+    #genre-selector ul li {
+        display: inline-block;
+        margin: 6px 3px 6px 3px;
+    }
 
-#genre-selector ul li#active {
-    text-decoration: underline;
-    font-weight: 500;
-}
+        #genre-selector ul li#active {
+            text-decoration: underline;
+            font-weight: 500;
+        }
 
 #genre-selector a {
     margin: 10px 16px 10px 16px;
@@ -216,3 +216,47 @@ body {
     border-radius: 6px;
     padding-bottom: 2px;
 }
+
+#add-movie, #remove-movie {
+    font-family: 'Varela Round', sans-serif;
+    font-size: 13px;
+    font-weight: 100;
+    background-color: white;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border: 1px solid lightgrey;
+    border-radius: 4px;
+    padding: 7px;
+    margin: 0 auto;
+}
+
+    #add-movie:hover, #remove-movie:hover {
+        transition-duration: 0.2s;
+        background-color: whitesmoke;
+    }
+
+#watchlist-notification {
+    width: 100%;
+    z-index: 105;
+    font-family: 'Varela Round', sans-serif;
+    font-weight: 100;
+    font-size: 12px;
+    font-weight: bold;
+    color: green;
+    margin-top: 15px;
+    padding: 10px;
+}
+
+    #watchlist-notification span.dismiss {
+        border: 2px solid;
+        padding: 0 0px;
+        cursor: pointer;
+        float: right;
+        margin-right: 10px;
+    }
+
+    #watchlist-notification a {
+        color: green;
+        text-decoration: none;
+        font-weight: bold
+    }

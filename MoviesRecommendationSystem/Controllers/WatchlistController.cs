@@ -25,7 +25,11 @@
                 return BadRequest();
             }
 
-            return RedirectToAction("Details", "Movies", new { id = movieId });
+            var watchlistMovie = this.watchlistService.GetMovie(userId, movieId);
+
+            var data = new { status = "ok", movie = watchlistMovie };
+
+            return Json(data);
         }
 
         [Authorize]

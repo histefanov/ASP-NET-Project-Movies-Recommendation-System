@@ -3,13 +3,20 @@
     using System.Linq;
     using MoviesRecommendationSystem.Data;
     using MoviesRecommendationSystem.Data.Models;
+    using MoviesRecommendationSystem.Services.Watchlists.Models;
+    using AutoMapper;
+    using AutoMapper.QueryableExtensions;
 
     public class WatchlistService : IWatchlistService
     {
         private readonly MoviesRecommendationDbContext data;
+        private readonly IMapper mapper;
 
-        public WatchlistService(MoviesRecommendationDbContext data)
-            => this.data = data;
+        public WatchlistService(MoviesRecommendationDbContext data, IMapper mapper)
+        {
+            this.data = data;
+            this.mapper = mapper;
+        }
 
         public bool Add(string userId, int movieId)
         {
@@ -58,5 +65,14 @@
             => this.data
                 .UserWatchlistMovies
                 .Any(w => w.UserId == userid && w.MovieId == movieId);
+
+        public WatchlistMovieServiceModel GetMovie(string userId, int movieId)
+        {
+            return this.data
+                    .UserWatchlistMovies
+                    .Where(w => w.UserId == userId && w.MovieId == movieId)
+                    .ProjectTo<WatchlistMovieServiceModel>(this.mapper.ConfigurationProvider)
+                    .FirstOrDefault();
+        }
     }
 }

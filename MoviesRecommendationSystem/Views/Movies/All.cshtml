@@ -88,15 +88,12 @@
 @section Scripts {
     <script>
         $(function () {
-
             var url = window.location.href;
-
             $("a").each(function () {
                 if (url == (this.href)) {
                     $(this).closest("li").addClass("a-active");
                 }
             });
-
         });
     </script>
 }

@@ -4,6 +4,7 @@
     using MoviesRecommendationSystem.Data.Models;
     using MoviesRecommendationSystem.Models.Movies;
     using MoviesRecommendationSystem.Services.Movies.Models;
+    using MoviesRecommendationSystem.Services.Watchlists.Models;
     using System.Linq;
 
     public class MappingProfile : Profile
@@ -25,6 +26,8 @@
             this.CreateMap<MovieDetailsServiceModel, MovieFormModel>();
 
             this.CreateMap<Genre, MovieGenreServiceModel>();
+
+            this.CreateMap<UserWatchlistMovie, WatchlistMovieServiceModel>();
         }
     }
 }

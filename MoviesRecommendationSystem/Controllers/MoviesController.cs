@@ -204,10 +204,13 @@
             var movie = this.moviesService
                 .Details(id);
 
-            var userId = this.User.GetId();
+            if (this.User.Identity.IsAuthenticated)
+            {
+                var userId = this.User.GetId();
 
-            ViewBag.MovieIsInWatchlist = this.watchlistService.Exists(userId, id);
-            ViewBag.WatchlistCount = this.watchlistService.Count(userId);
+                ViewBag.MovieIsInWatchlist = this.watchlistService.Exists(userId, id);
+                ViewBag.WatchlistCount = this.watchlistService.Count(userId);
+            }           
 
             return View(movie);
         }

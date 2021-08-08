@@ -26,15 +26,25 @@
         <div class="mt-4">
             @*<a class="btn-transparent" href="#">Watch now</a>*@
             <a href="#" id="btn-netflix"></a>
-            @if (!ViewBag.MovieIsInWatchlist)
+            @if (User.Identity.IsAuthenticated)
             {
-                <a asp-controller="Watchlist" asp-action="Add" asp-route-movieId="@Model.Id" class="btn-transparent">Watch later</a>
+                if (!ViewBag.MovieIsInWatchlist)
+                {
+                    <input type="button" value="Watch later" id="add-movie">
+                    <input type="button" value="Remove from watchlist" id="remove-movie" style="display: none">
+                }
+                else
+                {
+                    <input type="button" value="Watch later" id="add-movie" style="display: none">
+                    <input type="button" value="Remove from watchlist" id="remove-movie">
+                }
             }
             else
             {
-                <a asp-controller="Watchlist" asp-action="Remove" asp-route-movieId="@Model.Id" class="btn-transparent">Remove from watchlist</a>
+                <a class="btn-transparent" asp-area="Identity" asp-page="/Account/Login">Watch later</a>
             }
-
+            <div id="watchlist-notification" style="display: none;">
+            </div>
         </div>
         <script>(function (d, s, id) { var js, stags = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) { return; } js = d.createElement(s); js.id = id; js.src = "https://ia.media-imdb.com/images/G/01/imdb/plugins/rating/js/rating.js"; stags.parentNode.insertBefore(js, stags); })(document, "script", "imdb-rating-api");</script>
     </div>
@@ -46,3 +56,43 @@
         runtime <span>@Model.Runtime min</span> languange <span>@Model.Language</span>
     </p>
 </div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#add-movie').click(function () {
+                $.ajax({
+                    url: '@Url.Action("Add", "Watchlist", new { movieId = Model.Id })',
+                    complete: function () {
+                        $('#add-movie').hide(100, function () {
+                            $('#remove-movie').show(100);
+                        });
+
+                        $('#watchlist-counter').html(parseInt($('#watchlist-counter').html(), 10) + 1)
+
+                        $('#watchlist-notification')
+                            .text('✓ Successfully added @Model.Title (@Model.ReleaseYear) to your watchlist!')
+                            .fadeIn(300);
+                    }
+                })
+            });
+
+            $('#remove-movie').click(function () {
+                $.ajax({
+                    url: '@Url.Action("Remove", "Watchlist", new { movieId = Model.Id })',
+                    complete: function () {
+                        $('#remove-movie').hide(100, function () {
+                            $('#add-movie').show(100);
+                        });
+
+                        $('#watchlist-counter').html(parseInt($('#watchlist-counter').html(), 10) - 1)
+
+                        $('#watchlist-notification')
+                            .text('✓ Successfully removed @Model.Title (@Model.ReleaseYear) from your watchlist!')
+                            .fadeIn(300);
+                    }
+                })
+            })
+        });
+    </script>
+}
