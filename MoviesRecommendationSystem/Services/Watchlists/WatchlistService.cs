@@ -3,9 +3,11 @@
     using System.Linq;
     using MoviesRecommendationSystem.Data;
     using MoviesRecommendationSystem.Data.Models;
-    using MoviesRecommendationSystem.Services.Watchlists.Models;
     using AutoMapper;
+    using System.Collections.Generic;
+    using MoviesRecommendationSystem.Services.Watchlists.Models;
     using AutoMapper.QueryableExtensions;
+    using MoviesRecommendationSystem.Services.Movies.Models;
 
     public class WatchlistService : IWatchlistService
     {
@@ -66,13 +68,21 @@
                 .UserWatchlistMovies
                 .Any(w => w.UserId == userid && w.MovieId == movieId);
 
-        public WatchlistMovieServiceModel GetMovie(string userId, int movieId)
-        {
-            return this.data
-                    .UserWatchlistMovies
-                    .Where(w => w.UserId == userId && w.MovieId == movieId)
-                    .ProjectTo<WatchlistMovieServiceModel>(this.mapper.ConfigurationProvider)
-                    .FirstOrDefault();
-        }
+        public IEnumerable<WatchlistMovieServiceModel> GetMoviesByUser(string userId)
+            => this.data
+                .UserWatchlistMovies
+                .Where(w => w.UserId == userId)
+                .OrderByDescending(w => w.DateCreated)
+                .ProjectTo<WatchlistMovieServiceModel>(this.mapper.ConfigurationProvider)
+                .ToList();
+
+        public IEnumerable<MovieServiceModel> GetMoviesDetailedByUser(string userId)
+            => this.data
+                .UserWatchlistMovies
+                .Where(w => w.UserId == userId)
+                .OrderByDescending(w => w.DateCreated)
+                .Select(w => w.Movie)
+                .ProjectTo<MovieServiceModel>(this.mapper.ConfigurationProvider)
+                .ToList();
     }
 }

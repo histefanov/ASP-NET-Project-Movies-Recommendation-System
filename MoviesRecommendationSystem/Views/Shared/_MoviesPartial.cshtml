@@ -4,7 +4,7 @@
     @foreach (var movie in Model)
     {
         <div class="card">
-            <a href="Details/@movie.Id">
+            <a asp-controller="Movies" asp-action="Details" asp-route-id="@movie.Id">
                 <img class="card-img-top" src="@movie.ImageUrl" alt="@movie.Title (@movie.ReleaseYear)">
             </a>
             <div class="card-body">

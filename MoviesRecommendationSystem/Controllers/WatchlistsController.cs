@@ -5,11 +5,11 @@
     using MoviesRecommendationSystem.Infrastructure;
     using MoviesRecommendationSystem.Services.Watchlists;
 
-    public class WatchlistController : Controller
+    public class WatchlistsController : Controller
     {
         private readonly IWatchlistService watchlistService;
 
-        public WatchlistController(IWatchlistService watchlistService)
+        public WatchlistsController(IWatchlistService watchlistService)
             => this.watchlistService = watchlistService;
 
         [Authorize]
@@ -25,11 +25,7 @@
                 return BadRequest();
             }
 
-            var watchlistMovie = this.watchlistService.GetMovie(userId, movieId);
-
-            var data = new { status = "ok", movie = watchlistMovie };
-
-            return Json(data);
+            return RedirectToAction("Details", "Movies", new { id = movieId });
         }
 
         [Authorize]
@@ -46,6 +42,19 @@
             }
 
             return RedirectToAction("Details", "Movies", new { id = movieId });
+        }
+
+        [Authorize]
+        public IActionResult All(string userId)
+        {
+            if (!User.Identity.IsAuthenticated || User.GetId() != userId)
+            {
+                return BadRequest();
+            }
+
+            var movies = this.watchlistService.GetMoviesDetailedByUser(userId);
+
+            return View(movies);
         }
     }
 }

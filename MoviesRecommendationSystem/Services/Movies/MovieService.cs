@@ -144,7 +144,6 @@
 
             if (!string.IsNullOrWhiteSpace(searchTerm))
             {
-                //TODO: Improve code quality by replacing .ToLower() with another functionality
                 moviesQuery = moviesQuery.Where(m =>
                     m.Title.ToLower().Contains(searchTerm.ToLower()));
             }

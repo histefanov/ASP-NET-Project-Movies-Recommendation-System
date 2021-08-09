@@ -1,19 +1,22 @@
 ﻿namespace MoviesRecommendationSystem.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
+    using MoviesRecommendationSystem.Infrastructure;
+    using MoviesRecommendationSystem.Models;
     using MoviesRecommendationSystem.Models.Home;
     using MoviesRecommendationSystem.Services.Statistics;
+    using MoviesRecommendationSystem.Services.Watchlists;
 
     public class HomeController : Controller
     {
-        private readonly IStatisticsService statistics;
+        private readonly IStatisticsService statisticsService;
 
-        public HomeController(IStatisticsService statistics) 
-            => this.statistics = statistics;
+        public HomeController(IStatisticsService statisticsService)
+            => this.statisticsService = statisticsService;
 
         public IActionResult Index()
         {
-            var statisticsTotals = this.statistics.GetTotals();
+            var statisticsTotals = this.statisticsService.GetTotals();
 
             return View(new IndexViewModel
             {
@@ -24,7 +27,7 @@
             });
         }
 
-        public IActionResult Error() 
+        public IActionResult Error()
             => View();
     }
 }

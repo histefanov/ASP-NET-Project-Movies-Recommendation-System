@@ -1,5 +1,8 @@
 ﻿namespace MoviesRecommendationSystem.Services.Movies.Models
 {
+    using System.Collections.Generic;
+    using MoviesRecommendationSystem.Services.Watchlists.Models;
+
     public class MovieDetailsServiceModel : MovieServiceModel
     {
         public int Runtime { get; set; }

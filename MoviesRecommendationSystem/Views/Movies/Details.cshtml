@@ -41,7 +41,7 @@
             }
             else
             {
-                <a class="btn-transparent" asp-area="Identity" asp-page="/Account/Login">Watch later</a>
+                <a class="btn-transparent" id="btn-watch-later" asp-area="Identity" asp-page="/Account/Login">Watch later</a>
             }
             <div id="watchlist-notification" style="display: none;">
             </div>
@@ -64,13 +64,20 @@
                 $.ajax({
                     url: '@Url.Action("Add", "Watchlist", new { movieId = Model.Id })',
                     complete: function () {
-                        $('#add-movie').hide(100, function () {
-                            $('#remove-movie').show(100);
+                        $('#add-movie').fadeOut(400, function () {
+                            $('#remove-movie').fadeIn(150);
                         });
 
-                        $('#watchlist-counter').html(parseInt($('#watchlist-counter').html(), 10) + 1)
+                        $('#watchlist-counter').html(parseInt($('#watchlist-counter').html(), 10) + 1);
+
+                        $('#watchlist-dropdown').prepend('<a class="dropdown-item" href="@Model.Id" id="@Model.Id">@Model.Title (@Model.ReleaseYear)</a>');
+
+                        if ($('#watchlist-dropdown').children().length > 5) {
+                            $('#watchlist-dropdown').children().last().remove();
+                        }
 
                         $('#watchlist-notification')
+                            .css('color', 'darkgreen')
                             .text('✓ Successfully added @Model.Title (@Model.ReleaseYear) to your watchlist!')
                             .fadeIn(300);
                     }
@@ -81,13 +88,16 @@
                 $.ajax({
                     url: '@Url.Action("Remove", "Watchlist", new { movieId = Model.Id })',
                     complete: function () {
-                        $('#remove-movie').hide(100, function () {
-                            $('#add-movie').show(100);
+                        $('#remove-movie').fadeOut(400, function () {
+                            $('#add-movie').fadeIn(150);
                         });
 
-                        $('#watchlist-counter').html(parseInt($('#watchlist-counter').html(), 10) - 1)
+                        $('#watchlist-counter').html(parseInt($('#watchlist-counter').html(), 10) - 1);
+
+                        $('#watchlist-dropdown > #@Model.Id').remove();
 
                         $('#watchlist-notification')
+                            .css('color', 'darkred')
                             .text('✓ Successfully removed @Model.Title (@Model.ReleaseYear) from your watchlist!')
                             .fadeIn(300);
                     }

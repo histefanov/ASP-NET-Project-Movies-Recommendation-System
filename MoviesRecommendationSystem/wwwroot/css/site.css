@@ -108,9 +108,9 @@ body {
 }
 
 .genres > span {
-    font-family: "Oswald", sans-serif;
-    letter-spacing: 1.5px;
-    font-size: smaller;
+    font-family: 'Varela Round', sans-serif;
+    letter-spacing: -0.5px;
+    font-size: 9pt;
     color: dimgrey;
     text-decoration: underline;
 }
@@ -137,8 +137,8 @@ body {
 }
 
 .card-img-top:hover {
-    opacity: 0.8;
-    transition-duration: 0.2s;
+    opacity: 0.95;
+    transition-duration: 0.15s;
 }
 
 .btn-transparent {
@@ -154,19 +154,22 @@ body {
 }
 
     .btn-transparent:hover {
-        border-color: dimgrey;
-        transition-duration: 0.25s;
+        border-color: darkgrey;
+        transition-duration: 0.15s;
     }
 
+#btn-watch-later {
+    padding: 9px;
+}
+
 #btn-netflix {
-    background-size: 22px 22px;
     background-image: url(https://whatmovieshouldiwatchtonight.com/wp-content/themes/whatmovie/css/../images/netflix.svg);
     margin-right: 8px;
     color: transparent !important;
     background-position: center;
     background-repeat: no-repeat;
-    background-size: 35px;
-    padding: 7px 24px 10px 24px;
+    background-size: 30px;
+    padding: 9px 24px 14px 24px;
     background-color: red;
     border-radius: 3px;
 }
@@ -212,6 +215,7 @@ body {
 }
 
 .badge {
+    position: absolute;
     margin-left: -13px;
     border-radius: 6px;
     padding-bottom: 2px;
@@ -226,37 +230,22 @@ body {
     letter-spacing: 2px;
     border: 1px solid lightgrey;
     border-radius: 4px;
-    padding: 7px;
+    padding: 12px;
     margin: 0 auto;
 }
 
     #add-movie:hover, #remove-movie:hover {
-        transition-duration: 0.2s;
-        background-color: whitesmoke;
+        transition-duration: 0.15s;
+        background-color: white;
+        border-color: darkgray;
     }
 
 #watchlist-notification {
     width: 100%;
     z-index: 105;
     font-family: 'Varela Round', sans-serif;
-    font-weight: 100;
     font-size: 12px;
-    font-weight: bold;
-    color: green;
+    font-weight: 100;
     margin-top: 15px;
     padding: 10px;
 }
-
-    #watchlist-notification span.dismiss {
-        border: 2px solid;
-        padding: 0 0px;
-        cursor: pointer;
-        float: right;
-        margin-right: 10px;
-    }
-
-    #watchlist-notification a {
-        color: green;
-        text-decoration: none;
-        font-weight: bold
-    }

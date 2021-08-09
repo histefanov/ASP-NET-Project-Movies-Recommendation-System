@@ -27,7 +27,10 @@
 
             this.CreateMap<Genre, MovieGenreServiceModel>();
 
-            this.CreateMap<UserWatchlistMovie, WatchlistMovieServiceModel>();
+            this.CreateMap<UserWatchlistMovie, WatchlistMovieServiceModel>()
+                .ForMember(w => w.Id, cfg => cfg.MapFrom(m => m.MovieId))
+                .ForMember(w => w.Title, cfg => cfg.MapFrom(m => m.Movie.Title))
+                .ForMember(w => w.ReleaseYear, cfg => cfg.MapFrom(m => m.Movie.ReleaseYear));
         }
     }
 }

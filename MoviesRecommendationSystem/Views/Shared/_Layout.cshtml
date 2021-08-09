@@ -1,12 +1,4 @@
-﻿@inject SignInManager<User> SignInManager
-@inject IWatchlistService WatchlistService
-
-@{
-    var watchlistCount = SignInManager.IsSignedIn(User) ?
-        WatchlistService.Count(User.GetId()) : 0;
-}
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -42,8 +34,7 @@
                     <partial name="_LoginPartial" />
                     <ul class="navbar-nav">
                         <li class="ml-2">
-                            <img src="~/img/watchlist_icon.png" alt="Watchlist" />
-                            <span class="badge badge-danger" id="watchlist-counter">@watchlistCount</span>
+                            <partial name="_WatchlistPartial" />
                         </li>
                     </ul>
                 </div>

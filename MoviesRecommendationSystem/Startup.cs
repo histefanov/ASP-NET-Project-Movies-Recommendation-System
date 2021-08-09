@@ -44,7 +44,7 @@ namespace MoviesRecommendationSystem
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<MoviesRecommendationDbContext>();
 
-            services.AddDistributedMemoryCache();
+            services.AddMemoryCache();
 
             services.AddSession(options =>
             {
