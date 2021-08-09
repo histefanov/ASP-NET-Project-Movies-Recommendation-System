@@ -13,5 +13,7 @@
 
         public ICollection<UserWatchlistMovie> UserWatchlistMovies { get; init; }
             = new HashSet<UserWatchlistMovie>();
+
+        public ICollection<Review> Reviews { get; init; } = new HashSet<Review>();
     }
 }
