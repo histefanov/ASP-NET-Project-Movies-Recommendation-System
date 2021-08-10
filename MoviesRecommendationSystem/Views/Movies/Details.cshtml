@@ -49,12 +49,38 @@
         <script>(function (d, s, id) { var js, stags = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) { return; } js = d.createElement(s); js.id = id; js.src = "https://ia.media-imdb.com/images/G/01/imdb/plugins/rating/js/rating.js"; stags.parentNode.insertBefore(js, stags); })(document, "script", "imdb-rating-api");</script>
     </div>
 </div>
+<div class="average-rating">
+    @for (int i = 0; i < Model.AverageRating; i++)
+    {
+        <span class="star-active">★</span>
+    }
+    @for (int i = 0; i < 5 - Model.AverageRating; i++)
+    {
+        <span class="star-passive">☆</span>
+    }
+</div>
 <div class="div-movie-info">
     <p class="movie-info">
         <span>@Model.Studio</span> presents a <span>@Model.ReleaseYear</span> film by <span>@Model.DirectorName</span><br />
         starring <span>@Model.StarringActors</span><br />
-        runtime <span>@Model.Runtime min</span> languange <span>@Model.Language</span>
+        runtime <span>@Model.Runtime min</span> language <span>@Model.Language</span>
     </p>
+</div>
+<div>
+    <form asp-controller="Reviews" asp-action="Add" method="post">
+        <div class="form-group rating">
+            <input type="radio" name="rating" value="5" id="5"><label for="5">☆</label>
+            <input type="radio" name="rating" value="4" id="4"><label for="4">☆</label>
+            <input type="radio" name="rating" value="3" id="3"><label for="3">☆</label>
+            <input type="radio" name="rating" value="2" id="2"><label for="2">☆</label>
+            <input type="radio" name="rating" value="1" id="1"><label for="1">☆</label>
+        </div>
+        <div class="form-group">
+            <label for="exampleFormControlTextarea1">Review:</label>
+            <textarea class="form-control" name="content" rows="3"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
 </div>
 
 @section Scripts {

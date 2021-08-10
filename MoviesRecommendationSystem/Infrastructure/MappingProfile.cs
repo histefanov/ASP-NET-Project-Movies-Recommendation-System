@@ -17,11 +17,11 @@
                     .ToList()));
 
             this.CreateMap<Movie, MovieDetailsServiceModel>()
-                .ForMember(fm => fm.Genres, cfg => cfg.MapFrom(m => m.MovieGenres
+                .ForMember(md => md.Genres, cfg => cfg.MapFrom(m => m.MovieGenres
                     .Select(mg => mg.Genre.Name)
                     .ToList()))
-                .ForMember(fm => fm.EditorName, cfg => cfg.MapFrom(m => m.Editor.FirstName + " " + m.Editor.LastName))
-                .ForMember(fm => fm.UserId, cfg => cfg.MapFrom(m => m.Editor.UserId));
+                .ForMember(md => md.EditorName, cfg => cfg.MapFrom(m => m.Editor.FirstName + " " + m.Editor.LastName))
+                .ForMember(md => md.UserId, cfg => cfg.MapFrom(m => m.Editor.UserId));
 
             this.CreateMap<MovieDetailsServiceModel, MovieFormModel>();
 

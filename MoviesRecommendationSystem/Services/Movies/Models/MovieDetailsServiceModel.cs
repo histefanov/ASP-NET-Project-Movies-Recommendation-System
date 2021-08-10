@@ -17,6 +17,8 @@
 
         public string StarringActors { get; set; }
 
+        public int AverageRating { get; set; }
+
         public int EditorId { get; set; }
 
         public string EditorName { get; set; }

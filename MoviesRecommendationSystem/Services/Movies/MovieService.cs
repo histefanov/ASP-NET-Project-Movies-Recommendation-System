@@ -172,6 +172,7 @@
                 .ProjectTo<MovieDetailsServiceModel>(this.mapper.ConfigurationProvider)
                 .FirstOrDefault();
 
+            movieDetails.AverageRating = GetAverageRating(id);
             movieDetails.StarringActors = this.ActorsToString(id);
 
             return movieDetails;
@@ -285,6 +286,17 @@
                 .ToList();
 
             return string.Join(", ", actors);
+        }
+
+        private int GetAverageRating(int id)
+        {
+            var movie = this.data
+                .Movies
+                .FirstOrDefault(m => m.Id == id);
+
+            return movie.Reviews.Any() ? 
+                Convert.ToInt32(movie.Reviews.Select(m => m.Rating).Average()) 
+                : 0;
         }
     }
 }
