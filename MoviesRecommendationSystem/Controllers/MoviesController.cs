@@ -12,6 +12,7 @@
     using MoviesRecommendationSystem.Services.Editors;
     using MoviesRecommendationSystem.Services.Movies;
     using MoviesRecommendationSystem.Services.Movies.Models;
+    using MoviesRecommendationSystem.Services.Reviews;
     using MoviesRecommendationSystem.Services.Watchlists;
 
     public class MoviesController : Controller
@@ -19,17 +20,20 @@
         private readonly IMovieService moviesService;
         private readonly IEditorService editorsService;
         private readonly IWatchlistService watchlistService;
+        private readonly IReviewService reviewService;
         private readonly IMapper mapper;
 
         public MoviesController(
             IMovieService moviesService,
             IEditorService editorsService,
             IWatchlistService watchlistService,
+            IReviewService reviewService,
             IMapper mapper)
         {
             this.moviesService = moviesService;
             this.editorsService = editorsService;
             this.watchlistService = watchlistService;
+            this.reviewService = reviewService;
             this.mapper = mapper;
         }
 
@@ -203,6 +207,8 @@
         {
             var movie = this.moviesService
                 .Details(id);
+
+            movie.Reviews = this.reviewService.ReviewsForMovie(id);
 
             if (this.User.Identity.IsAuthenticated)
             {

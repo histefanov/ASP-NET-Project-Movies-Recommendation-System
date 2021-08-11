@@ -66,24 +66,63 @@
         runtime <span>@Model.Runtime min</span> language <span>@Model.Language</span>
     </p>
 </div>
-<div>
-    <form asp-controller="Reviews" asp-action="Add" method="post">
-        <div class="form-group rating col-1">
-            @for (int i = 5; i >= 1; i--)
+<div class="reviews">
+    <div>
+        <p>
+            Have you already watched this movie?
+            Give us your thoughts!
+        </p>
+        <input type="button" value="Add review" id="add-review">
+    </div>
+    <div class="review-form">
+        <form asp-controller="Reviews" asp-action="Add" method="post">
+            <p>Rating:</p>
+            <div class="form-group rating col-1 ml-2">
+                @for (int i = 5; i >= 1; i--)
+                {
+                    <input type="radio" name="rating" value="@i" id="@i"><label for="@i">☆</label>
+                }
+            </div>
+            <p>Review:</p>
+            <div class="form-group">
+                <textarea class="form-control" name="content" rows="3"></textarea>
+            </div>
+            <div hidden class="form-group hidden">
+                <input type="text" name="movieId" value="@Model.Id" />
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+    @if (Model.Reviews != null)
+    {
+        <div>
+            @foreach (var review in Model.Reviews)
             {
-                <input type="radio" name="rating" value="@i" id="@i"><label for="@i">☆</label>
+                <div class="row p-4">
+                    <div class="col-2">
+                        <p class="review-author">@review.Author</p>
+                        <p class="review-publish-date">@review.DateCreated</p>
+                    </div>
+                    <div class="col-4">
+                        <p class="review-rating">
+                            @for (int i = 0; i < review.Rating; i++)
+                            {
+                                <span class="star-active-small">★</span>
+                            }
+                            @for (int i = 0; i < 5 - review.Rating; i++)
+                            {
+                                <span class="star-passive-small">☆</span>
+                            }
+                        </p>
+                        <p class="review-content">@review.Content</p>
+                    </div>
+                </div>
+                <hr />
             }
         </div>
-        <div class="form-group">
-            <label for="exampleFormControlTextarea1">Review:</label>
-            <textarea class="form-control" name="content" rows="3"></textarea>
-        </div>
-        <div hidden class="form-group hidden">
-            <input type="text" name="movieId" value="@Model.Id" />
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
+    }
 </div>
+
 
 @section Scripts {
     <script>
@@ -132,5 +171,10 @@
                 })
             })
         });
+
+        $('#add-review').click(function () {
+            $('.review-form').show(300);
+            $('#add-review').hide();
+        })
     </script>
 }

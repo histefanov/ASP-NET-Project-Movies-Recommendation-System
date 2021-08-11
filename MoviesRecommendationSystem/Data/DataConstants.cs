@@ -44,6 +44,14 @@
             public const int LastNameMaxLength = 50;
             public const int EditorMinAge = 16;
             public const int EditorMaxAge = 100;
-        }    
+        }  
+        
+        public class Review
+        {
+            public const int ContentMinLength = 5;
+            public const int ContentMaxLength = 200;
+            public const int MinRating = 1;
+            public const int MaxRating = 5;
+        }
     }
 }

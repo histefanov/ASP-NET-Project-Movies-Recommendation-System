@@ -1,7 +1,7 @@
 ﻿namespace MoviesRecommendationSystem.Services.Movies.Models
 {
     using System.Collections.Generic;
-    using MoviesRecommendationSystem.Services.Watchlists.Models;
+    using MoviesRecommendationSystem.Services.Reviews.Reviews;
 
     public class MovieDetailsServiceModel : MovieServiceModel
     {
@@ -26,5 +26,7 @@
         public string YoutubeTrailerId { get; set; }
 
         public string UserId { get; set; }
+
+        public IEnumerable<ReviewServiceModel> Reviews { get; set; }
     }
 }

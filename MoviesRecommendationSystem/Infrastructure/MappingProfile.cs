@@ -4,6 +4,7 @@
     using MoviesRecommendationSystem.Data.Models;
     using MoviesRecommendationSystem.Models.Movies;
     using MoviesRecommendationSystem.Services.Movies.Models;
+    using MoviesRecommendationSystem.Services.Reviews.Reviews;
     using MoviesRecommendationSystem.Services.Watchlists.Models;
     using System.Linq;
 
@@ -31,6 +32,9 @@
                 .ForMember(w => w.Id, cfg => cfg.MapFrom(m => m.MovieId))
                 .ForMember(w => w.Title, cfg => cfg.MapFrom(m => m.Movie.Title))
                 .ForMember(w => w.ReleaseYear, cfg => cfg.MapFrom(m => m.Movie.ReleaseYear));
+
+            this.CreateMap<Review, ReviewServiceModel>()
+                .ForMember(r => r.Author, cfg => cfg.MapFrom(r => r.User.Name));
         }
     }
 }

@@ -7,28 +7,31 @@
     IEnumerable<WatchlistMovieServiceModel> watchlistMovies;
     int watchlistCount;
     bool userIsAuthenticated = User.Identity.IsAuthenticated;
-    var userId = User.GetId();
+    string userId;
 
     if (userIsAuthenticated)
     {
+        userId = User.GetId();
         watchlistMovies = WatchlistService.GetMoviesByUser(userId);
         watchlistCount = watchlistMovies.Count();
     }
     else
     {
+        userId = string.Empty;
         watchlistMovies = null;
         watchlistCount = 0;
     }
 }
 
-<div class="dropdown show">
-    <a href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <img src="~/img/watchlist_icon.png" alt="Watchlist" />
-        <span class="badge badge-danger" id="watchlist-counter">@watchlistCount</span>
-    </a>
-    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
-        @if (userIsAuthenticated)
-        {
+@if (userIsAuthenticated)
+{
+    <div class="dropdown show">
+        <a href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <img src="~/img/watchlist_icon.png" alt="Watchlist" />
+            <span class="badge badge-danger" id="watchlist-counter">@watchlistCount</span>
+        </a>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+
             <div id="watchlist-dropdown">
                 @foreach (var movie in watchlistMovies.Take(5))
                 {
@@ -37,6 +40,6 @@
             </div>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" asp-controller="Watchlists" asp-action="All" asp-route-userId="@userId">See all</a>
-        }
+        </div>
     </div>
-</div>
+}

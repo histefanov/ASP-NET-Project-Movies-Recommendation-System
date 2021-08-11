@@ -221,7 +221,7 @@ body {
     padding-bottom: 2px;
 }
 
-#add-movie, #remove-movie {
+#add-movie, #remove-movie, #add-review {
     font-family: 'Varela Round', sans-serif;
     font-size: 13px;
     font-weight: 100;
@@ -248,6 +248,16 @@ body {
     font-weight: 100;
     margin-top: 15px;
     padding: 10px;
+}
+
+.reviews {
+    margin-top: 100px;
+    background-color: #f5f5f5;
+}
+
+.review-form {
+    display: none;
+    margin: 50px;
 }
 
 .average-rating {
@@ -299,5 +309,17 @@ body {
 .star-passive {
     width: 1em;
     font-size: 4vw;
+    color: #FFD600;
+}
+
+.star-active-small {
+    width: 1em;
+    font-size: 2vw;
+    color: #FFD600;
+}
+
+.star-passive-small {
+    width: 1em;
+    font-size: 2vw;
     color: #FFD600;
 }
