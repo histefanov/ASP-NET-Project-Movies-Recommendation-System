@@ -1,5 +1,6 @@
 namespace MoviesRecommendationSystem
 {
+    using System;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Identity;
@@ -13,9 +14,9 @@ namespace MoviesRecommendationSystem
     using MoviesRecommendationSystem.Infrastructure;
     using MoviesRecommendationSystem.Services.Editors;
     using MoviesRecommendationSystem.Services.Movies;
+    using MoviesRecommendationSystem.Services.Reviews;
     using MoviesRecommendationSystem.Services.Statistics;
     using MoviesRecommendationSystem.Services.Watchlists;
-    using System;
 
     public class Startup
     {
@@ -55,21 +56,23 @@ namespace MoviesRecommendationSystem
 
             services.AddAutoMapper(typeof(Startup));
 
-            services.AddControllersWithViews(options => 
+            services.AddControllersWithViews(options =>
             {
                 options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
             });
 
-            services.AddTransient<IMovieService, MovieService>();
-            services.AddTransient<IEditorService, EditorService>();
-            services.AddTransient<IStatisticsService, StatisticsService>();
-            services.AddTransient<IWatchlistService, WatchlistService>();
+            services
+                .AddTransient<IMovieService, MovieService>()
+                .AddTransient<IEditorService, EditorService>()
+                .AddTransient<IStatisticsService, StatisticsService>()
+                .AddTransient<IWatchlistService, WatchlistService>()
+                .AddTransient<IReviewService, ReviewService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.PrepareDatabase();
-            
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

@@ -48,6 +48,9 @@
 
         //[Required]
         public string YoutubeTrailerId { get; set; }
+
+        //[Required]
+        public string ImdbId { get; set; }
       
         public ICollection<MovieGenre> MovieGenres { get; init; } = new HashSet<MovieGenre>();
 

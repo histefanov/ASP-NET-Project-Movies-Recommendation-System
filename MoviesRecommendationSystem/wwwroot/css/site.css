@@ -250,7 +250,11 @@ body {
     padding: 10px;
 }
 
-.rating, .average-rating {
+.average-rating {
+    text-align: center;
+}
+
+.rating {
     display: flex;
     flex-direction: row-reverse;
     justify-content: center
@@ -262,7 +266,7 @@ body {
 
     .rating > label {
         position: relative;
-        width: 1em;
+        width: 22px;
         font-size: 2vw;
         color: #FFD600;
     }

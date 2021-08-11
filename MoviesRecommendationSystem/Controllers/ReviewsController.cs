@@ -1,18 +1,30 @@
 ﻿namespace MoviesRecommendationSystem.Controllers
 {
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using MoviesRecommendationSystem.Data;
+    using MoviesRecommendationSystem.Infrastructure;
+    using MoviesRecommendationSystem.Services.Reviews;
 
     public class ReviewsController : Controller
     {
-        private readonly MoviesRecommendationDbContext data;
+        private readonly IReviewService reviewService;
 
-        public ReviewsController(MoviesRecommendationDbContext data) 
-            => this.data = data;
+        public ReviewsController(IReviewService reviewService) 
+            => this.reviewService = reviewService;
 
-        public IActionResult Add()
+        [Authorize]
+        [HttpPost]
+        public IActionResult Add(int movieId, int rating, string content)
         {
-            return View();
+            var userId = this.User.GetId();
+
+            this.reviewService.Create(
+                userId, 
+                movieId, 
+                rating, 
+                content);
+
+            return RedirectToAction("Details", "Movies", new { id = movieId });
         }
     }
 }

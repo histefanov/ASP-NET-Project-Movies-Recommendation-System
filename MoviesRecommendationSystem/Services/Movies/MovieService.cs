@@ -290,12 +290,14 @@
 
         private int GetAverageRating(int id)
         {
-            var movie = this.data
-                .Movies
-                .FirstOrDefault(m => m.Id == id);
+            var movieReviews = this.data
+                .Reviews
+                .Where(r => r.MovieId == id)
+                .ToList();
+                
 
-            return movie.Reviews.Any() ? 
-                Convert.ToInt32(movie.Reviews.Select(m => m.Rating).Average()) 
+            return movieReviews.Any() ? 
+                Convert.ToInt32(movieReviews.Select(m => m.Rating).Average()) 
                 : 0;
         }
     }
