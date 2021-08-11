@@ -51,6 +51,8 @@
 
         //[Required]
         public string ImdbId { get; set; }
+
+        public bool IsDeleted { get; set; }
       
         public ICollection<MovieGenre> MovieGenres { get; init; } = new HashSet<MovieGenre>();
 

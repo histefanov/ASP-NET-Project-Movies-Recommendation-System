@@ -115,6 +115,21 @@
             return true;
         }
 
+        public bool Delete(int movieId)
+        {
+            var movieData = this.data.Movies.Find(movieId);
+
+            if (movieData == null)
+            {
+                return false;
+            }
+
+            movieData.IsDeleted = true;
+            this.data.SaveChanges();
+
+            return true;
+        }
+
         public MovieQueryServiceModel All(
             string selectedGenre,
             string searchTerm,
@@ -122,7 +137,9 @@
             int currentPage,
             int moviesPerPage)
         {
-            var moviesQuery = this.data.Movies.AsQueryable();
+            var moviesQuery = this.data
+                .Movies
+                .Where(m => !m.IsDeleted);
 
             if (!string.IsNullOrWhiteSpace(selectedGenre))
             {
@@ -168,7 +185,7 @@
         {
             var movieDetails = this.data
                 .Movies
-                .Where(m => m.Id == id)
+                .Where(m => m.Id == id && !m.IsDeleted)
                 .ProjectTo<MovieDetailsServiceModel>(this.mapper.ConfigurationProvider)
                 .FirstOrDefault();
 
@@ -195,7 +212,7 @@
         public IEnumerable<MovieServiceModel> ByUser(string userId)
             => GetMovies(this.data
                 .Movies
-                .Where(m => m.Editor.UserId == userId));
+                .Where(m => m.Editor.UserId == userId && !m.IsDeleted));
 
         public bool IsByEditor(int movieId, int editorId)
             => this.data

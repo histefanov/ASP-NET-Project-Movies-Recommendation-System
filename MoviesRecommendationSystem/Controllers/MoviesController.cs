@@ -52,8 +52,8 @@
             return View(new MovieFormModel());
         }
 
-        [HttpPost]
         [Authorize]
+        [HttpPost]
         public IActionResult Add(MovieFormModel movie)
         {
             var editorId = this.editorsService.IdByUser(User.GetId());
@@ -125,8 +125,8 @@
             return View(movieForm);
         }
 
-        [HttpPost]
         [Authorize]
+        [HttpPost]
         public IActionResult Edit(int id, MovieFormModel movie)
         {
             var editorId = this.editorsService.IdByUser(User.GetId());
@@ -173,6 +173,26 @@
                 movie.GenreIds);
 
             return RedirectToAction("Index", "Home");
+        }
+
+        [Authorize]
+        public IActionResult Delete(int id)
+        {
+            var editorId = this.editorsService.IdByUser(User.GetId());
+
+            if (editorId == 0 && !this.User.IsAdmin())
+            {
+                return BadRequest();
+            }
+
+            if (!this.moviesService.IsByEditor(id, editorId) && !this.User.IsAdmin())
+            {
+                return BadRequest();
+            }
+
+            this.moviesService.Delete(id);
+
+            return RedirectToAction(nameof(EditorContributions), "Movies");
         }
 
         public IActionResult All([FromQuery] AllMoviesQueryModel query)

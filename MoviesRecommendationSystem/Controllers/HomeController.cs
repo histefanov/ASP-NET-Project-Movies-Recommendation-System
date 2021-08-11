@@ -27,6 +27,9 @@
             });
         }
 
+        public IActionResult About()
+            => View();
+
         public IActionResult Error()
             => View();
     }

@@ -49,7 +49,15 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; @DateTime.UtcNow.Year - Movies Recommendation System
+            <div class="nav-left">
+                &copy; Filmche @DateTime.UtcNow.Year
+            </div>
+            <div class="nav-right">
+                <ul>
+                    <li><a href="mailto:info@filmche.org" class="nav-link">Contact</a></li>
+                    <li><a asp-controller="Home" asp-action="About">About</a></li>
+                </ul>
+            </div>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

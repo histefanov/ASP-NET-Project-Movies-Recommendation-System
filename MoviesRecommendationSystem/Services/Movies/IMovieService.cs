@@ -33,6 +33,8 @@
             string actors,
             IEnumerable<string> genres);
 
+        bool Delete(int movieId);
+
         MovieQueryServiceModel All(
             string selectedGenre,
             string searchTerm,
