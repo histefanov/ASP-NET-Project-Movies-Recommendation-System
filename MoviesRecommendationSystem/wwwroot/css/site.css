@@ -159,6 +159,14 @@ body {
     max-width: 1280px;  
 }
 
+#btn-logout {
+    padding: 7px 7px 2px 4px;
+}
+
+    #btn-logout:hover {
+        color: darkgrey;
+    }
+
 .btn-transparent {
     font-family: 'Varela Round', sans-serif;
     font-size: 13px;

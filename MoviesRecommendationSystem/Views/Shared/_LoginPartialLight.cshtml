@@ -15,33 +15,33 @@
             if (userIsEditor)
             {
                 <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Movies" asp-action="EditorContributions">Contributions</a>
+                    <a class="nav-link text-light" asp-area="" asp-controller="Movies" asp-action="EditorContributions">Contributions</a>
                 </li>
             }
             else
             {
                 <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Editors" asp-action="Become">Become Editor</a>
+                    <a class="nav-link text-light" asp-area="" asp-controller="Editors" asp-action="Become">Become Editor</a>
                 </li>
             }
         }
 
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Profile</a>
+            <a class="nav-link text-light" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Profile</a>
         </li>
         <li class="nav-item">
             <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                <button type="submit" class="nav-link btn btn-link text-dark" id="btn-logout">Logout</button>
-            </form>          
+                <button type="submit" class="nav-link btn btn-link text-light" id="btn-logout">Logout</button>
+            </form>
         </li>
     }
     else
     {
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
+            <a class="nav-link text-light" asp-area="Identity" asp-page="/Account/Register">Register</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
+            <a class="nav-link text-light" asp-area="Identity" asp-page="/Account/Login">Login</a>
         </li>
     }
 </ul>

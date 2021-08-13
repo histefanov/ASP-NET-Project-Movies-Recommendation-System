@@ -2,7 +2,14 @@
 
 @{
     ViewBag.Title = "Home Page";
+    Layout = "_LayoutIndex";
 }
+
+<div class="stars-animation">
+    <div class="stars"></div>
+    <div class="twinkling"></div>
+    <div class="clouds"></div>
+</div>
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
@@ -27,6 +34,8 @@
         <h2 class="col-md-3 text-center" id="total-directors"></h2>
     </div>
 </div>
+
+
 
 @section Scripts {
     <script>
