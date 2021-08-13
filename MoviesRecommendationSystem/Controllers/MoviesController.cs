@@ -192,6 +192,8 @@
 
             this.moviesService.Delete(id);
 
+            this.watchlistService.RemoveForAllUsers(id);
+
             return RedirectToAction(nameof(EditorContributions), "Movies");
         }
 

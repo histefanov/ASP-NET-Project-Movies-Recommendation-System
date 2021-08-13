@@ -58,6 +58,23 @@
             return true;
         }
 
+        public void RemoveForAllUsers(int movieId)
+        {
+            var movies = this.data
+                .UserWatchlistMovies
+                .Where(w => w.MovieId == movieId)
+                .ToList();
+
+            foreach (var movie in movies)
+            {
+                this.data
+                    .UserWatchlistMovies
+                    .Remove(movie);
+            }
+
+            this.data.SaveChanges();
+        }
+
         public int Count(string userid)
             => this.data
                 .UserWatchlistMovies

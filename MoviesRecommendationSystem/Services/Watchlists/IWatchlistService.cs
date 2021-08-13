@@ -10,6 +10,8 @@
 
         bool Remove(string userId, int movieId);
 
+        void RemoveForAllUsers(int movieId);
+
         int Count(string userid);
 
         bool Exists(string userId, int movieId);
