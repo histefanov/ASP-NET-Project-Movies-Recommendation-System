@@ -44,6 +44,8 @@
 
         MovieDetailsServiceModel Details(int id);
 
+        int Random();
+
         IEnumerable<MovieServiceModel> ByUser(string userId);
 
         bool IsByEditor(int movieId, int editorId);

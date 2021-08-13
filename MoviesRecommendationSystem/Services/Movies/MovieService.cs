@@ -181,6 +181,20 @@
             };
         }
 
+        public int Random()
+        {
+            var movieIds = this.data
+                .Movies
+                .Where(m => !m.IsDeleted)
+                .Select(m => m.Id)
+                .ToList();
+
+            var rand = new Random();
+            var index = rand.Next(0, movieIds.Count - 1);
+
+            return movieIds[index];
+        }
+
         public MovieDetailsServiceModel Details(int id)
         {
             var movieDetails = this.data

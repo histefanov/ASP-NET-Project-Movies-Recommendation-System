@@ -225,6 +225,13 @@
             return View(contributions);
         }
 
+        public IActionResult Random()
+        {
+            var id = this.moviesService.Random();
+
+            return RedirectToAction(nameof(Details), "Movies", new { id });
+        }
+
         public IActionResult Details(int id)
         {
             var movie = this.moviesService
