@@ -181,7 +181,7 @@
             };
         }
 
-        public int Random()
+        public MovieRandomServiceModel Random()
         {
             var movieIds = this.data
                 .Movies
@@ -191,8 +191,13 @@
 
             var rand = new Random();
             var index = rand.Next(0, movieIds.Count - 1);
+            var id = movieIds[index];
 
-            return movieIds[index];
+            var movie = this.data
+                .Movies
+                .FirstOrDefault(m => m.Id == id);
+
+            return mapper.Map<MovieRandomServiceModel>(movie);
         }
 
         public MovieDetailsServiceModel Details(int id)

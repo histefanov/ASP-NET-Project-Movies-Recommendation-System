@@ -94,6 +94,10 @@ namespace MoviesRecommendationSystem
                 .UseEndpoints(endpoints =>
                 {
                     endpoints.MapDefaultAreaRoute();
+                    endpoints.MapControllerRoute(
+                        name: "Movie Details",
+                        pattern: "/Movies/Details/{id}/{info}",
+                        defaults: new { controller = "Movies", action = "Details" });
                     endpoints.MapDefaultControllerRoute();
                     endpoints.MapRazorPages();
                 });

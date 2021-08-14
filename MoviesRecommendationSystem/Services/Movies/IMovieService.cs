@@ -44,7 +44,7 @@
 
         MovieDetailsServiceModel Details(int id);
 
-        int Random();
+        MovieRandomServiceModel Random();
 
         IEnumerable<MovieServiceModel> ByUser(string userId);
 

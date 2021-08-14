@@ -1,8 +1,9 @@
 ﻿namespace MoviesRecommendationSystem.Services.Movies.Models
 {
+    using MoviesRecommendationSystem.Services.Movies.Models.Interfaces;
     using System.Collections.Generic;
     
-    public class MovieServiceModel
+    public class MovieServiceModel : IMovieServiceModel
     {
         public int Id { get; init; }
 

@@ -24,6 +24,8 @@
                 .ForMember(md => md.EditorName, cfg => cfg.MapFrom(m => m.Editor.FirstName + " " + m.Editor.LastName))
                 .ForMember(md => md.UserId, cfg => cfg.MapFrom(m => m.Editor.UserId));
 
+            this.CreateMap<Movie, MovieRandomServiceModel>();
+
             this.CreateMap<MovieDetailsServiceModel, MovieFormModel>();
 
             this.CreateMap<Genre, MovieGenreServiceModel>();

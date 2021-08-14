@@ -227,15 +227,23 @@
 
         public IActionResult Random()
         {
-            var id = this.moviesService.Random();
+            var model = this.moviesService.Random();
 
-            return RedirectToAction(nameof(Details), "Movies", new { id });
+            return RedirectToAction(
+                nameof(Details), 
+                "Movies", 
+                new { id = model.Id, info = model.GetInfo() });
         }
 
-        public IActionResult Details(int id)
+        public IActionResult Details(int id, string info)
         {
             var movie = this.moviesService
                 .Details(id);
+
+            if (info != movie.GetInfo())
+            {
+                return BadRequest();
+            }
 
             movie.Reviews = this.reviewService.ReviewsForMovie(id);
 
