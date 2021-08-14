@@ -15,6 +15,8 @@
 
         public string ImageUrl { get; init; }
 
+        public bool IsPublic { get; init; }
+
         public bool IsDeleted { get; init; }
 
         public IList<string> Genres { get; init; }

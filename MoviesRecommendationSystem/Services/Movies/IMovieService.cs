@@ -17,7 +17,8 @@
             string studio,
             string actors,
             IEnumerable<string> genres,
-            int editorId);
+            int editorId,
+            bool IsPublic);
 
         bool Edit(
             int movieId,
@@ -31,20 +32,24 @@
             string studio,
             string youtubeTrailerId,
             string actors,
-            IEnumerable<string> genres);
+            IEnumerable<string> genres,
+            bool IsPublic);
 
         bool Delete(int movieId);
 
         MovieQueryServiceModel All(
-            string selectedGenre,
-            string searchTerm,
-            MovieSorting sorting,
-            int currentPage,
-            int moviesPerPage);
+            string selectedGenre = null,
+            string searchTerm = null,
+            MovieSorting sorting = MovieSorting.DateCreated,
+            int currentPage = 1,
+            int moviesPerPage = int.MaxValue,
+            bool publicOnly = true);
 
         MovieDetailsServiceModel Details(int id);
 
         MovieRandomServiceModel Random();
+
+        void SwitchVisibility(int id);
 
         IEnumerable<MovieServiceModel> ByUser(string userId);
 

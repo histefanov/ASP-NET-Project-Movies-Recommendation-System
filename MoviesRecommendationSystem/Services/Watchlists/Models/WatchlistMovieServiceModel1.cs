@@ -1,6 +1,8 @@
 ﻿namespace MoviesRecommendationSystem.Services.Watchlists.Models
 {
-    public class WatchlistMovieServiceModel
+    using MoviesRecommendationSystem.Services.Movies.Models.Interfaces;
+
+    public class WatchlistMovieServiceModel : IMovieServiceModel
     {
         public int Id { get; set; }
 

@@ -47,13 +47,6 @@ namespace MoviesRecommendationSystem
 
             services.AddMemoryCache();
 
-            services.AddSession(options =>
-            {
-                options.IdleTimeout = TimeSpan.FromMinutes(20);
-                options.Cookie.HttpOnly = true;
-                options.Cookie.IsEssential = true;
-            });
-
             services.AddAutoMapper(typeof(Startup));
 
             services.AddControllersWithViews(options =>
@@ -86,7 +79,6 @@ namespace MoviesRecommendationSystem
 
             app
                 .UseHttpsRedirection()
-                .UseSession()
                 .UseStaticFiles()
                 .UseRouting()
                 .UseAuthentication()

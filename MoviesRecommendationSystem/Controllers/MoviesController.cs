@@ -15,6 +15,8 @@
     using MoviesRecommendationSystem.Services.Reviews;
     using MoviesRecommendationSystem.Services.Watchlists;
 
+    using static WebConstants;
+
     public class MoviesController : Controller
     {
         private readonly IMovieService moviesService;
@@ -82,7 +84,7 @@
                 return View(movie);
             }
 
-            this.moviesService.Create(
+            var movieId = this.moviesService.Create(
                 movie.Title,
                 (int)movie.ReleaseYear,
                 (int)movie.Runtime,
@@ -93,9 +95,14 @@
                 movie.Studio,
                 movie.StarringActors,
                 movie.GenreIds,
-                editorId);
+                editorId,
+                User.IsAdmin());
 
-            return RedirectToAction("Index", "Home");
+            TempData[GlobalMessageKey] = User.IsAdmin() ?
+                "Your movie was added successfully and is now public!"
+                : "Your movie was added successfully and is awaiting approval!";
+
+            return RedirectToAction(nameof(Details), new { id = movieId, info = movie.GetInfo() });
         }
 
         [Authorize]
@@ -170,9 +177,14 @@
                 movie.Studio,
                 movie.YoutubeTrailerId,
                 movie.StarringActors,
-                movie.GenreIds);
+                movie.GenreIds,
+                this.User.IsAdmin());
 
-            return RedirectToAction("Index", "Home");
+            TempData[GlobalMessageKey] = User.IsAdmin() ?
+                "Movie was edited successfully and is now public!"
+                : "Your movie was edited successfully and is awaiting approval!";
+
+            return RedirectToAction(nameof(Details), new { id, info = movie.GetInfo() });
         }
 
         [Authorize]
@@ -228,6 +240,11 @@
         public IActionResult Random()
         {
             var model = this.moviesService.Random();
+
+            if (model == null)
+            {
+                return NotFound();
+            }
 
             return RedirectToAction(
                 nameof(Details), 

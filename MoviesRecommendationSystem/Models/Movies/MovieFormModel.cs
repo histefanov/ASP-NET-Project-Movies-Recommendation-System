@@ -1,13 +1,14 @@
 ﻿namespace MoviesRecommendationSystem.Models.Movies
 {
     using MoviesRecommendationSystem.Data.Models.ValidationAttributes;
+    using MoviesRecommendationSystem.Services.Movies.Models.Interfaces;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
     using static Data.DataConstants.Movie;
     using static Data.DataConstants.Person;
 
-    public class MovieFormModel
+    public class MovieFormModel : IMovieServiceModel
     {       
         [Required]
         [StringLength(TitleMaxLength, MinimumLength = TitleMinLength)]
@@ -19,7 +20,7 @@
             YearMinValue, 
             YearMaxValue, 
             ErrorMessage = "The year of release must be between {1} and {2}.")]
-        public int? ReleaseYear { get; init; }
+        public int ReleaseYear { get; init; }
 
         [Required]
         [Range(

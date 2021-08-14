@@ -32,7 +32,8 @@
             string studio,
             string actors,
             IEnumerable<string> genres,
-            int editorId)
+            int editorId,
+            bool IsPublic)
         {
             var movieData = new Movie
             {
@@ -44,7 +45,8 @@
                 ImageUrl = imageUrl,
                 DirectorId = this.AddDirector(director),
                 Studio = studio,
-                EditorId = editorId
+                EditorId = editorId,
+                IsPublic = IsPublic
             };
 
             this.data.Movies.Add(movieData);
@@ -71,7 +73,8 @@
             string studio,
             string youtubeTrailerId,
             string actors,
-            IEnumerable<string> genres)
+            IEnumerable<string> genres,
+            bool isPublic)
         {
             var movieData = this.data.Movies.Find(movieId);
 
@@ -89,6 +92,7 @@
             movieData.DirectorId = this.AddDirector(director);
             movieData.Studio = studio;
             movieData.YoutubeTrailerId = youtubeTrailerId;
+            movieData.IsPublic = isPublic;
 
             this.data.SaveChanges();
 
@@ -131,15 +135,22 @@
         }
 
         public MovieQueryServiceModel All(
-            string selectedGenre,
-            string searchTerm,
-            MovieSorting sorting,
-            int currentPage,
-            int moviesPerPage)
+            string selectedGenre = null,
+            string searchTerm = null,
+            MovieSorting sorting = MovieSorting.DateCreated,
+            int currentPage = 1,
+            int moviesPerPage = int.MaxValue,
+            bool publicOnly = true)
         {
             var moviesQuery = this.data
                 .Movies
                 .Where(m => !m.IsDeleted);
+
+            if (publicOnly)
+            {
+                moviesQuery = moviesQuery
+                    .Where(m => m.IsPublic);
+            }
 
             if (!string.IsNullOrWhiteSpace(selectedGenre))
             {
@@ -185,9 +196,14 @@
         {
             var movieIds = this.data
                 .Movies
-                .Where(m => !m.IsDeleted)
+                .Where(m => !m.IsDeleted && m.IsPublic)
                 .Select(m => m.Id)
                 .ToList();
+
+            if (movieIds.Count == 0)
+            {
+                return null;
+            }
 
             var rand = new Random();
             var index = rand.Next(0, movieIds.Count - 1);
@@ -195,7 +211,7 @@
 
             var movie = this.data
                 .Movies
-                .FirstOrDefault(m => m.Id == id);
+                .Find(id);
 
             return mapper.Map<MovieRandomServiceModel>(movie);
         }
@@ -212,6 +228,15 @@
             movieDetails.StarringActors = this.ActorsToString(id);
 
             return movieDetails;
+        }
+
+        public void SwitchVisibility(int id)
+        {
+            var movie = this.data.Movies.Find(id);
+
+            movie.IsPublic = !movie.IsPublic;
+
+            data.SaveChanges();
         }
 
         public IEnumerable<MovieGenreServiceModel> AllGenres()
@@ -331,7 +356,6 @@
                 .Where(r => r.MovieId == id)
                 .ToList();
                 
-
             return movieReviews.Any() ? 
                 Convert.ToInt32(movieReviews.Select(m => m.Rating).Average()) 
                 : 0;
