@@ -230,6 +230,15 @@
             return movieDetails;
         }
 
+        public string GetRouteInfo(int movieId)
+        {
+            var movie = this.data.Movies.Find(movieId);
+
+            var routeInfo = movie.Title + "-" + movie.ReleaseYear;
+
+            return routeInfo;
+        }
+
         public void SwitchVisibility(int id)
         {
             var movie = this.data.Movies.Find(id);
@@ -355,9 +364,9 @@
                 .Reviews
                 .Where(r => r.MovieId == id)
                 .ToList();
-                
-            return movieReviews.Any() ? 
-                Convert.ToInt32(movieReviews.Select(m => m.Rating).Average()) 
+
+            return movieReviews.Any() ?
+                Convert.ToInt32(movieReviews.Select(m => m.Rating).Average())
                 : 0;
         }
     }

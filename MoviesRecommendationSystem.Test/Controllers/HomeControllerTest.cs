@@ -1,24 +1,33 @@
 ﻿namespace MoviesRecommendationSystem.Test.Controllers
 {
-    using Microsoft.AspNetCore.Mvc;
     using MoviesRecommendationSystem.Controllers;
     using Xunit;
+    using MyTested.AspNetCore.Mvc;
 
-    
     public class HomeControllerTest
     {
         [Fact]
-        public void ErrorShouldReturnView()
-        {
-            //Arrange
-            var homeController = new HomeController(null);
+        public void IndexShouldReturnCorrectView()
+            => MyController<HomeController>
+                .Instance()
+                .Calling(c => c.Index())
+                .ShouldReturn()
+                .View();
 
-            //Act
-            var result = homeController.Error();
+        [Fact]
+        public void AboutShouldReturnCorrectView()
+            => MyController<HomeController>
+                .Instance()
+                .Calling(c => c.About())
+                .ShouldReturn()
+                .View();
 
-            //Assert
-            Assert.NotNull(result);
-            Assert.IsType<ViewResult>(result);
-        }
+        [Fact]
+        public void ErrorShouldReturnCorrectView()
+            => MyController<HomeController>
+                .Instance()
+                .Calling(c => c.Error())
+                .ShouldReturn()
+                .View();
     }
 }

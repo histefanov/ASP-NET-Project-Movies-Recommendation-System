@@ -66,6 +66,7 @@
         runtime <span>@Model.Runtime min</span> language <span>@Model.Language</span>
     </p>
 </div>
+
 <div class="reviews">
     <div>
         <p>
@@ -75,12 +76,12 @@
         <input type="button" value="Add review" id="add-review">
     </div>
     <div class="review-form">
-        <form asp-controller="Reviews" asp-action="Add" method="post">
+        <form method="post" asp-controller="Reviews" asp-action="Add">
             <p>Rating:</p>
             <div class="form-group rating col-1 ml-2">
                 @for (int i = 5; i >= 1; i--)
                 {
-                    <input type="radio" name="rating" value="@i" id="@i"><label for="@i">☆</label>
+                    <input type="radio" name="rating" value="@(i)" id="star-@i"><label for="star-@i">☆</label>
                 }
             </div>
             <p>Review:</p>
@@ -137,7 +138,7 @@
 
                         $('#watchlist-counter').html(parseInt($('#watchlist-counter').html(), 10) + 1);
 
-                        $('#watchlist-dropdown').prepend('<a class="dropdown-item" href="@Model.Id" id="@Model.Id">@Model.Title (@Model.ReleaseYear)</a>');
+                        $('#watchlist-dropdown').prepend('<a class="dropdown-item" href="@Model.Id" id="movie-id-@Model.Id">@Model.Title (@Model.ReleaseYear)</a>');
 
                         if ($('#watchlist-dropdown').children().length > 5) {
                             $('#watchlist-dropdown').children().last().remove();
@@ -161,7 +162,7 @@
 
                         $('#watchlist-counter').html(parseInt($('#watchlist-counter').html(), 10) - 1);
 
-                        $('#watchlist-dropdown > #@Model.Id').remove();
+                        $('#watchlist-dropdown > #movie-id-@Model.Id').remove();
 
                         $('#watchlist-notification')
                             .css('color', 'darkred')

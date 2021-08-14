@@ -49,6 +49,8 @@
 
         MovieRandomServiceModel Random();
 
+        string GetRouteInfo(int movieId);
+
         void SwitchVisibility(int id);
 
         IEnumerable<MovieServiceModel> ByUser(string userId);
