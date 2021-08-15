@@ -4,37 +4,13 @@
     ViewBag.Title = "Collection";
 }
 
-@*<form method="get">
-        <div class="row" mb-5>
-            <div class="form-group col-md-4">
-                <select asp-for="SelectedGenre" class="form-control">
-                    <option value="">All Genres</option>
-                    @foreach (var genre in Model.Genres)
-                    {
-                        <option value="@genre">@genre</option>
-                    }
-                </select>
-            </div>
-            <div class="form-group col-md-4">
-                <select asp-for="Sorting" class="form-control">
-                    <option value="0" selected>Date of addition</option>
-                    <option value="1">Year of Release (desc.)</option>
-                    <option value="2">Year of Release (asc.)</option>
-                </select>
-            </div>
-            <div class="input-group col-md-4">
-                <input asp-for="SearchTerm" class="form-control">
-            </div>
-        </div>
-    </form>*@
-
 <form method="get">
     <div class="row" id="genre-selector">
         <ul>
-            <li><a class="genre-selector" href="/Movies/All">All</a></li>
+            <li class="li-genre-selector"><a class="genre-selector" href="/Movies/All">All</a></li>
             @foreach (var genre in Model.Genres)
             {
-                <li><a href="?SelectedGenre=@genre">@genre</a></li>
+                <li class="li-genre-selector"><a class="genre-selector" href="?SelectedGenre=@genre">@genre</a></li>
             }
         </ul>
     </div>
@@ -55,10 +31,11 @@
 }
 
 <div class="row">
-    @if (Model.CurrentPage > 1)
-    {
-        <div class="pagination">
-            <a class="btn-transparent"
+    <div class="pagination">
+        @if (Model.CurrentPage > 1)
+        {
+
+            <a class="btn-pagination"
                asp-controller="Movies"
                asp-action="All"
                asp-route-currentPage="@previousPage"
@@ -67,12 +44,10 @@
                asp-route-searchTerm="@Model.SearchTerm">
                 Previous
             </a>
-        </div>
-    }
-    @if (hasNextPage)
-    {
-        <div class="pagination">
-            <a class="btn-transparent"
+        }
+        @if (hasNextPage)
+        {
+            <a class="btn-pagination"
                asp-controller="Movies"
                asp-action="All"
                asp-route-currentPage="@nextPage"
@@ -81,8 +56,8 @@
                asp-route-searchTerm="@Model.SearchTerm">
                 Next
             </a>
-        </div>
-    }
+        }
+    </div>
 </div>
 
 @section Scripts {

@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<MovieServiceModel>
 
-<div class="row">
+<div class="row cards">
     @foreach (var movie in Model)
     {
         <div class="card">
@@ -11,11 +11,12 @@
                 <p class="genres">
                     @foreach (var genre in movie.Genres)
                     {
-                        <span>@genre.ToUpper()</span>
+                        <span>@genre</span>
                     }
                 </p>
-                <a href="Details/@movie.Id">
-                    <h5 class="card-title">@movie.Title, @movie.ReleaseYear</h5>
+                <a class="card-title" asp-controller="Movies" asp-action="Details" asp-route-id="@movie.Id" asp-route-info="@movie.GetInfo()">
+                    <span class="movie-title">@movie.Title</span>
+                    <span class="movie-year">, @movie.ReleaseYear</span>
                 </a>
                 <p class="card-text">@movie.Plot</p>
                 @if (ViewBag.AllowEdit == true)

@@ -7,7 +7,7 @@
 
     public class AllMoviesQueryModel
     {
-        public const int MoviesPerPage = 4;
+        public const int MoviesPerPage = 8;
 
         public int TotalMoviesCount { get; set; }
 
