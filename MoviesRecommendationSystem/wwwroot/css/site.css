@@ -82,6 +82,11 @@ body {
 /* Custom css 
     -------------------------------------------- */
 
+
+.container {
+    max-width: 1500px;
+}
+
 .nav-left {
     float: left;
 }
@@ -348,4 +353,47 @@ body {
     width: 1em;
     font-size: 2vw;
     color: #FFD600;
+}
+
+.popular-genres {
+    display: block;
+    text-align: center;
+}
+
+.popular-genre {
+    position: relative;
+    display: inline-block;
+    margin: 20px;
+    width: 350px;
+    height: 420px;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    bottom: 0;
+}
+
+.title-block {
+    position: absolute;
+    bottom: 0;
+    padding: 5px 5px 5px 15px;
+}
+
+.title-block > h3 {
+    color: white;
+}
+
+#funny {
+    background-image: url(/img/thumbnails/funny.png);
+}
+
+#heart-melting {
+    background-image: url(/img/thumbnails/heart-melting.jpg);
+}
+
+#action-packed {
+    background-image: url(https://i.pinimg.com/originals/ed/e6/ae/ede6ae06c43725f695168971a6340b69.jpg);
+}
+
+#dramatic {
+    background-image: url(/img/thumbnails/dramatic.png);
 }

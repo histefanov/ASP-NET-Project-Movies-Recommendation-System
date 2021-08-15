@@ -18,7 +18,7 @@
                     <h5 class="card-title">@movie.Title, @movie.ReleaseYear</h5>
                 </a>
                 <p class="card-text">@movie.Plot</p>
-                @if (ViewBag.AllowEdit == true || User.IsAdmin())
+                @if (ViewBag.AllowEdit == true)
                 {
                     <div class="row" id="movie-buttons">
                         <a asp-controller="Movies" asp-action="Edit" asp-route-id="@movie.Id" class="btn btn-outline-dark">Edit</a>

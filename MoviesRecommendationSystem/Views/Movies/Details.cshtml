@@ -70,7 +70,7 @@
 <div class="reviews">
     @if (User.Identity.IsAuthenticated)
     {
-        @if (!Model.Reviews.Any(r => r.UserId == User.GetId()))
+        @if (Model.Reviews == null || !Model.Reviews.Any(r => r.UserId == User.GetId()))
         {
             <div>
                 <p>
