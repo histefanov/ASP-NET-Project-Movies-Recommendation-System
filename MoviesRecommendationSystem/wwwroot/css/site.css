@@ -13,7 +13,10 @@ a.navbar-brand {
 }
 
 .nav-link {
-    font-family: 'Varela Round', sans-serif;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 300;
+    font-size: 18px;
+    letter-spacing: 0px;
 }
 
 /* Provide sufficient contrast against white background */
@@ -420,8 +423,44 @@ a.genre-selector {
     color: #FFD600;
 }
 
+.movie-roulette {
+    text-align: center;
+    margin: 45px 250px 40px 250px;
+    padding: 10px 80px 10px 80px;
+}
+
+.home-title {
+    font-family: "Poppins", sans-serif;
+    font-weight: 200;
+    font-size: 50px;
+    color: white;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    padding: 0px 15px 35px 15px;
+}
+
+.btn-transparent-light {
+    font-family: "Poppins", sans-serif;
+    font-weight: 200;
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: white;
+    padding: 18px;
+    background-color: transparent;
+    border: 1px solid rgba(255,255,255,.2);
+    border-radius: 6px;
+}
+
+    .btn-transparent-light:hover {
+        color: white;
+        border-color: rgba(255,255,255,.3);
+        transition-duration: 0.08s;
+    }
+
 .popular-genres {
     display: block;
+    margin-top: 65px;
     text-align: center;
 }
 
@@ -444,9 +483,12 @@ a.genre-selector {
 }
 
     .title-block > h3 {
-        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-        color: white;
+        font-family: "Poppins", sans-serif;
+        font-size: 26px;
+        font-weight: 500;
         text-transform: uppercase;
+        letter-spacing: 1px;
+        color: white;
     }
 
 #funny {
@@ -478,9 +520,17 @@ a.genre-selector {
 }
 
 .recently-added {
+    margin: 70px 0px 70px 0px;
 }
 
-    .recently-added > h3 {
-        text-align: center;
-        margin: 60px;
+    .recently-added > span {
+        display: table;
+        margin: 0 auto;
+        font-family: "Questrial", sans-serif;
+        font-size: 20px;
+        color: darkgrey;
+        font-weight: 100;
+        text-transform: uppercase;
+        border-bottom: 1px solid #ccc;
+        margin-bottom: 80px;
     }
