@@ -192,6 +192,15 @@
             };
         }
 
+        public IEnumerable<MovieServiceModel> LastFourAddedMovies()
+            => this.data
+                .Movies
+                .Where(m => m.IsPublic && !m.IsDeleted)
+                .OrderByDescending(m => m.Id)
+                .Take(4)
+                .ProjectTo<MovieServiceModel>(this.mapper.ConfigurationProvider)
+                .ToList();
+
         public MovieRandomServiceModel Random()
         {
             var movieIds = this.data

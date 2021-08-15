@@ -12,7 +12,7 @@
 </div>
 
 <div class="text-center mb-5">
-    <h1 class="display-3 text-white text-capitalize">
+    <h1 class="display-4 text-white text-uppercase">
         Movies recommendation system - your online cinematic roulette
     </h1>
     <a asp-controller="Movies" asp-action="Random" class="btn btn-light text-center">
@@ -20,48 +20,48 @@
     </a>
 </div>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="popular-genres">
+    <a href="/Movies/All?SelectedGenre=Drama" class="popular-genre" id="dramatic">
+        <div class="title-block">
+            <h3>Dramatic</h3>
+        </div>
+    </a>
+    <a href="/Movies/All?SelectedGenre=Crime" class="popular-genre" id="criminal">
+        <div class="title-block">
+            <h3>Criminal</h3>
+        </div>
+    </a>
+    <a href="/Movies/All?SelectedGenre=Romance" class="popular-genre" id="heart-melting">
+        <div class="title-block">
+            <h3>Heart Melting</h3>
+        </div>
+    </a>
+    <a href="/Movies/All?SelectedGenre=Comedy" class="popular-genre" id="funny">
+        <div class="title-block">
+            <h3>Funny</h3>
+        </div>
+    </a>
+    <a href="/Movies/All?SelectedGenre=War" class="popular-genre" id="war">
+        <div class="title-block">
+            <h3>War</h3>
+        </div>
+    </a>
+    <a href="/Movies/All?SelectedGenre=Horror" class="popular-genre" id="terrifying">
+        <div class="title-block">
+            <h3>Terrifying</h3>
+        </div>
+    </a>
+</div>
+
+<div class="recently-added">
+    <h3>Recently added movies</h3>
+    <partial name="_MoviesPartial" model="@Model.RecentlyAddedMovies" />
 </div>
 
 <div class="row mt-5">
     <div class="col-12 text-center">
         <button class="btn btn-primary" id="statistics-button">Collection Statistics</button>
     </div>
-</div>
-
-<div class="popular-genres">
-    <a href="#" class="popular-genre" id="dramatic">
-        <div class="title-block">
-            <h3>Dramatic</h3>
-        </div>
-    </a>
-    <a href="#" class="popular-genre" id="funny">
-        <div class="title-block">
-            <h3>Funny</h3>
-        </div>
-    </a>
-    <a href="#" class="popular-genre" id="heart-melting">
-        <div class="title-block">
-            <h3>Heart Melting</h3>
-        </div>
-    </a>
-    <a href="#" class="popular-genre" id="criminal">
-        <div class="title-block">
-            <h3>Criminal</h3>
-        </div>
-    </a>
-    <a href="#" class="popular-genre" id="war">
-        <div class="title-block">
-            <h3>War</h3>
-        </div>
-    </a>
-    <a href="#" class="popular-genre" id="terrifying">
-        <div class="title-block">
-            <h3>Terrifying</h3>
-        </div>
-    </a>
 </div>
 
 <h1 class="text-center d-none" style="margin: 35px" id="statistics-title">

@@ -1,11 +1,19 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
+.navbar {
+    padding: 22px 7px;
+}
+
 a.navbar-brand {
     position: absolute;
     left: 50%;
     transform: translate(-50%,0);
     font-weight: 700;
+}
+
+.nav-link {
+    font-family: 'Varela Round', sans-serif;
 }
 
 /* Provide sufficient contrast against white background */
@@ -85,6 +93,10 @@ body {
 
 .container {
     max-width: 1500px;
+}
+
+hr {
+    width: 85%;
 }
 
 .nav-left {
@@ -379,7 +391,9 @@ body {
 }
 
 .title-block > h3 {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     color: white;
+    text-transform: uppercase;
 }
 
 #funny {
@@ -396,4 +410,21 @@ body {
 
 #dramatic {
     background-image: url(/img/thumbnails/dramatic.png);
+}
+
+#war {
+    background-image: url(/img/thumbnails/war.png);
+}
+
+#criminal {
+    background-image: url(/img/thumbnails/criminal.png);
+}
+
+#terrifying {
+    background-image: url(/img/thumbnails/terrifying.png);
+}
+
+.recently-added {
+    text-align: center;
+    margin-top: 50px;
 }

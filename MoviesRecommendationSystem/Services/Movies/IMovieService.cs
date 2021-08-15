@@ -45,6 +45,8 @@
             int moviesPerPage = int.MaxValue,
             bool publicOnly = true);
 
+        IEnumerable<MovieServiceModel> LastFourAddedMovies();
+
         MovieDetailsServiceModel Details(int id);
 
         MovieRandomServiceModel Random();
