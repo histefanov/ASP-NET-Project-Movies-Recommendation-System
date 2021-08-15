@@ -68,32 +68,32 @@
 </div>
 
 <div class="reviews">
-    <div>
-        <p>
-            Have you already watched this movie?
-            Give us your thoughts!
-        </p>
-        <input type="button" value="Add review" id="add-review">
-    </div>
-    <div class="review-form">
-        <form method="post" asp-controller="Reviews" asp-action="Add">
-            <p>Rating:</p>
-            <div class="form-group rating col-1 ml-2">
-                @for (int i = 5; i >= 1; i--)
-                {
-                    <input type="radio" name="rating" value="@(i)" id="star-@i"><label for="star-@i">☆</label>
-                }
+    @if (User.Identity.IsAuthenticated)
+    {
+        @if (!Model.Reviews.Any(r => r.UserId == User.GetId()))
+        {
+            <div>
+                <p>
+                    Have you already watched this movie?
+                    Give us your thoughts!
+                </p>
+                <input type="button" value="Add review" id="add-review">
             </div>
-            <p>Review:</p>
-            <div class="form-group">
-                <textarea class="form-control" name="content" rows="3"></textarea>
+            <div class="review-form">
+                <partial name="_ReviewFormPartial" model="@Model.ReviewFormModel" />                
             </div>
-            <div hidden class="form-group hidden">
-                <input type="text" name="movieId" value="@Model.Id" />
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
-    </div>
+        }
+    }
+    else
+    {
+        <div>
+            <p>
+                Have you already watched this movie?
+                Give us your thoughts!
+            </p>
+            <a class="btn-transparent" asp-area="Identity" asp-page="/Account/Login" asp-route-returnUrl="@Url.Action("Details", "Movies", new { id = Model.Id, info = Model.GetInfo() })">Add review</a>
+        </div>
+    }
     @if (Model.Reviews != null)
     {
         <div>
@@ -103,6 +103,7 @@
                     <div class="col-2">
                         <p class="review-author">@review.Author</p>
                         <p class="review-publish-date">@review.DateCreated</p>
+                        
                     </div>
                     <div class="col-4">
                         <p class="review-rating">
@@ -116,6 +117,10 @@
                             }
                         </p>
                         <p class="review-content">@review.Content</p>
+                        @if (User.Identity.IsAuthenticated && (User.IsAdmin() || review.UserId == User.GetId()))
+                        {
+                            <a class="btn-transparent" asp-controller="Reviews" asp-action="Delete" asp-route-id="@review.Id" asp-route-movieId="@Model.Id">Delete</a>
+                        }
                     </div>
                 </div>
                 <hr />
@@ -126,6 +131,8 @@
 
 
 @section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
     <script>
         $(document).ready(function () {
             $('#add-movie').click(function () {

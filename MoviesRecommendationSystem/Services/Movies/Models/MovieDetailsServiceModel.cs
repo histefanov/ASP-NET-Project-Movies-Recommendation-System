@@ -1,6 +1,7 @@
 ﻿namespace MoviesRecommendationSystem.Services.Movies.Models
 {
     using System.Collections.Generic;
+    using MoviesRecommendationSystem.Models.Reviews;
     using MoviesRecommendationSystem.Services.Reviews.Reviews;
 
     public class MovieDetailsServiceModel : MovieServiceModel
@@ -28,5 +29,7 @@
         public string UserId { get; set; }
 
         public IEnumerable<ReviewServiceModel> Reviews { get; set; }
+
+        public AddReviewFormModel ReviewFormModel { get; set; } = new AddReviewFormModel();
     }
 }

@@ -1,0 +1,21 @@
+﻿@model AddReviewFormModel
+
+<form method="post" asp-controller="Reviews" asp-action="Add">
+    <p>Rating:</p>
+    <div class="form-group rating col-1 ml-2">
+        @for (int i = 5; i >= 1; i--)
+        {
+            <input asp-for="Rating" type="radio" name="rating" value="@(i)" id="star-@i"><label asp-for="Rating" for="star-@i">☆</label>
+        }
+        <span asp-validation-for="Rating" class="small text-danger"></span>
+    </div>
+    <p>Review:</p>
+    <div class="form-group">
+        <textarea asp-for="Content" class="form-control" rows="3"></textarea>
+        <span asp-validation-for="Content" class="small text-danger"></span>
+    </div>
+    <div hidden class="form-group hidden">
+        <input asp-for="MovieId" value="@Model.MovieId" />
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>

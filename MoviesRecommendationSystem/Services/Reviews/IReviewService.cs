@@ -11,6 +11,10 @@
             int rating,
             string content);
 
+        void Delete(int id);
+
         IEnumerable<ReviewServiceModel> ReviewsForMovie(int id);
+
+        bool BelongsToUser(int reviewId, string userId);
     }
 }

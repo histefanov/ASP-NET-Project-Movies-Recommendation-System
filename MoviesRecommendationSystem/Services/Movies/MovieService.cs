@@ -227,6 +227,8 @@
             movieDetails.AverageRating = GetAverageRating(id);
             movieDetails.StarringActors = this.ActorsToString(id);
 
+            movieDetails.ReviewFormModel.MovieId = id;
+
             return movieDetails;
         }
 

@@ -4,7 +4,9 @@
 
     public class ReviewServiceModel
     {
-        public string UserId { get; set; }
+        public int Id { get; init; }
+
+        public string UserId { get; init; }
 
         public string Author { get; init; }
 

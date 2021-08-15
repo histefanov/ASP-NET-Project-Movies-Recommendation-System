@@ -41,6 +41,19 @@
             return reviewData.Id;
         }
 
+        public void Delete(int id)
+        {
+            var review = this.data
+                .Reviews
+                .Find(id);
+
+            this.data
+                .Reviews
+                .Remove(review);
+
+            this.data.SaveChanges();
+        }
+
         public IEnumerable<ReviewServiceModel> ReviewsForMovie(int id)
         {
             var hasReviews = this.data
@@ -61,5 +74,25 @@
                 return null;
             }
         }
+
+        public bool BelongsToUser(int reviewId, string userId)
+        {
+            if (!ReviewExists(reviewId))
+            {
+                return false;
+            }
+
+            var result = this.data
+                .Reviews
+                .Find(reviewId)
+                .UserId == userId;
+
+            return result;
+        }
+
+        private bool ReviewExists(int id)
+            => this.data
+                .Reviews
+                .Any(r => r.Id == id);
     }
 }
