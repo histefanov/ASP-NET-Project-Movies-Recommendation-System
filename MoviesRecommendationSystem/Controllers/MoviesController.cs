@@ -237,21 +237,6 @@
             return View(contributions);
         }
 
-        public IActionResult Random()
-        {
-            var model = this.moviesService.Random();
-
-            if (model == null)
-            {
-                return NotFound();
-            }
-
-            return RedirectToAction(
-                nameof(Details), 
-                "Movies", 
-                new { id = model.Id, info = model.GetInfo() });
-        }
-
         public IActionResult Details(int id, string info)
         {
             var movie = this.moviesService

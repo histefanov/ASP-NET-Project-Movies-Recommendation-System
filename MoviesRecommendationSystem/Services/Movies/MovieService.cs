@@ -201,7 +201,7 @@
                 .ProjectTo<MovieServiceModel>(this.mapper.ConfigurationProvider)
                 .ToList();
 
-        public MovieRandomServiceModel Random()
+        public RandomMovieServiceModel Random()
         {
             var movieIds = this.data
                 .Movies
@@ -220,9 +220,15 @@
 
             var movie = this.data
                 .Movies
-                .Find(id);
+                .Where(m => m.Id == id)
+                .ProjectTo<RandomMovieServiceModel>(this.mapper.ConfigurationProvider)
+                .FirstOrDefault();
 
-            return mapper.Map<MovieRandomServiceModel>(movie);
+            var starringActors = this.ActorsToString(id);
+
+            movie.StarringActors = this.ActorsToString(id);
+
+            return movie;
         }
 
         public MovieDetailsServiceModel Details(int id)
@@ -234,7 +240,12 @@
                 .FirstOrDefault();
 
             movieDetails.AverageRating = GetAverageRating(id);
-            movieDetails.StarringActors = this.ActorsToString(id);
+
+            var starringActors = string.Join(
+                ", ",
+                this.ActorsToString(id));
+
+            movieDetails.StarringActors = starringActors;
 
             movieDetails.ReviewFormModel.MovieId = id;
 
@@ -291,7 +302,7 @@
         private IEnumerable<MovieServiceModel> GetMovies(IQueryable<Movie> movieQuery)
             => movieQuery
                 .ProjectTo<MovieServiceModel>(this.mapper.ConfigurationProvider)
-                .ToList();        
+                .ToList();
 
         private int AddDirector(string directorName)
         {
@@ -358,16 +369,14 @@
             }
         }
 
-        private string ActorsToString(int movieId)
-        {
-            var actors = this.data
+        private IEnumerable<string> ActorsToString(int movieId)
+            => this.data
                 .MovieActors
                 .Where(mg => mg.MovieId == movieId)
                 .Select(mg => mg.Actor.Name)
                 .ToList();
 
-            return string.Join(", ", actors);
-        }
+
 
         private int GetAverageRating(int id)
         {

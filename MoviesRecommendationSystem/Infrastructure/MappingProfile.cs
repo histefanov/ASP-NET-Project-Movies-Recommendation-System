@@ -24,7 +24,11 @@
                 .ForMember(md => md.EditorName, cfg => cfg.MapFrom(m => m.Editor.FirstName + " " + m.Editor.LastName))
                 .ForMember(md => md.UserId, cfg => cfg.MapFrom(m => m.Editor.UserId));
 
-            this.CreateMap<Movie, MovieRandomServiceModel>();
+            this.CreateMap<Movie, RandomMovieServiceModel>()
+                .ForMember(rm => rm.DirectorName, cfg => cfg.MapFrom(m => m.Director.Name))
+                .ForMember(md => md.Genres, cfg => cfg.MapFrom(m => m.MovieGenres
+                    .Select(mg => mg.Genre.Name)
+                    .ToList()));
 
             this.CreateMap<MovieDetailsServiceModel, MovieFormModel>();
 

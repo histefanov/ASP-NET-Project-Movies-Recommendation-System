@@ -1,0 +1,76 @@
+﻿@model RandomMovieServiceModel
+
+@{
+    Layout = "_LayoutMinimal";
+}
+
+<div class="container movie-rd">
+    <div class="trailer">
+        <iframe type="text/html" width="100%" height="100%" src="https://www.youtube.com/embed/@Model.YoutubeTrailerId" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+    <div class="main-info">
+        <h3>A film by @Model.DirectorName</h3>
+        <h1>@Model.Title</h1>
+        <p>@Model.Plot</p>
+        <p>
+            <span class="imdbRatingPlugin" data-title="tt1156398" data-style="p5">
+                <a href="https://www.imdb.com/title/tt1156398/?ref_=plg_rt_1">IMDb</a>
+            </span>
+            <span class="watch">
+                <a href="#">Watch now</a>
+            </span>
+        </p>
+    </div>
+    <hr class="light" />
+    <div class="other-info">
+        <table class="credits">
+            <tr>
+                <td class="info-label">Director</td>
+                <td class="info">@Model.DirectorName</td>
+            </tr>
+            <tr>
+                <td class="info-label">Actors</td>
+                <td class="info">
+                    @foreach (var actor in Model.StarringActors)
+                    {
+                        <span class="actor">@actor</span>
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td class="info-label">Studio</td>
+                <td class="info">@Model.Studio</td>
+            </tr>
+            <tr>
+                <td class="info-label">Year</td>
+                <td class="info">@Model.ReleaseYear</td>
+            </tr>
+            <tr>
+                <td class="info-label">Runtime</td>
+                <td class="info">@Model.Runtime</td>
+            </tr>
+            <tr>
+                <td class="info-label">Categories</td>
+                <td class="info">
+                    @foreach (var genre in Model.Genres)
+                    {
+                        <span class="genre">@genre</span>
+                    }
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        (function (d, s, id) { var js, stags = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) { return; } js = d.createElement(s); js.id = id; js.src = "https://ia.media-imdb.com/images/G/01/imdb/plugins/rating/js/rating.js"; stags.parentNode.insertBefore(js, stags); })(document, "script", "imdb-rating-api");
+        $(document).ready(function () {
+            $(".imdbRatingPlugin > .votes").css("display", "none");
+            $(".imdbRatingPlugin").css("color", "white");
+            $(".imdbRatingPlugin").hover(function () {
+                $(".imdbRatingPlugin > a").css("color", "white");
+            })
+        })
+    </script>
+}

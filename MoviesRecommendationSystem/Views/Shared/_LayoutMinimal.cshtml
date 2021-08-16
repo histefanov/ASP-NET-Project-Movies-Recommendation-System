@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FILMCHE</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&family=PT+Sans+Narrow&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Advent+Pro:wght@100&family=Inconsolata:wght@200&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800&family=Questrial&display=swap" rel="stylesheet">
+</head>
+<body style="background-color:black; text-align:center">
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm bg-transparent mb-3" id="navbar-min">
+            <div class="container">               
+                <div class="navbar-minimal">
+                    <ul class="nav-items">
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="RandomMovie">↻</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">✕</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            <div class="nav-left">
+                &copy; Filmche @DateTime.UtcNow.Year
+            </div>
+            <div class="nav-right">
+                <ul>
+                    <li><a href="mailto:info@filmche.org" class="nav-link">Contact</a></li>
+                    <li><a asp-controller="Home" asp-action="About">About</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

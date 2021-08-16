@@ -49,7 +49,7 @@
 
         MovieDetailsServiceModel Details(int id);
 
-        MovieRandomServiceModel Random();
+        RandomMovieServiceModel Random();
 
         string GetRouteInfo(int movieId);
 
