@@ -30,9 +30,19 @@
                 <span asp-validation-for="ImageUrl" class="small text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="PlaybackUrl"></label>
+                <input asp-for="PlaybackUrl" class="form-control" placeholder="A link to a legal playback service such as Netflix, Amazon, etc.">
+                <span asp-validation-for="PlaybackUrl" class="small text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="YoutubeTrailerId"></label>
                 <input asp-for="YoutubeTrailerId" class="form-control" placeholder="The last 11 characters of the URL, i.e. dQw4w9WgXcQ">
                 <span asp-validation-for="YoutubeTrailerId" class="small text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ImdbId"></label>
+                <input asp-for="ImdbId" class="form-control" placeholder="9 characters long, can be found in the movie's IMDb page URL'">
+                <span asp-validation-for="ImdbId" class="small text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="DirectorName"></label>

@@ -25,12 +25,6 @@
 
         public DbSet<MovieGenre> MovieGenres { get; init; }
 
-        public DbSet<Series> Series { get; init; }
-
-        public DbSet<SeriesActor> SeriesActors { get; init; }
-
-        public DbSet<SeriesGenre> SeriesGenres { get; init; }
-
         public DbSet<UserWatchlistMovie> UserWatchlistMovies { get; init; }
 
         public DbSet<Review> Reviews { get; init; }
@@ -61,12 +55,6 @@
 
             builder.Entity<MovieGenre>()
                 .HasKey(x => new { x.MovieId, x.GenreId });
-
-            builder.Entity<SeriesActor>()
-                .HasKey(x => new { x.SeriesId, x.ActorId });
-
-            builder.Entity<SeriesGenre>()
-                .HasKey(x => new { x.SeriesId, x.GenreId });
 
             builder.Entity<UserWatchlistMovie>()
                 .HasKey(x => new { x.UserId, x.MovieId });

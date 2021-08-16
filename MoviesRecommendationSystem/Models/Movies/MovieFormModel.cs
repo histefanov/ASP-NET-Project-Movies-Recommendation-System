@@ -45,16 +45,29 @@
 
         [Display(Name = "Image URL")]
         [Required]
-        [Url]
+        [Url(ErrorMessage = "Invalid Image URL.")]
         public string ImageUrl { get; init; }
 
-        [Display(Name = "Youtube trailer ID")]
-        //[Required]
+        [Display(Name = "Playback URL")]
+        [Required]
+        [Url(ErrorMessage = "Invalid Playback URL.")]
+        public string PlaybackUrl { get; init; }
+
+        [Display(Name = "Youtube Trailer ID")]
+        [Required]
         [RegularExpression(
             @"[a-zA-Z0-9_-]{11}", 
             ErrorMessage = "Please provide a valid video ID. It must be 11 characters long and may contain upper- and lowercase letters, digits, dashes and underscores.")]
         public string YoutubeTrailerId { get; init; }
 
+        [Display(Name = "IMDb Identifier")]
+        [Required]
+        [RegularExpression(
+            @"[a-zA-Z0-9]{9}",
+            ErrorMessage = "Please provide a valid Imdb Identifier. It must be 9 characters long and may contain upper- and lowercase letters and digits.")]
+        public string ImdbId { get; init; }
+
+        [Display(Name = "Director")]
         [Required]
         [StringLength(FullNameMaxLength, MinimumLength = FullNameMinLength)]
         public string DirectorName { get; init; }

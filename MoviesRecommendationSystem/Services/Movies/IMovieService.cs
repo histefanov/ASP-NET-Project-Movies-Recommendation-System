@@ -13,6 +13,9 @@
             string plot,
             string language,
             string imageUrl,
+            string playbackUrl,
+            string youtubeTrailerId,
+            string imdbId,
             string director,
             string studio,
             string actors,
@@ -28,9 +31,11 @@
             string plot,
             string language,
             string imageUrl,
+            string playbackUrl,
+            string youtubeTrailerId,
+            string ImdbId,
             string director,
             string studio,
-            string youtubeTrailerId,
             string actors,
             IEnumerable<string> genres,
             bool IsPublic);
@@ -48,6 +53,8 @@
         IEnumerable<MovieServiceModel> LastFourAddedMovies();
 
         MovieDetailsServiceModel Details(int id);
+
+        MovieFormDataServiceModel FormDetails(int id);
 
         RandomMovieServiceModel Random();
 

@@ -91,6 +91,9 @@
                 movie.Plot,
                 movie.Language,
                 movie.ImageUrl,
+                movie.PlaybackUrl,
+                movie.YoutubeTrailerId,
+                movie.ImdbId,
                 movie.DirectorName,
                 movie.Studio,
                 movie.StarringActors,
@@ -115,9 +118,9 @@
                 return RedirectToAction(nameof(EditorsController.Become), "Editors");
             }
 
-            var movie = this.moviesService.Details(id);
+            var movieData = this.moviesService.FormDetails(id);
 
-            if (movie.UserId != userId && !this.User.IsAdmin())
+            if (movieData.UserId != userId && !this.User.IsAdmin())
             {
                 return Unauthorized();
             }
@@ -127,7 +130,7 @@
 
             this.PrepareViewBagGenres(genres, selectedGenreIds);
 
-            var movieForm = this.mapper.Map<MovieFormModel>(movie);
+            var movieForm = this.mapper.Map<MovieFormModel>(movieData);
 
             return View(movieForm);
         }
@@ -173,9 +176,11 @@
                 movie.Plot,
                 movie.Language,
                 movie.ImageUrl,
+                movie.PlaybackUrl,
+                movie.YoutubeTrailerId,
+                movie.ImdbId,
                 movie.DirectorName,
                 movie.Studio,
-                movie.YoutubeTrailerId,
                 movie.StarringActors,
                 movie.GenreIds,
                 this.User.IsAdmin());

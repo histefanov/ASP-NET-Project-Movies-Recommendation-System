@@ -26,6 +26,10 @@
 
         public string YoutubeTrailerId { get; set; }
 
+        public string PlaybackUrl { get; set; }
+
+        public string ImdbId { get; set; }
+
         public string UserId { get; set; }
 
         public IEnumerable<ReviewServiceModel> Reviews { get; set; }

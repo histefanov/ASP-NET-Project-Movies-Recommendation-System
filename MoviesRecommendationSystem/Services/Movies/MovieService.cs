@@ -28,6 +28,9 @@
             string plot,
             string language,
             string imageUrl,
+            string playbackUrl,
+            string youtubeTrailerId,
+            string imdbId,
             string director,
             string studio,
             string actors,
@@ -43,6 +46,9 @@
                 Plot = plot,
                 Language = language,
                 ImageUrl = imageUrl,
+                PlaybackUrl = playbackUrl,
+                YoutubeTrailerId = youtubeTrailerId,
+                ImdbId = imdbId,
                 DirectorId = this.AddDirector(director),
                 Studio = studio,
                 EditorId = editorId,
@@ -69,9 +75,11 @@
             string plot,
             string language,
             string imageUrl,
+            string playbackUrl,
+            string youtubeTrailerId,
+            string ImdbId,
             string director,
             string studio,
-            string youtubeTrailerId,
             string actors,
             IEnumerable<string> genres,
             bool isPublic)
@@ -89,6 +97,9 @@
             movieData.Plot = plot;
             movieData.Language = language;
             movieData.ImageUrl = imageUrl;
+            movieData.PlaybackUrl = playbackUrl;
+            movieData.YoutubeTrailerId = youtubeTrailerId;
+            movieData.ImdbId = ImdbId;
             movieData.DirectorId = this.AddDirector(director);
             movieData.Studio = studio;
             movieData.YoutubeTrailerId = youtubeTrailerId;
@@ -224,9 +235,9 @@
                 .ProjectTo<RandomMovieServiceModel>(this.mapper.ConfigurationProvider)
                 .FirstOrDefault();
 
-            var starringActors = this.ActorsToString(id);
+            var starringActors = this.GetActors(id);
 
-            movie.StarringActors = this.ActorsToString(id);
+            movie.StarringActors = this.GetActors(id);
 
             return movie;
         }
@@ -243,13 +254,30 @@
 
             var starringActors = string.Join(
                 ", ",
-                this.ActorsToString(id));
+                this.GetActors(id));
 
             movieDetails.StarringActors = starringActors;
 
             movieDetails.ReviewFormModel.MovieId = id;
 
             return movieDetails;
+        }
+
+        public MovieFormDataServiceModel FormDetails(int id)
+        {
+            var movieFormData = this.data
+                .Movies
+                .Where(m => m.Id == id && !m.IsDeleted)
+                .ProjectTo<MovieFormDataServiceModel>(this.mapper.ConfigurationProvider)
+                .FirstOrDefault();
+
+            var starringActors = string.Join(
+                ", ",
+                this.GetActors(id));
+
+            movieFormData.StarringActors = starringActors;
+
+            return movieFormData;
         }
 
         public string GetRouteInfo(int movieId)
@@ -287,7 +315,8 @@
         public IEnumerable<MovieServiceModel> ByUser(string userId)
             => GetMovies(this.data
                 .Movies
-                .Where(m => m.Editor.UserId == userId && !m.IsDeleted));
+                .Where(m => m.Editor.UserId == userId && !m.IsDeleted)
+                .OrderByDescending(m => m.Id));
 
         public bool IsByEditor(int movieId, int editorId)
             => this.data
@@ -369,7 +398,7 @@
             }
         }
 
-        private IEnumerable<string> ActorsToString(int movieId)
+        private IEnumerable<string> GetActors(int movieId)
             => this.data
                 .MovieActors
                 .Where(mg => mg.MovieId == movieId)

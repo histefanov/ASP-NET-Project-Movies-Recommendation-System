@@ -52,6 +52,9 @@
         //[Required]
         public string ImdbId { get; set; }
 
+        [Url]
+        public string PlaybackUrl { get; set; }
+
         public bool IsPublic { get; set; }
 
         public bool IsDeleted { get; set; }
