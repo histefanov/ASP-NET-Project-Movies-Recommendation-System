@@ -35,15 +35,21 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            <div class="nav-left">
-                &copy; Filmche @DateTime.UtcNow.Year
+    <footer id="footer">
+        <div class="footer-container">
+            <div class="nav-left text-light">
+                <span>Movies-RS</span> @DateTime.UtcNow.Year
             </div>
-            <div class="nav-right">
+            <div class="nav-right text-light">
                 <ul>
-                    <li><a href="mailto:info@filmche.org" class="nav-link">Contact</a></li>
-                    <li><a asp-controller="Home" asp-action="About">About</a></li>
+                    <li>
+                        <a href="mailto:info@filmche.org" class="nav-link">Contact</a>
+                    </li>
+                    <li>
+                        <a asp-controller="Home" asp-action="About" class="nav-link">
+                            About
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
