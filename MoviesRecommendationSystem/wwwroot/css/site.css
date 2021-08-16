@@ -123,11 +123,11 @@ hr {
     padding-top: 15px;
 }
 
-.nav-left > span {
-    text-transform: uppercase;
-    color: grey;
-    font-weight: 600;
-}
+    .nav-left > span {
+        text-transform: uppercase;
+        color: grey;
+        font-weight: 600;
+    }
 
 .nav-right {
     float: right;
@@ -196,9 +196,9 @@ a.genre-selector {
         text-transform: uppercase;
     }
 
-    .card-title, .card-text {
-        font-size: 16px;
-    }
+.card-title, .card-text {
+    font-size: 16px;
+}
 
 .genres > span {
     border-bottom: 1px solid #ccc;
@@ -248,7 +248,7 @@ a.genre-selector {
 
     .jumbotron > .row > h2 {
         text-transform: uppercase;
-        font-weight: 100!important;
+        font-weight: 100 !important;
     }
 
 #jumbo-close {
@@ -272,36 +272,75 @@ a.genre-selector {
     margin: 0 auto;
 }
 
-#movie-title, #release-year {
-    font-size: 25pt;
-    text-transform: uppercase;
-    font-family: 'Oswald';
-    line-height: 32pt;
-}
-
-#movie-title {
-    font-weight: 900;
-    letter-spacing: 2.5px;
-}
-
-#release-year {
-    color: dimgrey;
-    font-family: "Oswald";
-}
-
 .card-img-top {
     border-radius: unset;
 }
 
-.card-img-top:hover {
-    opacity: 0.96;
-    transition-duration: 0.08s;
-}
+    .card-img-top:hover {
+        opacity: 0.96;
+        transition-duration: 0.08s;
+    }
 
 .movie-data {
-    width: auto;
-    height: 420px;
-    max-width: 1280px;
+    width: 100%;
+    height: 474px;
+    margin: 0 auto;
+    max-width: 1310px;
+}
+
+.data-genres {
+    font-family: "Poppins", sans-serif;
+    font-size: 12px;
+    word-spacing: 2.5px;
+    letter-spacing: 1.5px;
+    font-weight: 300;
+    text-transform: uppercase;
+}
+
+    .data-genres > span {
+        border-bottom: 1px solid lightgrey;
+    }
+
+#movie-title, #release-year {
+    font-family: "Poppins", sans-serif;
+    font-size: 25pt;
+    text-transform: uppercase;
+    line-height: 30pt;
+}
+
+#movie-title {
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+#release-year {
+    color: dimgrey;
+    font-weight: 200;
+}
+
+.data-plot {
+    font-family: "Poppins", sans-serif;
+}
+
+.watch-buttons {
+    margin: 20px 0px;
+}
+
+.btn-watch {
+    display: inline-block;
+    padding: 14px;
+    background-color: transparent;
+    border: 1px solid #bdbdbd;
+    border-radius: 5px;
+    font-family: "Poppins", sans-serif;
+    font-weight: 300;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+
+#watch-now {
+    margin-right: 5px;
 }
 
 #btn-logout {
@@ -329,27 +368,6 @@ a.genre-selector {
         transition-duration: 0.15s;
     }
 
-#btn-watch-later {
-    padding: 9px;
-}
-
-#btn-netflix {
-    background-image: url(https://whatmovieshouldiwatchtonight.com/wp-content/themes/whatmovie/css/../images/netflix.svg);
-    margin-right: 8px;
-    color: transparent !important;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: 30px;
-    padding: 9px 24px 14px 24px;
-    background-color: red;
-    border-radius: 3px;
-}
-
-    #btn-netflix:hover {
-        background-color: rgb(219, 0, 21);
-        transition-duration: 0.25s;
-    }
-
 .movie-info {
     margin: 5px;
     text-align: center;
@@ -371,7 +389,7 @@ a.genre-selector {
     padding-bottom: 2px;
 }
 
-#add-movie, #remove-movie, #add-review {
+/*#add-movie, #remove-movie, #add-review {
     font-family: 'Varela Round', sans-serif;
     font-size: 13px;
     font-weight: 100;
@@ -382,7 +400,7 @@ a.genre-selector {
     border-radius: 4px;
     padding: 12px;
     margin: 0 auto;
-}
+}*/
 
     #add-movie:hover, #remove-movie:hover {
         transition-duration: 0.15s;
@@ -600,9 +618,9 @@ a.genre-selector {
     right: 40px;
 }
 
-.nav-items > .nav-item {
-    display: inline-block;
-}
+    .nav-items > .nav-item {
+        display: inline-block;
+    }
 
 #reload, #close {
     font-size: 36px;
@@ -627,14 +645,14 @@ a.genre-selector {
     width: 450px;
 }
 
-.main-info > h3 {
-    text-transform: uppercase;
-    font-size: 14px;
-    font-weight: 200;
-    letter-spacing: 4px;
-    word-spacing: 2px;
-    margin-bottom: 10px;
-}
+    .main-info > h3 {
+        text-transform: uppercase;
+        font-size: 14px;
+        font-weight: 200;
+        letter-spacing: 4px;
+        word-spacing: 2px;
+        margin-bottom: 10px;
+    }
 
     .main-info > h1 {
         text-transform: uppercase;
@@ -649,7 +667,7 @@ a.genre-selector {
         font-weight: 200;
     }
 
-.imdbRatingPlugin {
+#rating-light {
     padding: 0 20px;
 }
 
@@ -658,14 +676,14 @@ a.genre-selector {
     text-transform: uppercase;
 }
 
-.watch > a {
-    border-bottom: 1px solid grey;
-}
+    .watch > a {
+        border-bottom: 1px solid grey;
+    }
 
-.watch > a:hover {
-    color: white;
-    border-color: lightgray;
-}
+        .watch > a:hover {
+            color: white;
+            border-color: lightgray;
+        }
 
 hr.light {
     border: 0;
@@ -711,19 +729,19 @@ hr.light {
 
 #form-container {
     border-radius: 5px;
-    margin-top: 45px;
+    margin-top: 60px;
 }
 
-#form-container > h2 {
-    font-family: "Questrial", sans-serif;
-    text-align: center;
-    margin: 20px 25px 45px 25px;
-    text-transform: uppercase;
-    letter-spacing: 5px;
-    word-spacing: 7px;
-    font-weight: 700;
-    font-size: 40px;
-}
+    #form-container > h2 {
+        font-family: "Questrial", sans-serif;
+        text-align: center;
+        margin: 0 25px 45px 25px;
+        text-transform: uppercase;
+        letter-spacing: 5px;
+        word-spacing: 7px;
+        font-weight: 700;
+        font-size: 40px;
+    }
 
 .movie-form {
     font-family: "Poppins", sans-serif;
@@ -755,11 +773,11 @@ hr.light {
 
 .submit {
     text-align: center;
-    margin: 20px;
+    margin: 20px 0 50px 0;
     padding: 10px;
 }
 
-.btn-submit {
+.btn-general {
     font-weight: 300;
     font-size: 15px;
     text-transform: uppercase;
@@ -772,9 +790,9 @@ hr.light {
     margin: 0 auto;
 }
 
-.btn-submit:hover {
-    border-color: dimgrey;
-}
+    .btn-general:hover {
+        border-color: dimgrey;
+    }
 
 /*Other*/
 

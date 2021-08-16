@@ -5,17 +5,17 @@
         <iframe type="text/html" width="100%" height="100%" src="https://www.youtube.com/embed/@Model.YoutubeTrailerId" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
     <div class="col-4">
-        <p class="genres">
+        <p class="data-genres">
             @foreach (var genre in Model.Genres)
             {
                 <span>@genre.ToUpper()</span>
             }
         </p>
         <p>
-            <span id="movie-title">@Model.Title, </span>
-            <span id="release-year">@Model.ReleaseYear</span>
+            <span id="movie-title">@Model.Title</span>
+            <span id="release-year">, @Model.ReleaseYear</span>
         </p>
-        <p>
+        <p class="data-plot">
             @Model.Plot
         </p>
         <span class="imdbRatingPlugin" data-title="tt1156398" data-style="p4">
@@ -23,25 +23,26 @@
                 <img width="37" height="17" src="https://www.nicepng.com/png/full/36-360403_8f068a-internet-movie-database.png" alt="@Model.Title (@Model.ReleaseYear) on IMDb" />
             </a>
         </span>
-        <div class="mt-4">
-            @*<a class="btn-transparent" href="#">Watch now</a>*@
-            <a href="#" id="btn-netflix"></a>
+        <div class="watch-buttons">
+            <form class="d-inline-block" action="@Model.PlaybackUrl">
+                <input class="btn-watch" type="submit" value="Watch now" id="watch-now" />
+            </form>
             @if (User.Identity.IsAuthenticated)
             {
                 if (!ViewBag.MovieIsInWatchlist)
                 {
-                    <input type="button" value="Watch later" id="add-movie">
-                    <input type="button" value="Remove from watchlist" id="remove-movie" style="display: none">
+                    <input class="btn-watch" type="button" value="Watch later" id="add-movie">
+                    <input class="btn-watch" type="button" value="Remove from watchlist" id="remove-movie" style="display: none">
                 }
                 else
                 {
-                    <input type="button" value="Watch later" id="add-movie" style="display: none">
-                    <input type="button" value="Remove from watchlist" id="remove-movie">
+                    <input class="btn-watch" type="button" value="Watch later" id="add-movie" style="display: none">
+                    <input class="btn-watch" type="button" value="Remove from watchlist" id="remove-movie">
                 }
             }
             else
             {
-                <a class="btn-transparent" id="btn-watch-later" asp-area="Identity" asp-page="/Account/Login">Watch later</a>
+                <a class="btn-watch" id="btn-watch-later" asp-area="Identity" asp-page="/Account/Login">Watch later</a>
             }
             <div id="watchlist-notification" style="display: none;">
             </div>

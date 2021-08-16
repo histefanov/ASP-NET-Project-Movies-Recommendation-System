@@ -60,7 +60,7 @@
 
 <div class="statistics">
     <div class="col-12 text-center">
-        <button class="btn btn-submit" id="statistics-button">Collection Statistics</button>
+        <button class="btn btn-general" id="statistics-button">Collection Statistics</button>
     </div>
     <h1 class="text-center" style="margin: 35px" id="statistics-title">
         <span>Currently in our collection</span>
@@ -87,15 +87,15 @@
                     $('#total-directors').text("guided by " + data.totalDirectors + " Directors")
                 });
 
-                $('#statistics-title').fadeIn(400);
-                $('#statistics-jumbotron').fadeIn(400);
+                $('#statistics-title').fadeIn(300);
+                $('#statistics-jumbotron').fadeIn(300);
                 $('#statistics-button').hide();
             });
 
             $('#jumbo-close').on('click', ev => {
                 $('#statistics-title').hide();
                 $('#statistics-jumbotron').hide();
-                $('#statistics-button').fadeIn(400);
+                $('#statistics-button').fadeIn(300);
             })
         })       
     </script>
