@@ -1,78 +1,88 @@
 ﻿@model MovieFormModel
 
-<div class="row">
-    <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-2 col-xl-8">
-        <h2 class="heading-margin">@ViewBag.Title</h2>
-        <form method="post">
-            <div class="form-group">
+<form method="post" class="movie-form">
+    <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-2 col-xl-8" id="form-container">
+        <h2>@ViewBag.Title</h2>
+
+        <div class="form-row">
+            <div class="form-group movie-form-group col-md-6">
                 <label asp-for="Title"></label>
-                <input asp-for="Title" class="form-control">
+                <input asp-for="Title" class="form-control" id="inputEmail4">
                 <span asp-validation-for="Title" class="small text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group movie-form-group col-md-6">
                 <label asp-for="ReleaseYear">Release Year</label>
-                <input asp-for="ReleaseYear" class="form-control">
+                <input asp-for="ReleaseYear" class="form-control" id="year">
                 <span asp-validation-for="ReleaseYear" class="small text-danger"></span>
             </div>
-            <div class="form-group">
+        </div>
+        <div class="form-row">
+            <div class="form-group movie-form-group col-md-6">
                 <label asp-for="Runtime"></label>
                 <input asp-for="Runtime" class="form-control" placeholder="(min.)">
                 <span asp-validation-for="Runtime" class="small text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group movie-form-group col-md-6">
                 <label asp-for="Language"></label>
                 <input asp-for="Language" class="form-control">
                 <span asp-validation-for="Language" class="small text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="ImageUrl"></label>
-                <input asp-for="ImageUrl" class="form-control" placeholder=".jpg/.png">
-                <span asp-validation-for="ImageUrl" class="small text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PlaybackUrl"></label>
-                <input asp-for="PlaybackUrl" class="form-control" placeholder="A link to a legal playback service such as Netflix, Amazon, etc.">
-                <span asp-validation-for="PlaybackUrl" class="small text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="YoutubeTrailerId"></label>
-                <input asp-for="YoutubeTrailerId" class="form-control" placeholder="The last 11 characters of the URL, i.e. dQw4w9WgXcQ">
-                <span asp-validation-for="YoutubeTrailerId" class="small text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ImdbId"></label>
-                <input asp-for="ImdbId" class="form-control" placeholder="9 characters long, can be found in the movie's IMDb page URL'">
-                <span asp-validation-for="ImdbId" class="small text-danger"></span>
-            </div>
-            <div class="form-group">
+        </div>
+        <div class="form-row">
+            <div class="form-group movie-form-group col-md-6">
                 <label asp-for="DirectorName"></label>
-                <input asp-for="DirectorName" class="form-control" placeholder="First name and last name separated by a single space.">
+                <input asp-for="DirectorName" class="form-control">
                 <span asp-validation-for="DirectorName" class="small text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group movie-form-group col-md-6">
                 <label asp-for="Studio"></label>
-                <input asp-for="Studio" class="form-control" placeholder="example: Warner Bros. Pictures">
+                <input asp-for="Studio" class="form-control">
                 <span asp-validation-for="Studio" class="small text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="StarringActors"></label>
-                <input asp-for="StarringActors" class="form-control" placeholder="Actor names separated by commas (Brad Pitt, Matt Damon, etc.)">
-                <span asp-validation-for="StarringActors" class="small text-danger"></span>
-            </div>
-            <div class="form-group">
+        </div>
+        <div class="form-group movie-form-group">
+            <label asp-for="StarringActors"></label>
+            <input asp-for="StarringActors" class="form-control" placeholder="Actor names separated by commas (Brad Pitt, Matt Damon, etc.)">
+            <span asp-validation-for="StarringActors" class="small text-danger"></span>
+        </div>
+        <div class="form-row">
+            <div class="form-group movie-form-group col-md-6">
                 <label asp-for="GenreIds"></label>
-                <select multiple asp-for="GenreIds" class="form-control" asp-items="ViewBag.Genres">
-                </select>
+                <select multiple asp-for="GenreIds" class="form-control" asp-items="ViewBag.Genres"></select>
                 <span asp-validation-for="GenreIds" class="small text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group movie-form-group col-md-6">
                 <label asp-for="Plot">Plot</label>
                 <textarea asp-for="Plot" class="form-control" placeholder="The movie's awesome plot in a few words." rows="3"></textarea>
                 <span asp-validation-for="Plot" class="small text-danger"></span>
             </div>
-            <div class="col-auto">
-                <button type="submit" class="btn btn-primary mb-2">Submit</button>
+        </div>
+        <div class="form-row">
+            <div class="form-group movie-form-group col-md-6">
+                <label asp-for="ImageUrl"></label>
+                <input asp-for="ImageUrl" class="form-control" placeholder=".jpg/.png">
+                <span asp-validation-for="ImageUrl" class="small text-danger"></span>
             </div>
-        </form>
+            <div class="form-group movie-form-group col-md-6">
+                <label asp-for="PlaybackUrl"></label>
+                <input asp-for="PlaybackUrl" class="form-control" placeholder="A link to a legal playback service such as Netflix etc.">
+                <span asp-validation-for="PlaybackUrl" class="small text-danger"></span>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group movie-form-group col-md-6">
+                <label asp-for="YoutubeTrailerId"></label>
+                <input asp-for="YoutubeTrailerId" class="form-control" placeholder="The last 11 characters of the URL, i.e. dQw4w9WgXcQ">
+                <span asp-validation-for="YoutubeTrailerId" class="small text-danger"></span>
+            </div>
+            <div class="form-group movie-form-group col-md-6">
+                <label asp-for="ImdbId"></label>
+                <input asp-for="ImdbId" class="form-control" placeholder="Can be found in the movie's IMDb page URL">
+                <span asp-validation-for="ImdbId" class="small text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group submit">
+            <button type="submit" class="btn btn-submit">Submit</button>
+        </div>
     </div>
-</div>
+</form>

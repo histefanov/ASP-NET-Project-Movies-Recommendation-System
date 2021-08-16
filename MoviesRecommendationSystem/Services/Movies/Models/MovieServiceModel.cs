@@ -9,7 +9,7 @@
 
         public string Title { get; init; }
 
-        public int ReleaseYear { get; init; }
+        public int? ReleaseYear { get; init; }
 
         public string Plot { get; init; }
 

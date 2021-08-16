@@ -20,7 +20,7 @@
             YearMinValue, 
             YearMaxValue, 
             ErrorMessage = "The year of release must be between {1} and {2}.")]
-        public int ReleaseYear { get; init; }
+        public int? ReleaseYear { get; init; }
 
         [Required]
         [Range(
@@ -43,7 +43,7 @@
             ErrorMessage = "The language must be between {2} and {1} characters long.")]
         public string Language { get; init; }
 
-        [Display(Name = "Image URL")]
+        [Display(Name = "Cover Image URL")]
         [Required]
         [Url(ErrorMessage = "Invalid Image URL.")]
         public string ImageUrl { get; init; }
@@ -86,6 +86,7 @@
         public string StarringActors { get; set; }
 
         [GenresCount(ErrorMessage = "You must select at least 1 and up to 3 genres.")]
+        [Display(Name = "Genres")]
         public List<string> GenreIds { get; set; }
     }
 }

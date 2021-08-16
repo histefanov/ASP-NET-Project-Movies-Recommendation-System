@@ -42,7 +42,7 @@
         [Authorize]
         public IActionResult Add()
         {
-            if (!this.editorsService.UserIsEditor(this.User.GetId()))
+            if (!this.editorsService.UserIsEditor(this.User.GetId()) && !User.IsAdmin())
             {
                 return RedirectToAction(nameof(HomeController.Index), "Home");
             }

@@ -93,6 +93,9 @@ body {
 /* Custom css 
     -------------------------------------------- */
 
+.alert {
+    font-family: "Questrial", sans-serif;
+}
 
 .container {
     max-width: 1500px;
@@ -535,6 +538,10 @@ a.genre-selector {
         margin-bottom: 80px;
     }
 
+.navbar-minimal {
+    font-size: 20px;
+}
+
 #navbar-min > .container {
     position: relative;
 }
@@ -547,6 +554,10 @@ a.genre-selector {
 
 .nav-items > .nav-item {
     display: inline-block;
+}
+
+#reload, #close {
+    font-size: 36px;
 }
 
 .container.movie-rd {
@@ -574,7 +585,7 @@ a.genre-selector {
     font-weight: 200;
     letter-spacing: 4px;
     word-spacing: 2px;
-    margin-bottom: -2px;
+    margin-bottom: 10px;
 }
 
     .main-info > h1 {
@@ -582,6 +593,7 @@ a.genre-selector {
         font-weight: 600;
         font-size: 50px;
         margin-bottom: 10px;
+        line-height: 95%
     }
 
     .main-info > p {
@@ -644,4 +656,87 @@ hr.light {
 
 .actor, .genre {
     display: block;
+}
+
+/* Movie Form
+    -------------------------------------------- */
+
+#form-container {
+    border-radius: 5px;
+    margin-top: 45px;
+}
+
+#form-container > h2 {
+    font-family: "Questrial", sans-serif;
+    text-align: center;
+    margin: 20px 25px 45px 25px;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    word-spacing: 7px;
+    font-weight: 700;
+    font-size: 40px;
+}
+
+.movie-form {
+    font-family: "Poppins", sans-serif;
+}
+
+.form-group > label {
+    text-transform: uppercase;
+    font-size: 20px;
+    margin: 0;
+}
+
+.form-row {
+    margin: 12px auto;
+}
+
+.movie-form-group > .form-control {
+    border-bottom: 1px solid lightgrey;
+    border-radius: 0px;
+    font-weight: 400;
+}
+
+.movie-form-group > input::placeholder {
+    font-weight: 200;
+}
+
+.movie-form-group > textarea::placeholder {
+    font-weight: 200;
+}
+
+.submit {
+    text-align: center;
+    margin: 20px;
+    padding: 10px;
+}
+
+.btn-submit {
+    font-weight: 300;
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: black;
+    padding: 18px 25px;
+    background-color: transparent;
+    border: 1px solid darkgrey;
+    border-radius: 6px;
+    margin: 0 auto;
+}
+
+.btn-submit:hover {
+    border-color: dimgrey;
+}
+
+/*Other*/
+
+.title > h1 {
+    font-family: "Questrial", sans-serif;
+    text-align: center;
+    margin: 45px 25px 40px 25px;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    word-spacing: 7px;
+    font-weight: 700;
+    font-size: 40px;
 }

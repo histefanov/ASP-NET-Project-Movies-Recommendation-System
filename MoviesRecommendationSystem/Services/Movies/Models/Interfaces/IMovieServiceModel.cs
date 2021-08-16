@@ -4,6 +4,6 @@
     {
         string Title { get; }
 
-        int ReleaseYear { get; }
+        int? ReleaseYear { get; }
     }
 }
