@@ -1101,7 +1101,7 @@ hr.light {
 
 /*Login and register*/
 
-h1#login-title, h1#register-title, h1#become-editor-title {
+h1#login-title, h1#register-title, h1#become-editor-title, h2#movies-empty {
     font-family: "Questrial", sans-serif;
     text-align: center;
     text-transform: uppercase;
@@ -1112,10 +1112,16 @@ h1#login-title, h1#register-title, h1#become-editor-title {
     margin: 30px 0;
 }
 
-.login, .register, .become-editor {
-    width: 25%;
-    margin: 0 auto;
+h2#movies-empty {
+    width: 50%;
+    font-size: 36px;
+    margin: 30px auto;
 }
+
+    .login, .register, .become-editor {
+        width: 25%;
+        margin: 0 auto;
+    }
 
 @media only screen and (max-width: 1200px) {
     .login, .register {
@@ -1187,4 +1193,8 @@ h1#login-title, h1#register-title, h1#become-editor-title {
 .table-admin {
     width: 75%;
     margin: 0 auto;
+}
+
+#btn-restrict {
+    padding: 6px 16px;
 }

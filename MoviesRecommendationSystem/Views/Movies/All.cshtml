@@ -12,6 +12,11 @@
     </div>
 </form>
 
+@if (!Model.Movies.Any())
+{
+    <h2 id="movies-empty">Oops! We don't have any movie suggestions in the selected category.</h2>
+}
+
 <partial name="_MoviesPartial" model="@Model.Movies" />
 
 @{

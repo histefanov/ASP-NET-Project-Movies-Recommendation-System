@@ -29,6 +29,7 @@
         public class InputModel
         {
             [Required]
+            [Display(Name = "E-mail")]
             [EmailAddress(ErrorMessage = "Your input is not a valid e-mail address.")]
             public string Email { get; set; }
 
@@ -73,7 +74,7 @@
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    ModelState.AddModelError(string.Empty, "Invalid e-mail or password. Please try again!");
 
                     return Page();
                 }

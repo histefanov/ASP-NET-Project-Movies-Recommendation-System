@@ -1,7 +1,15 @@
 ﻿@model IEnumerable<MovieServiceModel>
 
+
 <div class="title">
-    <h1>Your watchlist</h1>
+    @if (Model.Any())
+    {
+        <h1>Your watchlist</h1>
+    }
+    else
+    {       
+        <h1>(No movies in your watchlist)</h1>
+    }
 </div>
 
 <partial name="_MoviesPartial" model="@Model" />

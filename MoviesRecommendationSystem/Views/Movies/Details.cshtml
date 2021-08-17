@@ -152,7 +152,13 @@
 
                         $('#watchlist-counter').html(parseInt($('#watchlist-counter').html(), 10) + 1);
 
-                        $('#watchlist-dropdown').prepend('<a class="dropdown-item" href="@Model.Id" id="movie-id-@Model.Id">@Model.Title (@Model.ReleaseYear)</a>');
+                        $('#watchlist-dropdown').prepend('<a class="dropdown-item" href="@Model.Title-@Model.ReleaseYear" id="movie-id-@Model.Id"><span>@Model.Title</span><span class="watchlist-year"> (@Model.ReleaseYear)</span></a>');
+
+                        if ($('#watchlist-counter').text() == "1") {
+                            $('#watchlist-empty').hide();
+                            $('#watchlist-divider').show();
+                            $('#watchlist-see-all').show();
+                        }
 
                         if ($('#watchlist-dropdown').children().length > 5) {
                             $('#watchlist-dropdown').children().last().remove();
@@ -175,6 +181,12 @@
                         });
 
                         $('#watchlist-counter').html(parseInt($('#watchlist-counter').html(), 10) - 1);
+
+                        if ($('#watchlist-counter').text() == "0") {
+                            $('#watchlist-see-all').hide();
+                            $('#watchlist-divider').hide();
+                            $('#watchlist-empty').show();
+                        }
 
                         $('#watchlist-dropdown > #movie-id-@Model.Id').remove();
 

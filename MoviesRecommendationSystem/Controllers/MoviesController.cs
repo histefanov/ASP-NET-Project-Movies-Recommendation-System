@@ -60,9 +60,9 @@
         {
             var editorId = this.editorsService.IdByUser(User.GetId());
 
-            if (editorId == 0)
+            if (editorId == 0 && !User.IsAdmin())
             {
-                return RedirectToAction(nameof(HomeController.Index), "Home");
+                return BadRequest();
             }
 
             //TODO: Limit the number of genres a movie can have and fix the NullReferenceException for the null genre collection

@@ -4,11 +4,7 @@
     ViewBag.Title = "Admin Panel / Movies";
 }
 
-<div class="navigation">
-    <a asp-controller="Movies" asp-action="All">Movies</a>
-    <span>/</span>
-    <a asp-controller="Editors" asp-action="All">Editors</a>
-</div>
+<partial name="_NavigationPartial" />
 
 <table class="table table-striped table-admin">
     <thead class="table-dark">

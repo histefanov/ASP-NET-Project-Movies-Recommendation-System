@@ -33,7 +33,7 @@
         {
             [Required]
             [EmailAddress(ErrorMessage = "Your input is not a valid e-mail address.")]
-            [Display(Name = "Email")]
+            [Display(Name = "E-mail")]
             public string Email { get; set; }
 
             [StringLength(NameMaxLength, MinimumLength = NameMinLength,

@@ -14,6 +14,8 @@
 
     public static class ApplicationBuilderExtensions
     {
+        private const string AdminEmail = "admin@movies.com";
+
         public static IApplicationBuilder PrepareDatabase(
             this IApplicationBuilder app)
         {
@@ -31,6 +33,7 @@
             //SeedMovieGenres(serviceProvider);
 
             SeedAdmin(serviceProvider);
+            SeedAdminEditor(serviceProvider);
 
             return app;
         }
@@ -327,6 +330,34 @@
             data.SaveChanges();
         }
 
+        private static void SeedAdminEditor(IServiceProvider serviceProvider)
+        {
+            var data = serviceProvider.GetRequiredService<MoviesRecommendationDbContext>();
+
+            const string adminName = "Admin";
+            const string birthdate = "01/04/1996";
+
+            var adminId = data.
+                Users
+                .FirstOrDefault(u => u.Email == AdminEmail)
+                .Id;
+
+            if (data.Editors.Any(e => e.UserId == adminId))
+            {
+                return;
+            }
+
+            data.Editors.Add(new Editor
+            {
+                UserId = adminId,
+                FirstName = adminName,
+                LastName = adminName,
+                BirthDate = DateTime.Parse(birthdate),
+            });
+
+            data.SaveChanges();
+        }
+
         private static void SeedAdmin(IServiceProvider serviceProvider)
         {
             var userManager = serviceProvider.GetRequiredService<UserManager<User>>();
@@ -343,13 +374,12 @@
                     await roleManager.CreateAsync(
                         new IdentityRole { Name = AdminRoleName });
 
-                    const string adminEmail = "admin@movies.com";
                     const string adminPassword = "adminkey";
 
                     var user = new User
                     {
-                        Email = adminEmail,
-                        UserName = adminEmail,
+                        Email = AdminEmail,
+                        UserName = AdminEmail,
                         Name = "Admin"
                     };
 
@@ -359,6 +389,8 @@
                 })
                 .GetAwaiter()
                 .GetResult();
+
+
         }
     }
 }

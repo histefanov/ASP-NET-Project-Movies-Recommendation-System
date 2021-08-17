@@ -4,11 +4,7 @@
     ViewBag.Title = "Admin Panel / Editors";
 }
 
-<div class="navigation">
-    <a asp-controller="Movies" asp-action="All">Movies</a>
-    <span>/</span>
-    <a asp-controller="Editors" asp-action="All">Editors</a>
-</div>
+<partial name="_NavigationPartial" />
 
 <table class="table table-striped table-admin">
     <thead class="table-dark">
@@ -39,7 +35,7 @@
                     }
                     else
                     {
-                        <a asp-controller="Editors" asp-action="SwitchApprovalStatus" asp-route-id="@editor.Id" class="btn btn-outline-danger float-right">Ban</a>
+                        <a id="btn-restrict" asp-controller="Editors" asp-action="SwitchApprovalStatus" asp-route-id="@editor.Id" class="btn btn-outline-danger float-right">Restrict</a>
                     }
                 </td>
             </tr>

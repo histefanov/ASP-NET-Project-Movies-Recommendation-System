@@ -35,7 +35,7 @@
             <div id="watchlist-dropdown">
                 @foreach (var movie in watchlistMovies.Take(5))
                 {
-                    <a class="dropdown-item bg-dark text-white" asp-controller="Movies" asp-action="Details" asp-route-id="@movie.Id" asp-route-info="@movie.GetInfo()" id="@movie.Id">
+                    <a class="dropdown-item bg-dark text-white" asp-area="" asp-controller="Movies" asp-action="Details" asp-route-id="@movie.Id" asp-route-info="@movie.GetInfo()" id="@movie.Id">
                         <span>@movie.Title</span>
                         <span class="watchlist-year">(@movie.ReleaseYear)</span>
                     </a>
@@ -43,12 +43,17 @@
             </div>
             @if (!watchlistMovies.Any())
             {
-                <span class="dropdown-item bg-dark text-white">(watchlist is empty)</span>
+                <span id="watchlist-empty" class="dropdown-item bg-dark text-white">(watchlist is empty)</span>
+                <div id="watchlist-divider" class="dropdown-divider" style="display: none"></div>
+                <a id="watchlist-see-all" class="dropdown-item bg-dark text-white" style="display: none" asp-area="" asp-controller="Watchlists" asp-action="All" asp-route-userId="@userId" id="watchlist-see-all">
+                    See all
+                </a>
             }
             else
             {
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item bg-dark text-white" asp-controller="Watchlists" asp-action="All" asp-route-userId="@userId" id="watchlist-see-all">
+                <span id="watchlist-empty" class="dropdown-item bg-dark text-white" style="display: none">(watchlist is empty)</span>
+                <div id="watchlist-divider" class="dropdown-divider"></div>
+                <a id="watchlist-see-all" class="dropdown-item bg-dark text-white" asp-area="" asp-controller="Watchlists" asp-action="All" asp-route-userId="@userId" id="watchlist-see-all">
                     See all
                 </a>
             }
