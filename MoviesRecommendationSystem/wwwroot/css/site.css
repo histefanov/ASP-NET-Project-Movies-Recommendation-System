@@ -553,6 +553,9 @@ a.genre-selector {
     margin-left: -13px;
     border-radius: 6px;
     padding-bottom: 2px;
+    font-family: "Poppins", sans-serif;
+    font-size: 12px;
+    font-weight: 400;
 }
 
 /*#add-movie, #remove-movie, #add-review {
@@ -888,7 +891,7 @@ hr.light {
 
 /*Other*/
 
-.title > h1 {
+.title > h1, #contributions-title {
     font-family: "Questrial", sans-serif;
     text-align: center;
     margin: 45px 25px 40px 25px;
@@ -897,4 +900,25 @@ hr.light {
     word-spacing: 7px;
     font-weight: 700;
     font-size: 40px;
+}
+
+.contributions {
+    margin: 155px auto;
+    text-align: center;
+    width: 50%;
+}
+
+.dropdown-item {
+    font-family: "Poppins", sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 15px;
+}
+
+.watchlist-year {
+    font-weight: 200;
+}
+
+#watchlist-see-all {
+    font-weight: 700;
 }
