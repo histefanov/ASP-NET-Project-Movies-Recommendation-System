@@ -6,10 +6,12 @@ for details on configuring this project to bundle and minify static web assets. 
 }
 
 a.navbar-brand {
+    font-family: 'Notable', sans-serif;
     position: absolute;
     left: 50%;
     transform: translate(-50%,0);
-    font-weight: 700;
+    font-size: 46px;
+    font-weight: 400;
 }
 
 .nav-link {
@@ -600,7 +602,8 @@ a.genre-selector {
     color: white;
     letter-spacing: 4px;
     text-transform: uppercase;
-    padding: 0px 15px 35px 15px;
+    padding: 40px 15px 35px 15px;
+    margin-top: 25px;
 }
 
 .btn-transparent-light {
