@@ -46,7 +46,8 @@
                 .ForMember(w => w.ReleaseYear, cfg => cfg.MapFrom(m => m.Movie.ReleaseYear));
 
             this.CreateMap<Review, ReviewServiceModel>()
-                .ForMember(r => r.Author, cfg => cfg.MapFrom(r => r.User.Name));
+                .ForMember(r => r.Author, cfg => cfg.MapFrom(r => r.User.Name))
+                .ForMember(r => r.DateCreated, cfg => cfg.MapFrom(r => r.DateCreated.ToString("dd MMM yyyy, HH:mm")));
         }
     }
 }

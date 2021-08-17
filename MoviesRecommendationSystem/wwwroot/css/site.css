@@ -103,6 +103,14 @@ body {
 /* Custom css 
     -------------------------------------------- */
 
+#input-starring-actors {
+    padding: 0 5px 12px 5px;
+}
+
+#textarea-plot {
+    height: 114px;
+}
+
 .alert {
     font-family: "Questrial", sans-serif;
 }
@@ -326,7 +334,7 @@ a.genre-selector {
     margin: 20px 0px;
 }
 
-.btn-watch {
+.btn-watch, #add-review {
     display: inline-block;
     padding: 14px;
     background-color: transparent;
@@ -341,6 +349,164 @@ a.genre-selector {
 
 #watch-now {
     margin-right: 5px;
+}
+
+#rating-and-info {
+    margin: 44px 0;
+}
+
+.reviews {
+    margin: 40px auto 20px auto;
+    padding: 50px;
+    width: 80%;
+}
+
+.div-add-review {
+    text-align: center;
+    padding-bottom: 55px;
+}
+
+    .div-add-review > p {
+        font-family: "Questrial", sans-serif;
+        font-size: 26px;
+        line-height: 120%;
+    }
+
+.star-radio {
+    font-size: 36px !important;
+}
+
+.review-form {
+    text-align: center;
+    display: none;
+    margin: 0 20px 20px 20px;
+    max-width: 100%;
+}
+
+    .review-form > h3 {
+        text-align: center;
+        margin-bottom: 60px;
+        font-family: "Questrial", sans-serif;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+    }
+
+.average-rating {
+    text-align: center;
+}
+
+.star-rating {
+    position: absolute;
+    bottom: -10px;
+    right: 46%;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+}
+
+    .star-rating > input {
+        display: none
+    }
+
+    .star-rating > label {
+        position: relative;
+        width: 30px;
+        font-size: 2vw;
+        color: #FFD600;
+    }
+
+        .star-rating > label::before {
+            content: "\2605";
+            position: absolute;
+            opacity: 0;
+        }
+
+        .star-rating > label:hover:before,
+        .star-rating > label:hover ~ label:before {
+            opacity: 1 !important;
+        }
+
+    .star-rating > input:checked ~ label:before {
+        opacity: 1;
+    }
+
+    .star-rating:hover > input:checked ~ label:before {
+        opacity: 0.4;
+    }
+
+#reviews-title {
+    text-align: center;
+    margin: 100px auto 10px auto;
+    font-family: "Questrial", sans-serif;
+    font-size: 20px;
+    color: darkgrey;
+    font-weight: 100;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+}
+
+#reviews-title > span {
+    border-bottom: 1px solid lightgrey;
+}
+
+#no-reviews {
+
+}
+
+.user-review {
+    padding: 20px 42px;
+}
+
+.user-review > div {
+    display: inline-block;
+}
+
+.user-data {
+    width: 25%;
+}
+
+.review-data {
+    width: 50%;
+}
+
+.review-author, .review-publish-date {
+    font-family: "Poppins", sans-serif;
+    font-size: 18px;
+}
+
+.review-content {
+    font-family: "Questrial", sans-serif;
+    font-size: 24px;
+    line-height: 130%;
+}
+
+.review-publish-date {
+    font-weight: 200;
+}
+
+
+.star-active {
+    width: 1em;
+    font-size: 4vw;
+    color: #FFD600;
+}
+
+.star-passive {
+    width: 1em;
+    font-size: 4vw;
+    color: #FFD600;
+}
+
+.star-active-small {
+    width: 1em;
+    font-size: 2vw;
+    color: #FFD600;
+}
+
+.star-passive-small {
+    width: 1em;
+    font-size: 2vw;
+    color: #FFD600;
 }
 
 #btn-logout {
@@ -369,7 +535,7 @@ a.genre-selector {
     }
 
 .movie-info {
-    margin: 5px;
+    margin: 5px 5px 50px 5px;
     text-align: center;
     text-transform: uppercase;
     font-family: "Oswald", sans-serif;
@@ -402,11 +568,11 @@ a.genre-selector {
     margin: 0 auto;
 }*/
 
-    #add-movie:hover, #remove-movie:hover {
-        transition-duration: 0.15s;
-        background-color: white;
-        border-color: darkgray;
-    }
+#add-movie:hover, #remove-movie:hover {
+    transition-duration: 0.15s;
+    background-color: white;
+    border-color: darkgray;
+}
 
 #watchlist-notification {
     width: 100%;
@@ -416,80 +582,6 @@ a.genre-selector {
     font-weight: 100;
     margin-top: 15px;
     padding: 10px;
-}
-
-.reviews {
-    margin-top: 100px;
-    background-color: #f5f5f5;
-}
-
-.review-form {
-    display: none;
-    margin: 50px;
-}
-
-.average-rating {
-    text-align: center;
-}
-
-.rating {
-    display: flex;
-    flex-direction: row-reverse;
-    justify-content: center
-}
-
-    .rating > input {
-        display: none
-    }
-
-    .rating > label {
-        position: relative;
-        width: 22px;
-        font-size: 2vw;
-        color: #FFD600;
-    }
-
-        .rating > label::before {
-            content: "\2605";
-            position: absolute;
-            opacity: 0
-        }
-
-        .rating > label:hover:before,
-        .rating > label:hover ~ label:before {
-            opacity: 1 !important
-        }
-
-    .rating > input:checked ~ label:before {
-        opacity: 1
-    }
-
-    .rating:hover > input:checked ~ label:before {
-        opacity: 0.4
-    }
-
-.star-active {
-    width: 1em;
-    font-size: 4vw;
-    color: #FFD600;
-}
-
-.star-passive {
-    width: 1em;
-    font-size: 4vw;
-    color: #FFD600;
-}
-
-.star-active-small {
-    width: 1em;
-    font-size: 2vw;
-    color: #FFD600;
-}
-
-.star-passive-small {
-    width: 1em;
-    font-size: 2vw;
-    color: #FFD600;
 }
 
 .movie-roulette {

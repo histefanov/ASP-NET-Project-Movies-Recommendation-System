@@ -2,7 +2,7 @@
 
 <div class="row movie-data">
     <div class="col-12 col-md-8">
-        <iframe type="text/html" width="100%" height="100%" src="https://www.youtube.com/embed/@Model.YoutubeTrailerId" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <iframe type="text/html" width="100%" height="100%" src="https://www.youtube.com/embed/@(Model.YoutubeTrailerId)?controls=0&showinfo=0&modestbranding=1&playsinline=1&rel=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
     <div class="col-4">
         <p class="data-genres">
@@ -18,8 +18,8 @@
         <p class="data-plot">
             @Model.Plot
         </p>
-        <span class="imdbRatingPlugin" data-title="tt1156398" data-style="p4">
-            <a href="https://www.imdb.com/title/tt1156398/?ref_=plg_rt_1">
+        <span class="imdbRatingPlugin" data-title="@Model.ImdbId" data-style="p4">
+            <a href="https://www.imdb.com/title/@(Model.ImdbId)/?ref_=plg_rt_1">
                 <img width="37" height="17" src="https://www.nicepng.com/png/full/36-360403_8f068a-internet-movie-database.png" alt="@Model.Title (@Model.ReleaseYear) on IMDb" />
             </a>
         </span>
@@ -50,63 +50,74 @@
         <script>(function (d, s, id) { var js, stags = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) { return; } js = d.createElement(s); js.id = id; js.src = "https://ia.media-imdb.com/images/G/01/imdb/plugins/rating/js/rating.js"; stags.parentNode.insertBefore(js, stags); })(document, "script", "imdb-rating-api");</script>
     </div>
 </div>
-<div class="average-rating">
-    @for (int i = 0; i < Model.AverageRating; i++)
-    {
-        <span class="star-active">★</span>
-    }
-    @for (int i = 0; i < 5 - Model.AverageRating; i++)
-    {
-        <span class="star-passive">☆</span>
-    }
+<div id="rating-and-info">
+    <div class="average-rating">
+        @for (int i = 0; i < Model.AverageRating; i++)
+        {
+            <span class="star-active">★</span>
+        }
+        @for (int i = 0; i < 5 - Model.AverageRating; i++)
+        {
+            <span class="star-passive">☆</span>
+        }
+    </div>
+    <div class="div-movie-info">
+        <p class="movie-info">
+            <span>@Model.Studio</span> presents a <span>@Model.ReleaseYear</span> film by <span>@Model.DirectorName</span><br />
+            starring <span>@Model.StarringActors</span><br />
+            runtime <span>@Model.Runtime min</span> language <span>@Model.Language</span>
+        </p>
+    </div>
 </div>
-<div class="div-movie-info">
-    <p class="movie-info">
-        <span>@Model.Studio</span> presents a <span>@Model.ReleaseYear</span> film by <span>@Model.DirectorName</span><br />
-        starring <span>@Model.StarringActors</span><br />
-        runtime <span>@Model.Runtime min</span> language <span>@Model.Language</span>
-    </p>
-</div>
+
+<h2 id="reviews-title"><span>User reviews</span></h2>
+
 
 <div class="reviews">
     @if (User.Identity.IsAuthenticated)
     {
         @if (Model.Reviews == null || !Model.Reviews.Any(r => r.UserId == User.GetId()))
         {
-            <div>
+            <div class="div-add-review">
                 <p>
-                    Have you already watched this movie?
-                    Give us your thoughts!
+                    <span class="d-block">Have you already watched this movie?</span>
+                    <span class="d-block">Give us your thoughts!</span>
                 </p>
                 <input type="button" value="Add review" id="add-review">
             </div>
-            <div class="review-form">
-                <partial name="_ReviewFormPartial" model="@Model.ReviewFormModel" />                
+            <div class="new-review">
+                <partial name="_ReviewFormPartial" model="@Model.ReviewFormModel" />
             </div>
         }
+
     }
     else
     {
-        <div>
+        <div class="div-add-review">
             <p>
                 Have you already watched this movie?
                 Give us your thoughts!
             </p>
-            <a class="btn-transparent" asp-area="Identity" asp-page="/Account/Login" asp-route-returnUrl="@Url.Action("Details", "Movies", new { id = Model.Id, info = Model.GetInfo() })">Add review</a>
+            <a class="btn-watch" asp-area="Identity" asp-page="/Account/Login" asp-route-returnUrl="@Url.Action("Details", "Movies", new { id = Model.Id, info = Model.GetInfo() })">Add review</a>
         </div>
+        <hr />
     }
     @if (Model.Reviews != null)
     {
         <div>
             @foreach (var review in Model.Reviews)
-            {
-                <div class="row p-4">
-                    <div class="col-2">
+            {       
+                <hr />
+                <div class="user-review">
+                    <div class="user-data">
                         <p class="review-author">@review.Author</p>
                         <p class="review-publish-date">@review.DateCreated</p>
-                        
+                        @if (User.Identity.IsAuthenticated && (User.IsAdmin() || review.UserId == User.GetId()))
+                        {
+                            <a class="btn-watch" asp-controller="Reviews" asp-action="Delete" asp-route-id="@review.Id" asp-route-movieId="@Model.Id">Delete</a>
+                        }
                     </div>
-                    <div class="col-4">
+                    <div class="review-data">
                         <p class="review-rating">
                             @for (int i = 0; i < review.Rating; i++)
                             {
@@ -117,14 +128,9 @@
                                 <span class="star-passive-small">☆</span>
                             }
                         </p>
-                        <p class="review-content">@review.Content</p>
-                        @if (User.Identity.IsAuthenticated && (User.IsAdmin() || review.UserId == User.GetId()))
-                        {
-                            <a class="btn-transparent" asp-controller="Reviews" asp-action="Delete" asp-route-id="@review.Id" asp-route-movieId="@Model.Id">Delete</a>
-                        }
+                        <p class="review-content">@review.Content</p>                   
                     </div>
                 </div>
-                <hr />
             }
         </div>
     }

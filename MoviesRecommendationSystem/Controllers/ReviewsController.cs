@@ -37,6 +37,17 @@
 
             var userId = this.User.GetId();
 
+            if (this.reviewService.UserHasReview(review.MovieId, userId))
+            {
+                TempData[GlobalMessageKey] = "You already have a review for this movie!";
+
+                return RedirectToAction("Details", "Movies", new
+                {
+                    id = review.MovieId,
+                    info = this.movieService.GetRouteInfo(review.MovieId)
+                });
+            }
+
             this.reviewService.Create(
                 userId,
                 review.MovieId,

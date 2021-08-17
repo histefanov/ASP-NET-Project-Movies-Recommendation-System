@@ -14,6 +14,6 @@
 
         public string Content { get; init; }
 
-        public DateTime DateCreated { get; init; }
+        public string DateCreated { get; init; }
     }
 }

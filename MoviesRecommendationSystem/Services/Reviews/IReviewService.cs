@@ -16,5 +16,7 @@
         IEnumerable<ReviewServiceModel> ReviewsForMovie(int id);
 
         bool BelongsToUser(int reviewId, string userId);
+
+        bool UserHasReview(int movieId, string userId);
     }
 }

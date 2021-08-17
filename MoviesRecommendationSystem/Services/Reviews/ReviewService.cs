@@ -65,8 +65,8 @@
                 return this.data
                 .Reviews
                 .Where(r => r.MovieId == id)
-                .ProjectTo<ReviewServiceModel>(this.mapper.ConfigurationProvider)
                 .OrderByDescending(r => r.DateCreated)
+                .ProjectTo<ReviewServiceModel>(this.mapper.ConfigurationProvider)
                 .ToList();
             }
             else
@@ -89,6 +89,11 @@
 
             return result;
         }
+
+        public bool UserHasReview(int movieId, string userId)
+            => this.data
+                .Reviews
+                .Any(r => r.UserId == userId && r.MovieId == movieId);
 
         private bool ReviewExists(int id)
             => this.data
