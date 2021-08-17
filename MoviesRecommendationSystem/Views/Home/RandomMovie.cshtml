@@ -13,11 +13,11 @@
         <h1>@Model.Title</h1>
         <p>@Model.Plot</p>
         <p>
-            <span class="imdbRatingPlugin" data-user="ur104177979" data-title="tt1156398" data-style="p5">
+            <span class="imdbRatingPlugin" data-user="ur104177979" data-title="@Model.ImdbId" data-style="p5">
             <a href="https://www.imdb.com/title/tt1156398/?ref_=plg_rt_1">IMDb </a>
             </span>
             <span class="watch">
-                <a href="#">Watch now</a>
+                <a href="@Model.PlaybackUrl">Watch now</a>
             </span>
         </p>
     </div>

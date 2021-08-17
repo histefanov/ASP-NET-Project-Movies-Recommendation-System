@@ -3,6 +3,7 @@
     using AutoMapper;
     using MoviesRecommendationSystem.Data.Models;
     using MoviesRecommendationSystem.Models.Movies;
+    using MoviesRecommendationSystem.Services.Editors.Models;
     using MoviesRecommendationSystem.Services.Movies.Models;
     using MoviesRecommendationSystem.Services.Reviews.Reviews;
     using MoviesRecommendationSystem.Services.Watchlists.Models;
@@ -48,6 +49,9 @@
             this.CreateMap<Review, ReviewServiceModel>()
                 .ForMember(r => r.Author, cfg => cfg.MapFrom(r => r.User.Name))
                 .ForMember(r => r.DateCreated, cfg => cfg.MapFrom(r => r.DateCreated.ToString("dd MMM yyyy, HH:mm")));
+
+            this.CreateMap<Editor, EditorServiceModel>()
+                .ForMember(e => e.BirthDate, cfg => cfg.MapFrom(e => e.BirthDate.ToString("dd/MM/yyyy")));
         }
     }
 }

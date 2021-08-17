@@ -8,17 +8,18 @@
     @if (SignInManager.IsSignedIn(User))
     {
         var userIsEditor = Editors.UserIsEditor(User.GetId());
+        var userIsApprovedEditor = Editors.UserIsApprovedEditor(User.GetId());
         var userIsAdmin = User.IsAdmin();
 
         if (!userIsAdmin)
         {
-            if (userIsEditor)
+            if (userIsApprovedEditor)
             {
                 <li class="nav-item">
                     <a class="nav-link text-dark" asp-area="" asp-controller="Movies" asp-action="EditorContributions">Contributions</a>
                 </li>
             }
-            else
+            else if (!userIsEditor)
             {
                 <li class="nav-item">
                     <a class="nav-link text-dark" asp-area="" asp-controller="Editors" asp-action="Become">Become Editor</a>

@@ -1,10 +1,16 @@
 ﻿@model IEnumerable<MovieServiceModel>
 
 @{
-    ViewBag.Title = "Admin Panel";
+    ViewBag.Title = "Admin Panel / Movies";
 }
 
-<table class="table table-striped table-hover">
+<div class="navigation">
+    <a asp-controller="Movies" asp-action="All">Movies</a>
+    <span>/</span>
+    <a asp-controller="Editors" asp-action="All">Editors</a>
+</div>
+
+<table class="table table-striped table-admin">
     <thead class="table-dark">
         <tr>
             <th scope="col">ID</th>
@@ -25,7 +31,6 @@
                 <td scope="col">@string.Join(", ", movie.Genres)</td>
                 <td scope="col">@(movie.IsPublic ? "Yes" : "No") </td>
                 <td scope="col">
-
                     <a asp-area="" asp-controller="Movies" asp-action="Delete" asp-route-id="@movie.Id" class="btn btn-outline-danger float-right ml-2">Delete</a>
                     @if (movie.IsPublic)
                     {

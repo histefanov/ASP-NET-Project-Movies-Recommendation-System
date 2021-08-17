@@ -26,6 +26,8 @@
             public const int StudioNameMaxLength = 40;
             public const int SeasonCountMinValue = 1;
             public const int SeasonCountMaxValue = 30;
+            public const int ImdbIdCharCount = 9;
+            public const int YoutbeTrailerIdCharCount = 11;
         }
 
         public class Genre

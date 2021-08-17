@@ -17,5 +17,7 @@
         public string YoutubeTrailerId { get; set; }
 
         public string ImdbId { get; set; }
+
+        public string PlaybackUrl { get; set; }
     }
 }

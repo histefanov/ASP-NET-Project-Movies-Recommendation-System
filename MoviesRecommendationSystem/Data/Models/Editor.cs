@@ -23,6 +23,8 @@
 
         public string UserId { get; set; }
 
+        public bool IsApproved { get; set; }
+
         public IEnumerable<Movie> Movies { get; init; } = new List<Movie>();
     }
 }

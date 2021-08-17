@@ -6,6 +6,8 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
+    using static WebConstants;
+
     public class EditorsController : Controller
     {
         private readonly IEditorService editorsService;
@@ -40,6 +42,8 @@
                 editor.LastName,
                 editor.BirthDate,
                 userId);
+
+            TempData[GlobalMessageKey] = "Your submission was sent and is awaiting approval!";
 
             return RedirectToAction(nameof(HomeController.Index), "Home");
         }

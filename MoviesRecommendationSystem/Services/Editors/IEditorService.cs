@@ -1,6 +1,8 @@
 ﻿namespace MoviesRecommendationSystem.Services.Editors
 {
+    using MoviesRecommendationSystem.Services.Editors.Models;
     using System;
+    using System.Collections.Generic;
 
     public interface IEditorService
     {
@@ -12,6 +14,12 @@
 
         bool UserIsEditor(string userId);
 
+        bool UserIsApprovedEditor(string userId);
+
         int IdByUser(string userId);
+
+        void SwitchApprovalStatus(int id);
+
+        IEnumerable<EditorServiceModel> All();
     }
 }

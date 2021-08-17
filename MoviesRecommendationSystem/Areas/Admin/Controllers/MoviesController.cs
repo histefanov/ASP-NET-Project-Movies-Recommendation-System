@@ -1,6 +1,7 @@
 ﻿namespace MoviesRecommendationSystem.Areas.Admin.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
+    using MoviesRecommendationSystem.Services.Editors;
     using MoviesRecommendationSystem.Services.Movies;
 
     public class MoviesController : AdminController

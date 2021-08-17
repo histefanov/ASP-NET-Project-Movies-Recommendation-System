@@ -46,10 +46,8 @@
 
         public Editor Editor { get; init; }
 
-        //[Required]
         public string YoutubeTrailerId { get; set; }
 
-        //[Required]
         public string ImdbId { get; set; }
 
         [Url]
