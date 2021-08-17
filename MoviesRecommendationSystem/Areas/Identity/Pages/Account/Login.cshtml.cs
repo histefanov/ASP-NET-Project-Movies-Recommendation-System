@@ -29,7 +29,7 @@
         public class InputModel
         {
             [Required]
-            [EmailAddress]
+            [EmailAddress(ErrorMessage = "Your input is not a valid e-mail address.")]
             public string Email { get; set; }
 
             [Required]

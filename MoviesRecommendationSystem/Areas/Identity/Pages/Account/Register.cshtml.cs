@@ -32,19 +32,20 @@
         public class InputModel
         {
             [Required]
-            [EmailAddress]
+            [EmailAddress(ErrorMessage = "Your input is not a valid e-mail address.")]
             [Display(Name = "Email")]
             public string Email { get; set; }
 
-            [StringLength(NameMaxLength, MinimumLength = NameMinLength)]
-            [Display(Name = "Full name")]
+            [StringLength(NameMaxLength, MinimumLength = NameMinLength,
+                ErrorMessage = "The name input must be at least {2} and max {1} characters long.")]
+            [Display(Name = "Name")]
             public string Name { get; set; }
 
             [Required]
             [StringLength(
                 PasswordMaxLength,
                 MinimumLength = PasswordMinLength,
-                ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.")]
+                ErrorMessage = "The {0} must be at least {2} and max {1} characters long.")]
             [DataType(DataType.Password)]
             [Display(Name = "Password")]
             public string Password { get; set; }
