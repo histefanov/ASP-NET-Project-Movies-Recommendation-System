@@ -139,6 +139,12 @@ hr {
         font-weight: 600;
     }
 
+@media (max-width: 445px) {
+    .nav-left > span {
+        font-size: 14px;
+    }
+}
+
 .nav-right {
     float: right;
     padding-top: 6px;
@@ -176,22 +182,57 @@ a.genre-selector {
     font-weight: 600;
 }
 
-.row.cards {
-    margin: 10px 60px;
+.cards {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    padding: 35px 20px 30px 20px;
+    max-width: 1340px;
+    margin: auto;
 }
 
 .card {
+    width: calc(100% / 4 - 30px);
     font-family: 'Poppins', sans-serif;
     border: none;
     border-radius: unset;
     margin: 15px 15px 50px 15px;
-    width: 307px;
+}
+
+@media (min-width: 300px) {
+    .card {
+        width: 100%;
+    }
+}
+
+@media (min-width: 550px) {
+
+    .card {
+        width: calc(100% / 2 - 30px);      
+    }
+}
+
+
+@media (min-width: 900px) {
+    .card {
+        width: calc(100% / 3 - 30px);
+    }
+}
+
+@media (min-width: 1200px) {
+    .card {
+        width: calc(100% / 4 - 30px);
+    }
+}
+
+.card > a {
+    height: 170px;
 }
 
     .card > a > img {
         object-fit: cover;
         width: 100%;
-        height: 170px;
+        height: 100%;
     }
 
 .card-body {
@@ -239,6 +280,12 @@ a.genre-selector {
 
 .statistics {
     margin: 50px;
+}
+
+@media (max-width: 460px) {
+    .statistics {
+        margin: 50px 30px 80px 30px;
+    }
 }
 
 #statistics-title {
@@ -447,21 +494,20 @@ a.genre-selector {
     margin-bottom: 20px;
 }
 
-#reviews-title > span {
-    border-bottom: 1px solid lightgrey;
-}
+    #reviews-title > span {
+        border-bottom: 1px solid lightgrey;
+    }
 
 #no-reviews {
-
 }
 
 .user-review {
     padding: 20px 42px;
 }
 
-.user-review > div {
-    display: inline-block;
-}
+    .user-review > div {
+        display: inline-block;
+    }
 
 .user-data {
     width: 25%;
@@ -515,9 +561,11 @@ a.genre-selector {
     padding: 7px 7px 2px 4px;
 }
 
-    #btn-logout:hover {
-        color: darkgrey;
+@media (max-width: 768px) {
+    #btn-logout {
+        padding: 6px 7px 2px 4px;
     }
+}
 
 .btn-pagination {
     font-family: 'Poppins', sans-serif;
@@ -582,17 +630,82 @@ a.genre-selector {
 #watchlist-notification {
     width: 100%;
     z-index: 105;
-    font-family: 'Varela Round', sans-serif;
-    font-size: 12px;
-    font-weight: 100;
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    font-weight: 300;
     margin-top: 15px;
     padding: 10px;
 }
 
+.container-center {
+    width: 50%;
+    margin: 0 auto;
+}
+
+@media screen and (max-width: 1500px) {
+    .container-center {
+        width: 70%;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .container-center {
+        width: 80%;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .container-center {
+        width: 90%;
+    }
+}
+
+@media screen and (max-width: 700px) {
+
+    .container-center {
+        width: 100%;
+    }
+}
+
 .movie-roulette {
     text-align: center;
-    margin: 45px 250px 40px 250px;
-    padding: 10px 80px 10px 80px;
+    margin: 45px 50px 40px 50px;
+    padding: 10px 80px;
+}
+
+@media screen and (max-width: 1200px) {
+    .movie-roulette {
+        text-align: center;
+        padding: 10px 60px;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    .movie-roulette {
+        text-align: center;
+        padding: 10px 50px;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .movie-roulette {
+        text-align: center;
+        padding: 10px 40px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .movie-roulette {
+        text-align: center;
+        padding: 10px 30px;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .movie-roulette {
+        text-align: center;
+        padding: 10px 20px;
+    }
 }
 
 .home-title {
@@ -604,6 +717,62 @@ a.genre-selector {
     text-transform: uppercase;
     padding: 40px 15px 35px 15px;
     margin-top: 25px;
+}
+
+@media screen and (max-width: 1200px) {
+    .home-title {
+        font-size: 48px;
+        letter-spacing: 4px;
+    }
+}
+
+@media screen and (max-width: 1100px) {
+    .home-title {
+        font-size: 46px;
+        letter-spacing: 4px;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    .home-title {
+        font-size: 44px;
+        letter-spacing: 3.5px;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .home-title {
+        font-size: 42px;
+        letter-spacing: 3px;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .home-title {
+        font-size: 40px;
+        letter-spacing: 3px;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .home-title {
+        font-size: 38px;
+        letter-spacing: 2.5px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .home-title {
+        font-size: 36px;
+        letter-spacing: 2.5px;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .home-title {
+        font-size: 34px;
+        letter-spacing: 2px;
+    }
 }
 
 .btn-transparent-light {
@@ -806,6 +975,7 @@ hr.light {
     vertical-align: top;
     width: 200px;
     padding: 7px 7px;
+    font-weight: 300;
 }
 
 .info {
@@ -972,13 +1142,12 @@ h1#login-title, h1#register-title {
     margin: 30px;
 }
 
-#remember-me, .log-links > a
- {
+#remember-me, .log-links > a {
     font-family: "Questrial", sans-serif;
     word-spacing: 3px;
     font-weight: 200;
     font-size: 16px;
-    text-align:center;
+    text-align: center;
 }
 
 .log-links {
@@ -986,13 +1155,13 @@ h1#login-title, h1#register-title {
     padding: 5px;
 }
 
-.log-links > a {
-    margin: 10px 0;
-}
+    .log-links > a {
+        margin: 10px 0;
+    }
 
-.log-links > a > span {
-    border-bottom: 1px solid grey;
-}
+        .log-links > a > span {
+            border-bottom: 1px solid grey;
+        }
 
 #div-btn-register {
     margin: 16px 0 30px 0;
