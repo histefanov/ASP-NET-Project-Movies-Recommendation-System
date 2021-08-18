@@ -5,6 +5,7 @@
     using System.Linq;
     using AutoMapper;
     using AutoMapper.QueryableExtensions;
+
     using MoviesRecommendationSystem.Data;
     using MoviesRecommendationSystem.Data.Models;
     using MoviesRecommendationSystem.Services.Editors.Models;
@@ -19,24 +20,7 @@
             this.data = data;
             this.mapper = mapper;
         }
-
-        public bool UserIsEditor(string userId)
-            => this.data
-                .Editors
-                .Any(e => e.UserId == userId);
-
-        public bool UserIsApprovedEditor(string userId)
-            => this.data
-                .Editors
-                .Any(e => e.UserId == userId && e.IsApproved);
-
-        public int IdByUser(string userId)
-            => this.data
-                .Editors
-                .Where(e => e.UserId == userId)
-                .Select(e => e.Id)
-                .FirstOrDefault();
-
+        
         public int Create(
             string firstName,
             string lastName,
@@ -57,6 +41,23 @@
 
             return editorData.Id;
         }
+
+        public bool UserIsEditor(string userId)
+            => this.data
+                .Editors
+                .Any(e => e.UserId == userId);
+
+        public bool UserIsApprovedEditor(string userId)
+            => this.data
+                .Editors
+                .Any(e => e.UserId == userId && e.IsApproved);
+
+        public int IdByUser(string userId)
+            => this.data
+                .Editors
+                .Where(e => e.UserId == userId)
+                .Select(e => e.Id)
+                .FirstOrDefault();
 
         public void SwitchApprovalStatus(int id)
         {

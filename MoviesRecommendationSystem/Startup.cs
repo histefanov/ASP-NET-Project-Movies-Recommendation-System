@@ -2,12 +2,14 @@ namespace MoviesRecommendationSystem
 {
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
+
     using MoviesRecommendationSystem.Data;
     using MoviesRecommendationSystem.Data.Models;
     using MoviesRecommendationSystem.Infrastructure;
@@ -26,6 +28,15 @@ namespace MoviesRecommendationSystem
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                // This lambda determines whether user consent for non-essential 
+                // cookies is needed for a given request.
+                options.CheckConsentNeeded = context => true;
+                // requires using Microsoft.AspNetCore.Http;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
+
             services
                 .AddDbContext<MoviesRecommendationDbContext>(options => options
                     .UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
@@ -79,6 +90,7 @@ namespace MoviesRecommendationSystem
             app
                 .UseHttpsRedirection()
                 .UseStaticFiles()
+                .UseCookiePolicy()
                 .UseRouting()
                 .UseAuthentication()
                 .UseAuthorization()

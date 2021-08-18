@@ -2,6 +2,7 @@
 {
     using AutoMapper;
     using Moq;
+    using MoviesRecommendationSystem.Infrastructure;
 
     public static class MapperMock
     {
@@ -9,13 +10,10 @@
         {
             get
             {
-                var mapperMock = new Mock<IMapper>();
+                var mapperConfiguration = new MapperConfiguration(configuration
+                    => configuration.AddProfile<MappingProfile>());
 
-                mapperMock
-                    .SetupGet(m => m.ConfigurationProvider)
-                    .Returns(Mock.Of<IConfigurationProvider>());
-
-                return mapperMock.Object;
+                return new Mapper(mapperConfiguration);
             }
         }
     }
