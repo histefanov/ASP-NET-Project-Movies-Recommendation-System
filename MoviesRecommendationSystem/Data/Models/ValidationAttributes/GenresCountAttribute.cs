@@ -1,6 +1,5 @@
 ﻿namespace MoviesRecommendationSystem.Data.Models.ValidationAttributes
 {
-    using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 

@@ -1,19 +1,21 @@
 ﻿namespace MoviesRecommendationSystem.Controllers
 {
-    using MoviesRecommendationSystem.Infrastructure;
-    using MoviesRecommendationSystem.Models.Editors;
-    using MoviesRecommendationSystem.Services.Editors;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
+    using MoviesRecommendationSystem.Infrastructure;
+    using MoviesRecommendationSystem.Models.Editors;
+    using MoviesRecommendationSystem.Services.Editors;
+
     using static WebConstants;
+    using static Common.ControllerConstants.Editors;
 
     public class EditorsController : Controller
     {
-        private readonly IEditorService editorsService;
+        private readonly IEditorService editorService;
 
-        public EditorsController(IEditorService editorsService)
-            => this.editorsService = editorsService;
+        public EditorsController(IEditorService editorService)
+            => this.editorService = editorService;
 
         [Authorize]
         public IActionResult Become()
@@ -23,9 +25,9 @@
         [Authorize]
         public IActionResult Become(BecomeEditorFormModel editor)
         {
-            var userId = this.User.GetId();
+            var userId = User.GetId();
 
-            var userIsAlreadyEditor = this.editorsService.UserIsEditor(userId);
+            var userIsAlreadyEditor = this.editorService.UserIsEditor(userId);
 
             if (userIsAlreadyEditor)
             {
@@ -37,15 +39,15 @@
                 return View(editor);
             }
 
-            this.editorsService.Create(
+            this.editorService.Create(
                 editor.FirstName,
                 editor.LastName,
                 editor.BirthDate,
                 userId);
 
-            TempData[GlobalMessageKey] = "Your submission was sent and is awaiting approval!";
+            TempData[GlobalMessageKey] = SubmissionSentMessage;
 
-            return RedirectToAction(nameof(HomeController.Index), "Home");
+            return RedirectToAction(nameof(HomeController.Index), HomeControllerName);
         }
     }
 }

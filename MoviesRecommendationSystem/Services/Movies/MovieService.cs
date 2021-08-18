@@ -5,6 +5,7 @@
     using System.Linq;
     using AutoMapper;
     using AutoMapper.QueryableExtensions;
+
     using MoviesRecommendationSystem.Data;
     using MoviesRecommendationSystem.Data.Models;
     using MoviesRecommendationSystem.Models.Enums;
@@ -235,8 +236,6 @@
                 .ProjectTo<RandomMovieServiceModel>(this.mapper.ConfigurationProvider)
                 .FirstOrDefault();
 
-            var starringActors = this.GetActors(id);
-
             movie.StarringActors = this.GetActors(id);
 
             return movie;
@@ -276,6 +275,7 @@
                 this.GetActors(id));
 
             movieFormData.StarringActors = starringActors;
+
 
             return movieFormData;
         }
@@ -404,7 +404,6 @@
                 .Where(mg => mg.MovieId == movieId)
                 .Select(mg => mg.Actor.Name)
                 .ToList();
-
 
 
         private int GetAverageRating(int id)

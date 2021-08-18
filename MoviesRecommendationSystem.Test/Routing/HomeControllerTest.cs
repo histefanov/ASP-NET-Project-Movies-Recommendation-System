@@ -1,8 +1,9 @@
 ﻿namespace MoviesRecommendationSystem.Test.Routing
 {
-    using MoviesRecommendationSystem.Controllers;
     using Xunit;
     using MyTested.AspNetCore.Mvc;
+    
+    using MoviesRecommendationSystem.Controllers;
 
     public class HomeControllerTest
     {
@@ -12,6 +13,13 @@
                 .Configuration()
                 .ShouldMap("/Home/Index")
                 .To<HomeController>(c => c.Index());
+
+        [Fact]
+        public void RandomMovieShouldBeMappedAccurately()
+            => MyRouting
+                .Configuration()
+                .ShouldMap("/Home/RandomMovie")
+                .To<HomeController>(c => c.RandomMovie());
 
         [Fact]
         public void AboutRouteShouldBeMappedAccurately()

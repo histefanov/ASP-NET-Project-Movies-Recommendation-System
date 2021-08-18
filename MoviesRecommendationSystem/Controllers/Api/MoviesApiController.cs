@@ -1,26 +1,21 @@
 ﻿namespace MoviesRecommendationSystem.Controllers.Api
 {
     using Microsoft.AspNetCore.Mvc;
+
     using MoviesRecommendationSystem.Models.Api.Movies;
     using MoviesRecommendationSystem.Services.Movies;
     using MoviesRecommendationSystem.Services.Movies.Models;
 
     [ApiController]
-    [Route("api/movies")]
+    [Route("/api/movies")]
     public class MoviesApiController : ControllerBase
     {
-        private readonly IMovieService movies;
+        private readonly IMovieService movieService;
 
-        public MoviesApiController(IMovieService movies) 
-            => this.movies = movies;
+        public MoviesApiController(IMovieService movieService) 
+            => this.movieService = movieService;
 
-        [HttpGet]
         public MovieQueryServiceModel All([FromQuery] AllMoviesApiRequestModel query) 
-            => this.movies.All(
-                query.SelectedGenre,
-                query.SearchTerm,
-                query.Sorting,
-                query.CurrentPage,
-                query.MoviesPerPage);
+            => this.movieService.All();
     }
 }

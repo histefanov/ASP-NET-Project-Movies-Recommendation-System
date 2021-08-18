@@ -1,12 +1,9 @@
 ﻿namespace MoviesRecommendationSystem.Test.Pipeline
 {
-    using System;
-    using System.Linq;
-    using MoviesRecommendationSystem.Controllers;
     using Xunit;
     using MyTested.AspNetCore.Mvc;
-    using MoviesRecommendationSystem.Models.Editors;
-    using MoviesRecommendationSystem.Data.Models;
+    
+    using MoviesRecommendationSystem.Controllers;
 
     public class EditorsControllerTest
     {
@@ -14,13 +11,13 @@
         public void GetBecomeShouldRequireAuthorizationAndShouldReturnView()
             => MyMvc
                 .Pipeline()
-                .ShouldMap(r => r
+                .ShouldMap(request => request
                     .WithPath("/Editors/Become")
                     .WithUser())
                 .To<EditorsController>(c => c.Become())
                 .Which()
                 .ShouldHave()
-                .ActionAttributes(a => a
+                .ActionAttributes(attributes => attributes
                     .RestrictingForAuthorizedRequests())
                 .AndAlso()
                 .ShouldReturn()

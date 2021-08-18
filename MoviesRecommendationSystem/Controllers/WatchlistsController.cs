@@ -2,8 +2,11 @@
 {
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+
     using MoviesRecommendationSystem.Infrastructure;
     using MoviesRecommendationSystem.Services.Watchlists;
+
+    using static Common.ControllerConstants.Watchlists;
 
     public class WatchlistsController : Controller
     {
@@ -13,10 +16,10 @@
             => this.watchlistService = watchlistService;
 
         [Authorize]
-        [Route("Watchlist/Add/{movieId}")]
+        [Route(AddRoute)]
         public IActionResult Add(int movieId)
         {
-            var userId = this.User.GetId();
+            var userId = User.GetId();
 
             var isSuccess = this.watchlistService.Add(userId, movieId);
 
@@ -25,14 +28,14 @@
                 return BadRequest();
             }
 
-            return RedirectToAction("Details", "Movies", new { id = movieId });
+            return RedirectToAction(nameof(MoviesController.Details), MoviesControllerName, new { id = movieId });
         }
 
         [Authorize]
-        [Route("Watchlist/Remove/{movieId}")]
+        [Route(RemoveRoute)]
         public IActionResult Remove(int movieId)
         {
-            var userId = this.User.GetId();
+            var userId = User.GetId();
 
             var isSuccess = this.watchlistService.Remove(userId, movieId);
 
@@ -41,7 +44,7 @@
                 return BadRequest();
             }
 
-            return RedirectToAction("Details", "Movies", new { id = movieId });
+            return RedirectToAction(nameof(MoviesController.Details), MoviesControllerName, new { id = movieId });
         }
 
         [Authorize]

@@ -2,12 +2,14 @@
 {
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+
     using MoviesRecommendationSystem.Infrastructure;
     using MoviesRecommendationSystem.Models.Reviews;
     using MoviesRecommendationSystem.Services.Movies;
     using MoviesRecommendationSystem.Services.Reviews;
 
     using static WebConstants;
+    using static Common.ControllerConstants.Reviews;
 
     public class ReviewsController : Controller
     {
@@ -26,22 +28,22 @@
         {
             if (!ModelState.IsValid)
             {
-                TempData[GlobalMessageKey] = "Rating and content must be between 1 and 5 stars and between 5 and 200 characters respectively!";
+                TempData[GlobalMessageKey] = ReviewInvalidMessage;
 
-                return RedirectToAction("Details", "Movies", new
+                return RedirectToAction(nameof(MoviesController.Details), MoviesControllerName, new
                 {
                     id = review.MovieId,
                     info = this.movieService.GetRouteInfo(review.MovieId)
                 });
             }
 
-            var userId = this.User.GetId();
+            var userId = User.GetId();
 
             if (this.reviewService.UserHasReview(review.MovieId, userId))
             {
-                TempData[GlobalMessageKey] = "You already have a review for this movie!";
+                TempData[GlobalMessageKey] = UserHasReviewMessage;
 
-                return RedirectToAction("Details", "Movies", new
+                return RedirectToAction(nameof(MoviesController.Details), MoviesControllerName, new
                 {
                     id = review.MovieId,
                     info = this.movieService.GetRouteInfo(review.MovieId)
@@ -54,7 +56,7 @@
                 review.Rating,
                 review.Content);
 
-            return RedirectToAction("Details", "Movies", new
+            return RedirectToAction(nameof(MoviesController.Details), MoviesControllerName, new
             {
                 id = review.MovieId,
                 info = this.movieService.GetRouteInfo(review.MovieId)
@@ -75,7 +77,7 @@
 
             var info = this.movieService.GetRouteInfo(movieId);
 
-            return RedirectToAction(nameof(MoviesController.Details), "Movies", new 
+            return RedirectToAction(nameof(MoviesController.Details), MoviesControllerName, new 
             { 
                 id = movieId,
                 info

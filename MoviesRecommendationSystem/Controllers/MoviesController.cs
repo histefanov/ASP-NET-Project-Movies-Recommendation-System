@@ -7,6 +7,7 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
+
     using MoviesRecommendationSystem.Infrastructure;
     using MoviesRecommendationSystem.Models.Movies;
     using MoviesRecommendationSystem.Services.Editors;
@@ -16,11 +17,12 @@
     using MoviesRecommendationSystem.Services.Watchlists;
 
     using static WebConstants;
+    using static Common.ControllerConstants.Movies;
 
     public class MoviesController : Controller
     {
-        private readonly IMovieService moviesService;
-        private readonly IEditorService editorsService;
+        private readonly IMovieService movieService;
+        private readonly IEditorService editorService;
         private readonly IWatchlistService watchlistService;
         private readonly IReviewService reviewService;
         private readonly IMapper mapper;
@@ -32,8 +34,8 @@
             IReviewService reviewService,
             IMapper mapper)
         {
-            this.moviesService = moviesService;
-            this.editorsService = editorsService;
+            this.movieService = moviesService;
+            this.editorService = editorsService;
             this.watchlistService = watchlistService;
             this.reviewService = reviewService;
             this.mapper = mapper;
@@ -42,49 +44,47 @@
         [Authorize]
         public IActionResult Add()
         {
-            if (!this.editorsService.UserIsEditor(this.User.GetId()) && !User.IsAdmin())
+            if (!this.editorService.UserIsEditor(User.GetId()) && !User.IsAdmin())
             {
-                return RedirectToAction(nameof(HomeController.Index), "Home");
+                return RedirectToAction(nameof(HomeController.Index), HomeControllerName);
             }
 
-            var genres = this.moviesService.AllGenres();
+            var genres = this.movieService.AllGenres();
 
             this.PrepareViewBagGenres(genres);
 
             return View(new MovieFormModel());
         }
 
-        [Authorize]
         [HttpPost]
+        [Authorize]
         public IActionResult Add(MovieFormModel movie)
         {
-            var editorId = this.editorsService.IdByUser(User.GetId());
+            var editorId = this.editorService.IdByUser(User.GetId());
 
             if (editorId == 0 && !User.IsAdmin())
             {
                 return BadRequest();
             }
 
-            //TODO: Limit the number of genres a movie can have and fix the NullReferenceException for the null genre collection
-
             foreach (var genreId in movie.GenreIds)
-            {
-                if (!this.moviesService.GenreExists(int.Parse(genreId)))
                 {
-                    this.ModelState.AddModelError(nameof(genreId), $"Genre '{genreId}' does not exist.");
+                    if (!this.movieService.GenreExists(int.Parse(genreId)))
+                    {
+                        ModelState.AddModelError(nameof(genreId), GenreDoesNotExistMessage);
+                    }
                 }
-            }
 
             if (!ModelState.IsValid)
             {
-                var genres = this.moviesService.AllGenres();
+                var genres = this.movieService.AllGenres();
 
                 this.PrepareViewBagGenres(genres);
 
                 return View(movie);
             }
 
-            var movieId = this.moviesService.Create(
+            var movieId = this.movieService.Create(
                 movie.Title,
                 (int)movie.ReleaseYear,
                 (int)movie.Runtime,
@@ -102,8 +102,8 @@
                 User.IsAdmin());
 
             TempData[GlobalMessageKey] = User.IsAdmin() ?
-                "Your movie was added successfully and is now public!"
-                : "Your movie was added successfully and is awaiting approval!";
+                MovieAddedPublicMessage
+                : MovieAddedAwaitingApprovalMessage;
 
             return RedirectToAction(nameof(Details), new { id = movieId, info = movie.GetInfo() });
         }
@@ -111,26 +111,28 @@
         [Authorize]
         public IActionResult Edit(int id)
         {
-            var userId = this.User.GetId();
+            var userId = User.GetId();
 
-            if (!this.editorsService.UserIsEditor(userId) && !this.User.IsAdmin())
+            if (!this.editorService.UserIsEditor(userId) && !User.IsAdmin())
             {
-                return RedirectToAction(nameof(EditorsController.Become), "Editors");
+                return RedirectToAction(nameof(EditorsController.Become), EditorsControllerName);
             }
 
-            var movieData = this.moviesService.FormDetails(id);
+            var movieData = this.movieService.FormDetails(id);
 
-            if (movieData.UserId != userId && !this.User.IsAdmin())
+            if (movieData.UserId != userId && !User.IsAdmin())
             {
                 return Unauthorized();
             }
 
-            var genres = this.moviesService.AllGenres();
-            var selectedGenreIds = this.moviesService.SelectedGenreIds(id);
+            var genres = this.movieService.AllGenres();
+            var selectedGenreIds = this.movieService.SelectedGenreIds(id);
 
             this.PrepareViewBagGenres(genres, selectedGenreIds);
 
             var movieForm = this.mapper.Map<MovieFormModel>(movieData);
+
+            movieForm.GenreIds = selectedGenreIds.ToList();
 
             return View(movieForm);
         }
@@ -139,36 +141,36 @@
         [HttpPost]
         public IActionResult Edit(int id, MovieFormModel movie)
         {
-            var editorId = this.editorsService.IdByUser(User.GetId());
+            var editorId = this.editorService.IdByUser(User.GetId());
 
-            if (editorId == 0 && !this.User.IsAdmin())
+            if (editorId == 0 && !User.IsAdmin())
             {
-                return RedirectToAction(nameof(EditorsController.Become), "Editors");
+                return RedirectToAction(nameof(EditorsController.Become), EditorsControllerName);
             }
 
             foreach (var genreId in movie.GenreIds)
             {
-                if (!this.moviesService.GenreExists(int.Parse(genreId)))
+                if (!this.movieService.GenreExists(int.Parse(genreId)))
                 {
-                    this.ModelState.AddModelError(nameof(genreId), $"Genre '{genreId}' does not exist.");
+                    ModelState.AddModelError(nameof(genreId), GenreDoesNotExistMessage);
                 }
             }
 
             if (!ModelState.IsValid)
             {
-                var genres = this.moviesService.AllGenres();
+                var genres = this.movieService.AllGenres();
 
                 this.PrepareViewBagGenres(genres);
 
                 return View(movie);
             }
 
-            if (!this.moviesService.IsByEditor(id, editorId) && !this.User.IsAdmin())
+            if (!this.movieService.IsByEditor(id, editorId) && !User.IsAdmin())
             {
                 return BadRequest();
             }
 
-            this.moviesService.Edit(
+            this.movieService.Edit(
                 id,
                 movie.Title,
                 (int)movie.ReleaseYear,
@@ -183,11 +185,11 @@
                 movie.Studio,
                 movie.StarringActors,
                 movie.GenreIds,
-                this.User.IsAdmin());
+                User.IsAdmin());
 
             TempData[GlobalMessageKey] = User.IsAdmin() ?
-                "Movie was edited successfully and is now public!"
-                : "Your movie was edited successfully and is awaiting approval!";
+                MovieEditedPublicMessage
+                : MovieEditedAwaitingApprovalMessage;
 
             return RedirectToAction(nameof(Details), new { id, info = movie.GetInfo() });
         }
@@ -195,35 +197,37 @@
         [Authorize]
         public IActionResult Delete(int id)
         {
-            var editorId = this.editorsService.IdByUser(User.GetId());
+            var editorId = this.editorService.IdByUser(User.GetId());
 
-            if (editorId == 0 && !this.User.IsAdmin())
+            if (editorId == 0 && !User.IsAdmin())
             {
                 return BadRequest();
             }
 
-            if (!this.moviesService.IsByEditor(id, editorId) && !this.User.IsAdmin())
+            if (!this.movieService.IsByEditor(id, editorId) && !User.IsAdmin())
             {
                 return BadRequest();
             }
 
-            this.moviesService.Delete(id);
+            this.movieService.Delete(id);
 
             this.watchlistService.RemoveForAllUsers(id);
 
-            return RedirectToAction(nameof(EditorContributions), "Movies");
+            return !User.IsAdmin() ?
+                RedirectToAction(nameof(EditorContributions))
+                : Redirect(AdminPanelRoute);
         }
 
         public IActionResult All([FromQuery] AllMoviesQueryModel query)
         {
-            var queryResult = this.moviesService.All(
+            var queryResult = this.movieService.All(
                 query.SelectedGenre,
                 query.SearchTerm,
                 query.Sorting,
                 query.CurrentPage,
                 AllMoviesQueryModel.MoviesPerPage);
 
-            query.Genres = this.moviesService
+            query.Genres = this.movieService
                 .AllGenres()
                 .Select(g => g.Name);
 
@@ -236,15 +240,15 @@
         [Authorize]
         public IActionResult EditorContributions()
         {
-            var contributions = this.moviesService
-                .ByUser(this.User.GetId());
+            var contributions = this.movieService
+                .ByUser(User.GetId());
 
             return View(contributions);
         }
 
         public IActionResult Details(int id, string info)
         {
-            var movie = this.moviesService
+            var movie = this.movieService
                 .Details(id);
 
             if (info != movie.GetInfo())
@@ -254,9 +258,9 @@
 
             movie.Reviews = this.reviewService.ReviewsForMovie(id);
 
-            if (this.User.Identity.IsAuthenticated)
+            if (User.Identity.IsAuthenticated)
             {
-                var userId = this.User.GetId();
+                var userId = User.GetId();
 
                 ViewBag.MovieIsInWatchlist = this.watchlistService.Exists(userId, id);
                 ViewBag.WatchlistCount = this.watchlistService.Count(userId);
@@ -288,7 +292,7 @@
                 }
             }
 
-            this.ViewBag.Genres = viewBagGenres;
+            ViewBag.Genres = viewBagGenres;
         }
     }
 }

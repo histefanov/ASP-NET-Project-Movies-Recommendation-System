@@ -1,22 +1,23 @@
 ﻿namespace MoviesRecommendationSystem.Test.Controllers
 {
-    using MoviesRecommendationSystem.Models.Editors;
-    using MoviesRecommendationSystem.Controllers;
+    using System;
+    using System.Linq;
     using Xunit;
     using MyTested.AspNetCore.Mvc;
-    using System;
+
+    using MoviesRecommendationSystem.Models.Editors;
+    using MoviesRecommendationSystem.Controllers;
     using MoviesRecommendationSystem.Data.Models;
-    using System.Linq;
 
     public class EditorsControllerTest
     {
         [Fact]
-        public void GetBecomeShouldRequireAuthorizationReturnCorrectView()
+        public void GetBecomeShouldRequireAuthorizationAndReturnCorrectView()
             => MyController<EditorsController>
                 .Instance()
                 .Calling(c => c.Become())
                 .ShouldHave()
-                .ActionAttributes(a => a
+                .ActionAttributes(attributes => attributes
                     .RestrictingForAuthorizedRequests())
                 .AndAlso()
                 .ShouldReturn()
@@ -30,7 +31,7 @@
             var editorBirthDate = DateTime.Parse(editorBirthDateAsString);
 
             MyController<EditorsController>
-                .Instance(i => i
+                .Instance(instance => instance
                     .WithUser())
                 .Calling(c => c.Become(new BecomeEditorFormModel
                 {                    
@@ -39,11 +40,15 @@
                     BirthDate = editorBirthDate
                 }))
                 .ShouldHave()
-                .ActionAttributes(a => a
+                .ActionAttributes(attributes => attributes
                     .RestrictingForHttpMethod(HttpMethod.Post)
                     .RestrictingForAuthorizedRequests())
+                .AndAlso()
+                .ShouldHave()
                 .ValidModelState()
-                .Data(d => d
+                .AndAlso()
+                .ShouldHave()
+                .Data(data => data
                     .WithSet<Editor>(editors => editors
                         .Any(e =>
                             e.UserId == TestUser.Identifier &&
@@ -52,7 +57,7 @@
                             e.BirthDate == editorBirthDate)))
                 .AndAlso()
                 .ShouldReturn()
-                .Redirect(r => r
+                .Redirect(redirect => redirect
                     .To<HomeController>(c => c.Index()));
         }
     }

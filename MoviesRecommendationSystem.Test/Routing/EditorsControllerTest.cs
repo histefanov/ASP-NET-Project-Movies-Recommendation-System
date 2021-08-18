@@ -1,9 +1,10 @@
 ﻿namespace MoviesRecommendationSystem.Test.Routing
 {
-    using MoviesRecommendationSystem.Controllers;
-    using MoviesRecommendationSystem.Models.Editors;
     using Xunit;
     using MyTested.AspNetCore.Mvc;
+
+    using MoviesRecommendationSystem.Controllers;
+    using MoviesRecommendationSystem.Models.Editors;
 
     public class EditorsControllerTest
     {

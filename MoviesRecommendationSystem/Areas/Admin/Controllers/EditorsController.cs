@@ -1,6 +1,7 @@
 ﻿namespace MoviesRecommendationSystem.Areas.Admin.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
+
     using MoviesRecommendationSystem.Services.Editors;
 
     public class EditorsController : AdminController
@@ -10,7 +11,8 @@
         public EditorsController(IEditorService editorService) 
             => this.editorService = editorService;
 
-        public IActionResult All() => View(this.editorService.All());
+        public IActionResult All() 
+            => View(this.editorService.All());
 
         public IActionResult SwitchApprovalStatus(int id)
         {

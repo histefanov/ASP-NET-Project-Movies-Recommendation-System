@@ -87,6 +87,6 @@
 
         [GenresCount(ErrorMessage = "You must select at least 1 and up to 3 genres.")]
         [Display(Name = "Genres")]
-        public List<string> GenreIds { get; set; }
+        public List<string> GenreIds { get; set; } = new List<string>();
     }
 }

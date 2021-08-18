@@ -5,7 +5,7 @@
     using System.Linq;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Caching.Memory;
-    using MoviesRecommendationSystem.Infrastructure;
+
     using MoviesRecommendationSystem.Models.Home;
     using MoviesRecommendationSystem.Services.Movies;
     using MoviesRecommendationSystem.Services.Movies.Models;
@@ -16,7 +16,7 @@
     public class HomeController : Controller
     {
         private readonly IStatisticsService statisticsService;
-        private readonly IMovieService moviesService;
+        private readonly IMovieService movieService;
         private readonly IMemoryCache cache;
 
         public HomeController(
@@ -25,7 +25,7 @@
             IMemoryCache cache)
         {
             this.statisticsService = statisticsService;
-            this.moviesService = movieService;
+            this.movieService = movieService;
             this.cache = cache;
         }
 
@@ -36,7 +36,7 @@
 
             if (recentlyAddedMovies == null)
             {
-                recentlyAddedMovies = moviesService
+                recentlyAddedMovies = movieService
                     .LastFourAddedMovies()
                     .ToList();
 
@@ -61,7 +61,7 @@
 
         public IActionResult RandomMovie()
         {
-            var movie = this.moviesService.Random();
+            var movie = this.movieService.Random();
 
             if (movie == null)
             {
