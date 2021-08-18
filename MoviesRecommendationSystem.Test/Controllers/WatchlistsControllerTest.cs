@@ -64,7 +64,7 @@
 
         [Theory]
         [InlineData("TestId")]
-        public void AllShouldRequireAuthorizationAndReturnView(string userId)
+        public void AllShouldRequireAuthorizationAndReturnViewWithCorrectModel(string userId)
             => MyController<WatchlistsController>
                 .Instance()
                 .WithUser()
