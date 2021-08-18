@@ -8,6 +8,9 @@ Its functionalities include, but are not limited to, helping its users easily an
 * jQuery
 * AutoMapper
 * Bootstrap 4
+* Moq
+* Xunit
+* MyTested.AspNetCore.Mvc
 # Functionality
 * User login/registration
 * Available user roles:
@@ -17,3 +20,6 @@ Its functionalities include, but are not limited to, helping its users easily an
 * Editors inherit all of the regular users' capabilites but can also add new movies to the collection and edit or remove them.
 * There is a single system administrator who can perform CRUD operations throughout the entire application.
 * The index page incorporates a random movie picker, which utilizes the available movie collection. This allows any user to be presented with a movie recommendation in a single mouse click.
+# Quick Setup
+* Admin: admin@movies.com
+* Pass: adminkey
