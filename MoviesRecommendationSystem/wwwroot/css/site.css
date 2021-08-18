@@ -208,7 +208,7 @@ a.genre-selector {
 @media (min-width: 550px) {
 
     .card {
-        width: calc(100% / 2 - 30px);      
+        width: calc(100% / 2 - 30px);
     }
 }
 
@@ -1067,7 +1067,7 @@ hr.light {
 
 /*Other*/
 
-.title > h1, #contributions-title {
+.title > h1, #contributions-title, #about-title {
     font-family: "Questrial", sans-serif;
     text-align: center;
     margin: 45px 25px 40px 25px;
@@ -1118,10 +1118,10 @@ h2#movies-empty {
     margin: 30px auto;
 }
 
-    .login, .register, .become-editor {
-        width: 25%;
-        margin: 0 auto;
-    }
+.login, .register, .become-editor {
+    width: 25%;
+    margin: 0 auto;
+}
 
 @media only screen and (max-width: 1200px) {
     .login, .register {
@@ -1197,4 +1197,41 @@ h2#movies-empty {
 
 #btn-restrict {
     padding: 6px 16px;
+}
+
+.about {
+    width: 50%;
+    margin: 0 auto;
+}
+
+@media (max-width: 800px) {
+    .about {
+        width: 85%;
+    }
+}
+
+@media (max-width: 1200px) {
+    .about {
+        width: 65%;
+    }
+}
+
+#about-info {
+    font-family: "Oswald", sans-serif;
+    font-size: 26px;
+    letter-spacing: 0.5px;
+    word-spacing: 0.5px;
+    padding-bottom: 20px;
+    text-align: center;
+}
+
+#about-disclaimer {
+    font-family: "Questrial", sans-serif;
+    font-size: 20px;
+    text-align: left;
+    padding: 20px 0 60px 0;
+}
+
+#about-info > span, #about-disclaimer > span {
+    font-weight: 700;
 }
