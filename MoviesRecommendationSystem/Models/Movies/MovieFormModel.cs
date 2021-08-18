@@ -1,9 +1,10 @@
 ﻿namespace MoviesRecommendationSystem.Models.Movies
 {
-    using MoviesRecommendationSystem.Data.Models.ValidationAttributes;
-    using MoviesRecommendationSystem.Services.Movies.Models.Interfaces;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+
+    using MoviesRecommendationSystem.Data.Models.ValidationAttributes;
+    using MoviesRecommendationSystem.Services.Movies.Models.Interfaces;
 
     using static Data.DataConstants.Movie;
     using static Data.DataConstants.Person;

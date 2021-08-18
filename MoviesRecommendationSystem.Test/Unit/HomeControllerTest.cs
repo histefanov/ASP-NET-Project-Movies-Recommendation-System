@@ -1,9 +1,9 @@
 ﻿namespace MoviesRecommendationSystem.Test.Unit
 {
-    using Microsoft.AspNetCore.Mvc;
-    using MoviesRecommendationSystem.Controllers;
-    using MoviesRecommendationSystem.Test.Mocks;
     using Xunit;
+    using Microsoft.AspNetCore.Mvc;
+
+    using MoviesRecommendationSystem.Controllers;
 
     public class HomeControllerTest
     {

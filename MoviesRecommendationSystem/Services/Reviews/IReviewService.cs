@@ -1,6 +1,7 @@
 ﻿namespace MoviesRecommendationSystem.Services.Reviews
 {
     using System.Collections.Generic;
+
     using MoviesRecommendationSystem.Services.Reviews.Reviews;
 
     public interface IReviewService

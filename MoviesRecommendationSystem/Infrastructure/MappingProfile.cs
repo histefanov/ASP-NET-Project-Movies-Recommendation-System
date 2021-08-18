@@ -1,13 +1,14 @@
 ﻿namespace MoviesRecommendationSystem.Infrastructure
 {
+    using System.Linq;
     using AutoMapper;
+
     using MoviesRecommendationSystem.Data.Models;
     using MoviesRecommendationSystem.Models.Movies;
     using MoviesRecommendationSystem.Services.Editors.Models;
     using MoviesRecommendationSystem.Services.Movies.Models;
     using MoviesRecommendationSystem.Services.Reviews.Reviews;
     using MoviesRecommendationSystem.Services.Watchlists.Models;
-    using System.Linq;
 
     public class MappingProfile : Profile
     {

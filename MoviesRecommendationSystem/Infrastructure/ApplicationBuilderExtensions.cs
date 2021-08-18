@@ -7,6 +7,7 @@
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
+
     using MoviesRecommendationSystem.Data;
     using MoviesRecommendationSystem.Data.Models;
 
@@ -25,12 +26,12 @@
             
             MigrateDatabase(serviceProvider);
 
-            //SeedGenres(serviceProvider);
-            //SeedDirectors(serviceProvider);
-            //SeedActors(serviceProvider);
-            //SeedMovies(serviceProvider);
-            //SeedMovieActors(serviceProvider);
-            //SeedMovieGenres(serviceProvider);
+            SeedGenres(serviceProvider);
+            SeedDirectors(serviceProvider);
+            SeedActors(serviceProvider);
+            SeedMovies(serviceProvider);
+            SeedMovieActors(serviceProvider);
+            SeedMovieGenres(serviceProvider);
 
             SeedAdmin(serviceProvider);
             SeedAdminEditor(serviceProvider);

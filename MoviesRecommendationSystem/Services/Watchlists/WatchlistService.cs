@@ -1,12 +1,13 @@
 ﻿namespace MoviesRecommendationSystem.Services.Watchlists
 {
     using System.Linq;
+    using System.Collections.Generic;
+    using AutoMapper;
+    using AutoMapper.QueryableExtensions;
+
     using MoviesRecommendationSystem.Data;
     using MoviesRecommendationSystem.Data.Models;
-    using AutoMapper;
-    using System.Collections.Generic;
     using MoviesRecommendationSystem.Services.Watchlists.Models;
-    using AutoMapper.QueryableExtensions;
     using MoviesRecommendationSystem.Services.Movies.Models;
 
     public class WatchlistService : IWatchlistService

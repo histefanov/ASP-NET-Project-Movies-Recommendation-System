@@ -2,6 +2,7 @@
 {
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
+
     using MoviesRecommendationSystem.Data.Models;
 
     public class MoviesRecommendationDbContext : IdentityDbContext<User>

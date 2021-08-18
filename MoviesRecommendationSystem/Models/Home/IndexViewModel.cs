@@ -1,7 +1,8 @@
 ﻿namespace MoviesRecommendationSystem.Models.Home
 {
-    using MoviesRecommendationSystem.Services.Movies.Models;
     using System.Collections.Generic;
+
+    using MoviesRecommendationSystem.Services.Movies.Models;
 
     public class IndexViewModel
     {

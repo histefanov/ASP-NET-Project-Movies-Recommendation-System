@@ -1,8 +1,9 @@
 ﻿namespace MoviesRecommendationSystem.Test.Pipeline
 {
-    using MoviesRecommendationSystem.Controllers;
     using Xunit;
     using MyTested.AspNetCore.Mvc;
+    
+    using MoviesRecommendationSystem.Controllers;
     
     public class HomeControllerTest
     {

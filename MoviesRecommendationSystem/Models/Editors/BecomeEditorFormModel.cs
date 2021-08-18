@@ -2,6 +2,7 @@
 {
     using System;
     using System.ComponentModel.DataAnnotations;
+
     using MoviesRecommendationSystem.Data.Models.ValidationAttributes;
 
     using static Data.DataConstants.Person;

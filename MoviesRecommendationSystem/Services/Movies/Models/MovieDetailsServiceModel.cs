@@ -1,6 +1,7 @@
 ﻿namespace MoviesRecommendationSystem.Services.Movies.Models
 {
     using System.Collections.Generic;
+
     using MoviesRecommendationSystem.Models.Reviews;
     using MoviesRecommendationSystem.Services.Reviews.Reviews;
 

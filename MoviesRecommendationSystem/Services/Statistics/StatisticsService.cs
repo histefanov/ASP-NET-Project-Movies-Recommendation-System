@@ -1,6 +1,7 @@
 ﻿namespace MoviesRecommendationSystem.Services.Statistics
 {
     using System.Linq;
+
     using MoviesRecommendationSystem.Data;
     using MoviesRecommendationSystem.Services.Statistics.Models;
 

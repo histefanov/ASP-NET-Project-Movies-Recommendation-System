@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+
     using MoviesRecommendationSystem.Models.Enums;
     using MoviesRecommendationSystem.Services.Movies.Models;
 

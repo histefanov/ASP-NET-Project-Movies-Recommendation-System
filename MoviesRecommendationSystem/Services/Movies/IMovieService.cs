@@ -1,6 +1,7 @@
 ﻿namespace MoviesRecommendationSystem.Services.Movies
 {
     using System.Collections.Generic;
+
     using MoviesRecommendationSystem.Models.Enums;
     using MoviesRecommendationSystem.Services.Movies.Models;
 

@@ -1,8 +1,9 @@
 ﻿namespace MoviesRecommendationSystem.Services.Editors
 {
-    using MoviesRecommendationSystem.Services.Editors.Models;
     using System;
     using System.Collections.Generic;
+    
+    using MoviesRecommendationSystem.Services.Editors.Models;
 
     public interface IEditorService
     {

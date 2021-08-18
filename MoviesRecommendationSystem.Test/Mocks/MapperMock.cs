@@ -1,7 +1,7 @@
 ﻿namespace MoviesRecommendationSystem.Test.Mocks
 {
     using AutoMapper;
-    using Moq;
+
     using MoviesRecommendationSystem.Infrastructure;
 
     public static class MapperMock

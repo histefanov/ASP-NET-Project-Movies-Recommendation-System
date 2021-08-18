@@ -1,6 +1,7 @@
 ﻿namespace MoviesRecommendationSystem.Services.Watchlists
 {
     using System.Collections.Generic;
+
     using MoviesRecommendationSystem.Services.Movies.Models;
     using MoviesRecommendationSystem.Services.Watchlists.Models;
 
