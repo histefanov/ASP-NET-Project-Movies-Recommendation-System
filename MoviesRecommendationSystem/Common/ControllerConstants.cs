@@ -24,7 +24,9 @@
         {
             public const string MoviesControllerName = "Movies";
             public const string ReviewInvalidMessage = "Rating and content must be between 1 and 5 stars and between 5 and 200 characters respectively!";
+            public const string AddSuccessfulMessage = "Your review was added successfully"!;
             public const string UserHasReviewMessage = "You already have a review for this movie!";
+            public const string DeleteSuccessfulMessage = "Your review was removed successfully!";
         }
 
         public class Watchlists

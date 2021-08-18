@@ -1,5 +1,6 @@
 ﻿namespace MoviesRecommendationSystem.Test.Controllers
 {
+    using System.Collections.Generic;
     using System.Linq;
     using Xunit;
     using MyTested.AspNetCore.Mvc;
@@ -7,11 +8,13 @@
     
     using MoviesRecommendationSystem.Controllers;
     using MoviesRecommendationSystem.Data.Models;
+    using MoviesRecommendationSystem.Models.Movies;
+    using MoviesRecommendationSystem.Services.Movies.Models;
 
     public class MoviesControllerTest
     {
         [Fact]
-        public void GetAddShouldRequireAuthorizationAndReturnCorrectView()
+        public void GetAddShouldRequireAuthorizationAndReturnViewWithCorrectModel()
             => MyController<MoviesController>
                 .Instance()
                 .WithUser()
@@ -22,7 +25,8 @@
                         .RestrictingForAuthorizedRequests())
                 .AndAlso()
                 .ShouldReturn()
-                .View();
+                .View(view => view
+                    .WithModelOfType<MovieFormModel>());
 
         [Theory]
         [InlineData("A Quiet Place", 2018)]
@@ -36,7 +40,7 @@
                 .Calling(c => c.Add(
                     Data.GetValidMovieFormModel()))
                 .ShouldHave()
-                .ActionAttributes(attributes => attributes
+                    .ActionAttributes(attributes => attributes
                         .RestrictingForHttpMethod(HttpMethod.Post)
                         .RestrictingForAuthorizedRequests())
                 .AndAlso()
@@ -56,7 +60,7 @@
 
         [Theory]
         [InlineData(1)]
-        public void GetEditShouldRequireAuthorizationAndReturnCorrectView(int movieId)
+        public void GetEditShouldRequireAuthorizationAndReturnViewWithCorrectModel(int movieId)
             => MyController<MoviesController>
                 .Instance()
                     .WithUser()
@@ -70,11 +74,12 @@
                         Data.GetMovieGenre())
                 .Calling(c => c.Edit(movieId))
                 .ShouldHave()
-                .ActionAttributes(attributes => attributes
-                    .RestrictingForAuthorizedRequests())
+                    .ActionAttributes(attributes => attributes
+                        .RestrictingForAuthorizedRequests())
                 .AndAlso()
                 .ShouldReturn()
-                .View();
+                .View(view => view
+                    .WithModelOfType<MovieFormModel>());
 
         [Theory]
         [InlineData("A Quiet Place", 2018)]
@@ -90,7 +95,7 @@
                     1,
                     Data.GetValidMovieFormModel()))
                 .ShouldHave()
-                .ActionAttributes(attributes => attributes
+                    .ActionAttributes(attributes => attributes
                         .RestrictingForHttpMethod(HttpMethod.Post)
                         .RestrictingForAuthorizedRequests())
                 .AndAlso()
@@ -110,7 +115,7 @@
 
         [Theory]
         [InlineData(1)]
-        public void DeleteShouldRequireAuthorizationAndReturnCorrectView(int movieId)
+        public void DeleteShouldRequireAuthorizationAndReturnViewWithCorrectModel(int movieId)
             => MyController<MoviesController>
                 .Instance()
                 .WithUser()
@@ -132,5 +137,71 @@
                 .ShouldReturn()
                 .Redirect(redirect => redirect
                     .To<MoviesController>(c => c.EditorContributions()));
+
+        [Fact]
+        public void AllShouldReturnViewWithCorrectModel()
+            => MyController<MoviesController>
+                .Instance()
+                .WithData(
+                        Data.GetEditor(),
+                        Data.GetGenre(),
+                        Data.GetDirector(),
+                        Data.GetActor(),
+                        Data.GetPublicMovie(),
+                        Data.GetMovieActor(),
+                        Data.GetMovieGenre())
+                .Calling(c => c.All(
+                    new AllMoviesQueryModel
+                    {
+                        CurrentPage = 1,
+                        Movies = new List<MovieServiceModel>()
+                    }))
+                .ShouldReturn()
+                .View(view => view
+                    .WithModelOfType<AllMoviesQueryModel>());
+
+        [Fact]
+        public void EditorContributionsShouldRequireAuthorizationAndShouldReturnViewWithCorrectModel()
+            => MyController<MoviesController>
+                .Instance()
+                .WithUser()
+                .WithData(
+                    Data.GetEditor())
+                .Calling(c => c.EditorContributions())
+                 .ShouldHave()
+                    .ActionAttributes(attributes => attributes
+                        .RestrictingForAuthorizedRequests())
+                .AndAlso()
+                .ShouldReturn()
+                .View(view => view
+                    .WithModelOfType<IEnumerable<MovieServiceModel>>());
+
+        [Fact]
+        public void EditorContributionsShouldReturnRedirectWhenUserIsNotApprovedEditor()
+            => MyController<MoviesController>
+                .Instance()
+                .WithUser()
+                .Calling(c => c.EditorContributions())
+                .ShouldReturn()
+                .Redirect(redirect => redirect
+                    .To<EditorsController>(c => c.Become()));
+
+        [Theory]
+        [InlineData(1, "A Quiet Place", 2018)]
+        public void DetailsShouldReturnViewWithCorrectModel(int id, string title, int releaseYear)
+            => MyController<MoviesController>
+                .Instance()
+                .WithData(
+                     Data.GetEditor(),
+                     Data.GetGenre(),
+                     Data.GetDirector(),
+                     Data.GetActor(),
+                     Data.GetPublicMovie(),
+                     Data.GetMovieActor(),
+                     Data.GetMovieGenre())
+                .Calling(c => c.Details(id, $"{title}-{releaseYear}"))
+                .ShouldReturn()
+                .View(view => view
+                    .WithModelOfType<MovieDetailsServiceModel>());                
     }
 }

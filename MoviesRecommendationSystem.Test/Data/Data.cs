@@ -74,7 +74,8 @@
                 Id = 1,
                 FirstName = "Editor",
                 LastName = "Editor",
-                UserId = "TestId"
+                UserId = "TestId",
+                IsApproved = true
             };
 
         public static MovieFormModel GetValidMovieFormModel()
@@ -93,6 +94,22 @@
                 StarringActors = "ActorOne, ActorTwo",
                 DirectorName = "Director",
                 GenreIds = new List<string> { "1" }
+            };
+
+        public static Review GetReview()
+            => new Review
+            {
+                UserId = "TestId",
+                MovieId = 1,
+                Rating = 5,
+                Content = "Awesome movie"
+            };
+
+        public static UserWatchlistMovie GetUserWatchlistMovie()
+            => new UserWatchlistMovie
+            {
+                UserId = "TestId",
+                MovieId = 1
             };
     }
 }

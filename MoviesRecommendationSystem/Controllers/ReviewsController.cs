@@ -56,6 +56,8 @@
                 review.Rating,
                 review.Content);
 
+            TempData[GlobalMessageKey] = AddSuccessfulMessage;
+
             return RedirectToAction(nameof(MoviesController.Details), MoviesControllerName, new
             {
                 id = review.MovieId,
@@ -76,6 +78,8 @@
             this.reviewService.Delete(id);
 
             var info = this.movieService.GetRouteInfo(movieId);
+
+            TempData[GlobalMessageKey] = DeleteSuccessfulMessage;
 
             return RedirectToAction(nameof(MoviesController.Details), MoviesControllerName, new 
             { 

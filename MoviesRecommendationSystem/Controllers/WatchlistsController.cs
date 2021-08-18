@@ -4,6 +4,7 @@
     using Microsoft.AspNetCore.Mvc;
 
     using MoviesRecommendationSystem.Infrastructure;
+    using MoviesRecommendationSystem.Services.Movies;
     using MoviesRecommendationSystem.Services.Watchlists;
 
     using static Common.ControllerConstants.Watchlists;
@@ -11,9 +12,13 @@
     public class WatchlistsController : Controller
     {
         private readonly IWatchlistService watchlistService;
+        private readonly IMovieService movieService;
 
-        public WatchlistsController(IWatchlistService watchlistService)
-            => this.watchlistService = watchlistService;
+        public WatchlistsController(IWatchlistService watchlistService, IMovieService movieService)
+        {
+            this.watchlistService = watchlistService;
+            this.movieService = movieService;
+        }
 
         [Authorize]
         [Route(AddRoute)]
@@ -28,7 +33,11 @@
                 return BadRequest();
             }
 
-            return RedirectToAction(nameof(MoviesController.Details), MoviesControllerName, new { id = movieId });
+            return RedirectToAction(nameof(MoviesController.Details), MoviesControllerName, new 
+            { 
+                id = movieId,
+                info = this.movieService.GetRouteInfo(movieId)
+            });
         }
 
         [Authorize]
@@ -44,7 +53,11 @@
                 return BadRequest();
             }
 
-            return RedirectToAction(nameof(MoviesController.Details), MoviesControllerName, new { id = movieId });
+            return RedirectToAction(nameof(MoviesController.Details), MoviesControllerName, new
+            {
+                id = movieId,
+                info = this.movieService.GetRouteInfo(movieId)
+            });
         }
 
         [Authorize]

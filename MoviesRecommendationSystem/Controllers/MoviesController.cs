@@ -240,6 +240,11 @@
         [Authorize]
         public IActionResult EditorContributions()
         {
+            if (!editorService.UserIsApprovedEditor(User.GetId()) && !User.IsAdmin())
+            {
+                return RedirectToAction(nameof(EditorsController.Become), EditorsControllerName);
+            }
+
             var contributions = this.movieService
                 .ByUser(User.GetId());
 
