@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<MovieServiceModel>
 
-@{ 
+@{
     ViewBag.Title = "My Contributions";
     ViewBag.AllowEdit = true;
 }
@@ -8,11 +8,14 @@
 @if (!Model.Any())
 {
     <div class="contributions">
-        <h2 id="contributions-title">Hey, you still haven't added any movies!</h2>
+        <h2 id="contributions-empty-title">Hey, you still haven't added any movies!</h2>
         <a class="btn-general d-inline-block" asp-controller="Movies" asp-action="Add">Add movie</a>
-    </div>    
+    </div>
 }
-
-<partial name="_MoviesPartial" model="@Model" />
+else
+{
+    <h2 id="contributions-title">Movies added by you</h2>
+    <partial name="_MoviesPartial" model="@Model" />
+}
 
 

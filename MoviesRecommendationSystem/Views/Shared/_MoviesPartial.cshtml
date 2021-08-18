@@ -3,7 +3,7 @@
 <section class="cards">
     @foreach (var movie in Model)
     {
-        <div class="card">
+        <div class="card position-relative">
             <a asp-controller="Movies" asp-action="Details" asp-route-id="@movie.Id" asp-route-info="@movie.GetInfo()">
                 <img class="card-img-top" src="@movie.ImageUrl" alt="@movie.Title (@movie.ReleaseYear)">
             </a>
@@ -21,8 +21,8 @@
                 <p class="card-text">@movie.Plot</p>
                 @if (ViewBag.AllowEdit == true)
                 {
-                    <div class="row" id="movie-buttons">
-                        <a asp-controller="Movies" asp-action="Edit" asp-route-id="@movie.Id" class="btn btn-outline-dark">Edit</a>
+                    <div class="row contributor-buttons" id="movie-buttons">
+                        <a asp-controller="Movies" asp-action="Edit" asp-route-id="@movie.Id" class="btn btn-info mr-1">Edit</a>
                         <a asp-controller="Movies" asp-action="Delete" asp-route-id="@movie.Id" class="btn btn-danger">Delete</a>
                     </div>
                 }

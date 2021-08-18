@@ -1116,7 +1116,7 @@ hr.light {
 
 /*Other*/
 
-.title > h1, #contributions-title, #about-title {
+.title > h1, #contributions-empty-title, #about-title {
     font-family: "Questrial", sans-serif;
     text-align: center;
     margin: 45px 25px 40px 25px;
@@ -1125,6 +1125,17 @@ hr.light {
     word-spacing: 7px;
     font-weight: 700;
     font-size: 40px;
+}
+
+#contributions-title {
+    font-family: "Questrial", sans-serif;
+    text-align: center;
+    margin: 45px 25px 20px 25px;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    word-spacing: 7px;
+    font-weight: 700;
+    font-size: 36px;
 }
 
 .contributions {
@@ -1241,7 +1252,7 @@ h2#movies-empty {
 
 .table-admin {
     width: 75%;
-    margin: 0 auto;
+    margin: 0 auto 54px auto;
 }
 
 #btn-restrict {
@@ -1284,4 +1295,14 @@ h2#movies-empty {
 
 #about-info > span, #about-disclaimer > span {
     font-weight: 700;
+}
+
+.contributor-buttons {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    margin: 20px 0;
+    font-family: "Poppins", sans-serif;
+    text-transform: uppercase;
+
 }
