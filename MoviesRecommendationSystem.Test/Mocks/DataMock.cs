@@ -1,4 +1,4 @@
-﻿namespace StreetWorkout.Test.Mocks
+﻿namespace MoviesRecommendationSystem.Test.Mocks
 {
     using System;
     using Microsoft.EntityFrameworkCore;
