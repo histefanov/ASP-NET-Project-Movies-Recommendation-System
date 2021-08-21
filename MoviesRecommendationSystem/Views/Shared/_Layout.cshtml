@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>FILMCHE</title>
+    <title>@(ViewBag.Title ?? "MRS")</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -65,7 +65,7 @@
                         <a href="mailto:info@filmche.org" class="nav-link">Contact</a>
                     </li>
                     <li>
-                        <a asp-controller="Home" asp-action="About" class="nav-link">
+                        <a asp-area="" asp-controller="Home" asp-action="About" class="nav-link">
                             About
                         </a>
                     </li>

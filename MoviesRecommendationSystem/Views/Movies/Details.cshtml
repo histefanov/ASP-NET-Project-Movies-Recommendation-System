@@ -1,10 +1,10 @@
 ﻿@model MovieDetailsServiceModel
 
 <div class="row movie-data">
-    <div class="col-12 col-md-8">
+    <div class="col-12 col-md-8 col-sm-10">
         <iframe type="text/html" width="100%" height="100%" src="https://www.youtube.com/embed/@(Model.YoutubeTrailerId)?controls=0&showinfo=0&modestbranding=1&playsinline=1&rel=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
-    <div class="col-4">
+    <div class="col-md-4 col-sm-10">
         <p class="data-genres">
             @foreach (var genre in Model.Genres)
             {
@@ -44,6 +44,9 @@
             {
                 <a class="btn-watch" id="btn-watch-later" asp-area="Identity" asp-page="/Account/Login">Watch later</a>
             }
+            <div>
+
+            </div>
             <div id="watchlist-notification" style="display: none;">
             </div>
         </div>
@@ -100,7 +103,6 @@
             </p>
             <a class="btn-watch" asp-area="Identity" asp-page="/Account/Login" asp-route-returnUrl="@Url.Action("Details", "Movies", new { id = Model.Id, info = Model.GetInfo() })">Add review</a>
         </div>
-        <hr />
     }
     @if (Model.Reviews != null)
     {
@@ -146,8 +148,8 @@
                 $.ajax({
                     url: '@Url.Action("Add", "Watchlists", new { movieId = Model.Id })',
                     complete: function () {
-                        $('#add-movie').fadeOut(400, function () {
-                            $('#remove-movie').fadeIn(150);
+                        $('#add-movie').fadeOut(200, function () {
+                            $('#remove-movie').fadeIn(100);
                         });
 
                         $('#watchlist-counter').html(parseInt($('#watchlist-counter').html(), 10) + 1);
@@ -176,8 +178,8 @@
                 $.ajax({
                     url: '@Url.Action("Remove", "Watchlists", new { movieId = Model.Id })',
                     complete: function () {
-                        $('#remove-movie').fadeOut(400, function () {
-                            $('#add-movie').fadeIn(150);
+                        $('#remove-movie').fadeOut(200, function () {
+                            $('#add-movie').fadeIn(100);
                         });
 
                         $('#watchlist-counter').html(parseInt($('#watchlist-counter').html(), 10) - 1);

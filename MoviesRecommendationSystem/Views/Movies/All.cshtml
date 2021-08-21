@@ -1,5 +1,9 @@
 ﻿@model AllMoviesQueryModel
 
+@{
+    ViewBag.Title = "Collection - " + (Model.SelectedGenre ?? "All");
+}
+
 <form method="get">
     <div class="row" id="genre-selector">
         <ul class="collapse">
