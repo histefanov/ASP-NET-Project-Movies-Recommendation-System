@@ -4,6 +4,7 @@ Its functionalities include, but are not limited to, helping its users easily an
 # Built Using
 * ASP.NET Core 5 MVC (C#)
 * Microsoft SQL Server
+* SQLite
 * Entity Framework Core
 * jQuery
 * AutoMapper
