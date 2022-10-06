@@ -46,7 +46,7 @@
         {
             if (!this.editorService.UserIsEditor(User.GetId()) && !User.IsAdmin())
             {
-                return RedirectToAction(nameof(HomeController.Index), HomeControllerName);
+                return RedirectToAction(nameof(EditorsController.Become), EditorsControllerName);
             }
 
             var genres = this.movieService.AllGenres();

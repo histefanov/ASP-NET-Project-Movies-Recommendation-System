@@ -37,9 +37,14 @@ namespace MoviesRecommendationSystem
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services
-                .AddDbContext<MoviesRecommendationDbContext>(options => options
-                    .UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            //services
+            //    .AddDbContext<MoviesRecommendationDbContext>(options => options
+            //        .UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddDbContext<MoviesRecommendationDbContext>(options =>
+            {
+                options.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
+            });
 
             services.AddDatabaseDeveloperPageExceptionFilter();
 

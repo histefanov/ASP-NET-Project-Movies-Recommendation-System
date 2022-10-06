@@ -23,18 +23,18 @@
             using var scopedServices = app.ApplicationServices.CreateScope();
 
             var serviceProvider = scopedServices.ServiceProvider;
-            
-            MigrateDatabase(serviceProvider);
 
-            SeedGenres(serviceProvider);
-            SeedDirectors(serviceProvider);
-            SeedActors(serviceProvider);
-            SeedMovies(serviceProvider);
-            SeedMovieActors(serviceProvider);
-            SeedMovieGenres(serviceProvider);
+            MigrateDatabase(serviceProvider);
 
             SeedAdmin(serviceProvider);
             SeedAdminEditor(serviceProvider);
+
+            SeedDirectors(serviceProvider);
+            SeedMovies(serviceProvider);
+            SeedGenres(serviceProvider);
+            SeedActors(serviceProvider);
+            SeedMovieActors(serviceProvider);
+            SeedMovieGenres(serviceProvider);
 
             return app;
         }
@@ -57,19 +57,20 @@
 
             data.Genres.AddRange(new[]
             {
-                new Genre() { Name = "Action" },
-                new Genre() { Name = "Horror" },
-                new Genre() { Name = "Romance" },
-                new Genre() { Name = "Drama" },
-                new Genre() { Name = "Sci-Fi" },
-                new Genre() { Name = "Comedy" },
-                new Genre() { Name = "Thriller" },
-                new Genre() { Name = "Western" },
-                new Genre() { Name = "Documentary" },
-                new Genre() { Name = "Animation" },
-                new Genre() { Name = "War" },
-                new Genre() { Name = "Fantasy" },
-                new Genre() { Name = "Historical" },
+                new Genre() { Id = 1, Name = "Action" },
+                new Genre() { Id = 2, Name = "Horror" },
+                new Genre() { Id = 3, Name = "Romance" },
+                new Genre() { Id = 4, Name = "Drama" },
+                new Genre() { Id = 5, Name = "Sci-Fi" },
+                new Genre() { Id = 6, Name = "Comedy" },
+                new Genre() { Id = 7, Name = "Crime" },
+                new Genre() { Id = 8, Name = "Thriller" },
+                new Genre() { Id = 9, Name = "Western" },
+                new Genre() { Id = 10, Name = "Documentary" },
+                new Genre() { Id = 11, Name = "Animation" },
+                new Genre() { Id = 12, Name = "War" },
+                new Genre() { Id = 13, Name = "Fantasy" },
+                new Genre() { Id = 14, Name = "Historical" },
             });
 
             data.SaveChanges();
@@ -124,39 +125,42 @@
 
             data.Movies.AddRange(new[]
             {
-                new Movie() { 
-                    Title = "A Quiet Place", 
-                    ReleaseYear = 2018, 
-                    Runtime = 90, 
-                    Plot = "An electrifying interpretation of the post-apocalyptic horror genre", 
-                    Language = "English", 
-                    ImageUrl = "https://img.jakpost.net/c/2018/04/04/2018_04_04_43296_1522824740._large.jpg", 
-                    DirectorId = 1, 
-                    Studio = "Paramount Pictures", 
-                    EditorId = null, 
-                    YoutubeTrailerId = "WR7cc5t7tv8", 
-                    ImdbId = "tt6644200", 
-                    IsDeleted = false, 
-                    IsPublic = true, 
+                new Movie() {
+                    Id = 1,
+                    Title = "A Quiet Place",
+                    ReleaseYear = 2018,
+                    Runtime = 90,
+                    Plot = "An electrifying interpretation of the post-apocalyptic horror genre",
+                    Language = "English",
+                    ImageUrl = "https://img.jakpost.net/c/2018/04/04/2018_04_04_43296_1522824740._large.jpg",
+                    DirectorId = 1,
+                    Studio = "Paramount Pictures",
+                    EditorId = null,
+                    YoutubeTrailerId = "WR7cc5t7tv8",
+                    ImdbId = "tt6644200",
+                    IsDeleted = false,
+                    IsPublic = true,
                     PlaybackUrl = "https://www.amazon.com/Quiet-Place-Emily-Blunt/dp/B07BYJX9FZ" },
 
-                new Movie() { 
-                    Title = "In Bruges", 
-                    ReleaseYear = 2008, 
-                    Runtime = 107, 
-                    Plot = "You don't want to be in Bruges if you're a hitman", 
-                    Language = "English", 
-                    ImageUrl = "https://miro.medium.com/max/1200/1*_ycbwmbbdcjMoc67Q7qSvA.jpeg", 
-                    DirectorId = 2, 
-                    Studio = "Universal Pictures", 
-                    EditorId = null, 
-                    YoutubeTrailerId = "p-gG2qo_l_A", 
-                    ImdbId = "tt0780536", 
-                    IsDeleted = false, 
-                    IsPublic = true, 
+                new Movie() {
+                    Id = 2,
+                    Title = "In Bruges",
+                    ReleaseYear = 2008,
+                    Runtime = 107,
+                    Plot = "You don't want to be in Bruges if you're a hitman",
+                    Language = "English",
+                    ImageUrl = "https://miro.medium.com/max/1200/1*_ycbwmbbdcjMoc67Q7qSvA.jpeg",
+                    DirectorId = 2,
+                    Studio = "Universal Pictures",
+                    EditorId = null,
+                    YoutubeTrailerId = "p-gG2qo_l_A",
+                    ImdbId = "tt0780536",
+                    IsDeleted = false,
+                    IsPublic = true,
                     PlaybackUrl = "https://www.netflix.com/title/70083111" },
 
                 new Movie() {
+                    Id = 3,
                     Title = "The Nice Guys",
                     ReleaseYear = 2016,
                     Runtime = 116,
@@ -173,6 +177,7 @@
                     PlaybackUrl = "https://www.netflix.com/title/80049284" },
 
                 new Movie() {
+                    Id = 4,
                     Title = "The Pianist",
                     ReleaseYear = 2002,
                     Runtime = 150,
@@ -189,6 +194,7 @@
                     PlaybackUrl = "https://www.netflix.com/title/60025061" },
 
                 new Movie() {
+                    Id = 5,
                     Title = "Zombieland",
                     ReleaseYear = 2009,
                     Runtime = 88,
@@ -205,6 +211,7 @@
                     PlaybackUrl = "https://www.netflix.com/ca/title/70123542" },
 
                 new Movie() {
+                    Id = 6,
                     Title = "Avengers: Infinity War",
                     ReleaseYear = 2018,
                     Runtime = 159,
@@ -221,6 +228,7 @@
                     PlaybackUrl = "https://www.amazon.com/Avengers-Infinity-Robert-Downey-Jr/dp/B07CKK1LT3" },
 
                 new Movie() {
+                    Id = 7,
                     Title = "Parasite",
                     ReleaseYear = 2019,
                     Runtime = 132,
@@ -237,6 +245,7 @@
                     PlaybackUrl = "https://www.amazon.com/Parasite-English-Subtitled-Kang-Song/dp/B07YM14FRG" },
 
                 new Movie() {
+                    Id = 8,
                     Title = "1917",
                     ReleaseYear = 2019,
                     Runtime = 119,
@@ -287,7 +296,6 @@
                 new MovieActor { MovieId = 6, ActorId = 3},
                 new MovieActor { MovieId = 7, ActorId = 1},
                 new MovieActor { MovieId = 7, ActorId = 2},
-                new MovieActor { MovieId = 7, ActorId = 3},
                 new MovieActor { MovieId = 8, ActorId = 1},
                 new MovieActor { MovieId = 8, ActorId = 2},
                 new MovieActor { MovieId = 8, ActorId = 3},
@@ -307,25 +315,25 @@
 
             data.MovieGenres.AddRange(new[]
             {
+                new MovieGenre { MovieId = 1, GenreId = 2 },
                 new MovieGenre { MovieId = 1, GenreId = 4 },
-                new MovieGenre { MovieId = 1, GenreId = 5 },
+                new MovieGenre { MovieId = 1, GenreId = 8 },
                 new MovieGenre { MovieId = 2, GenreId = 7 },
-                new MovieGenre { MovieId = 2, GenreId = 1 },
-                new MovieGenre { MovieId = 3, GenreId = 12 },
-                new MovieGenre { MovieId = 3, GenreId = 9 },
-                new MovieGenre { MovieId = 3, GenreId = 15 },
-                new MovieGenre { MovieId = 4, GenreId = 7 },
-                new MovieGenre { MovieId = 5, GenreId = 1 },
-                new MovieGenre { MovieId = 5, GenreId = 5 },
-                new MovieGenre { MovieId = 5, GenreId = 8 },
-                new MovieGenre { MovieId = 6, GenreId = 4 },
-                new MovieGenre { MovieId = 6, GenreId = 14 },
-                new MovieGenre { MovieId = 7, GenreId = 14 },
+                new MovieGenre { MovieId = 2, GenreId = 4 },
+                new MovieGenre { MovieId = 3, GenreId = 1 },
+                new MovieGenre { MovieId = 3, GenreId = 6 },
+                new MovieGenre { MovieId = 3, GenreId = 7 },
+                new MovieGenre { MovieId = 4, GenreId = 4 },
+                new MovieGenre { MovieId = 4, GenreId = 12 },
+                new MovieGenre { MovieId = 5, GenreId = 2 },
+                new MovieGenre { MovieId = 5, GenreId = 6 },
+                new MovieGenre { MovieId = 6, GenreId = 1 },
+                new MovieGenre { MovieId = 6, GenreId = 5 },
                 new MovieGenre { MovieId = 7, GenreId = 4 },
-                new MovieGenre { MovieId = 7, GenreId = 2 },
-                new MovieGenre { MovieId = 8, GenreId = 9 },
-                new MovieGenre { MovieId = 8, GenreId = 1 },
-                new MovieGenre { MovieId = 8, GenreId = 3 },
+                new MovieGenre { MovieId = 7, GenreId = 8 },
+                new MovieGenre { MovieId = 8, GenreId = 4 },
+                new MovieGenre { MovieId = 8, GenreId = 12 },
+                new MovieGenre { MovieId = 8, GenreId = 14 },
             });
 
             data.SaveChanges();
